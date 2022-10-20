@@ -46,6 +46,10 @@ from .resources import (
     AnalysisResources,
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
+    EnergySourceResources,
+    EnergyEndUseResources,
+    EnergyConsumptionTimseriesBySiteResources,
+    EnergyConsumptionTimseriesByBuildingResources,
 )
 
 
@@ -135,6 +139,15 @@ class BEMServerApiClient:
         )
         self.st_cleanup_by_timeseries = ST_CleanupByTimeseriesResources(
             self._request_manager
+        )
+
+        self.energy_sources = EnergySourceResources(self._request_manager)
+        self.energy_end_uses = EnergyEndUseResources(self._request_manager)
+        self.energy_cons_ts_by_sites = EnergyConsumptionTimseriesBySiteResources(
+            self._request_manager
+        )
+        self.energy_cons_ts_by_buildings = (
+            EnergyConsumptionTimseriesByBuildingResources(self._request_manager)
         )
 
     @property
