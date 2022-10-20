@@ -8,6 +8,12 @@ from .campaigns import (  # noqa
     CampaignScopeResources,
     UserGroupByCampaignScopeResources,
 )
+from .energy import (  # noqa
+    EnergySourceResources,
+    EnergyEndUseResources,
+    EnergyConsumptionTimseriesBySiteResources,
+    EnergyConsumptionTimseriesByBuildingResources,
+)
 from .events import (  # noqa
     EventResources,
     EventStateResources,
