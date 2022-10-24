@@ -16,9 +16,11 @@ class TestAPIClientResourcesAnalysis:
             "delete",
         ]
         assert hasattr(AnalysisResources, "get_completeness")
+        assert hasattr(AnalysisResources, "get_energy_consumption_breakdown")
 
     def test_api_client_resources_analysis_endpoints(self, mock_request):
         analysis_res = AnalysisResources(mock_request)
+        # Get completeness
         resp = analysis_res.get_completeness(
             start_time="2020-01-01T00:00:00+00:00",
             end_time="2020-02-01T00:00:00+00:00",
@@ -55,6 +57,42 @@ class TestAPIClientResourcesAnalysis:
                     "ratio": [1, 1, 1, 1, 1],
                     "total_count": 4467,
                     "undefined_interval": False,
+                },
+            },
+            "timestamps": [
+                "2019-12-30T00:00:00+00:00",
+                "2020-01-06T00:00:00+00:00",
+                "2020-01-13T00:00:00+00:00",
+                "2020-01-20T00:00:00+00:00",
+                "2020-01-27T00:00:00+00:00",
+            ],
+        }
+
+        # Get energy consumption breakdown
+        resp = analysis_res.get_energy_consumption_breakdown(
+            "site",
+            1,
+            start_time="2020-01-01T00:00:00+00:00",
+            end_time="2020-02-01T00:00:00+00:00",
+            bucket_width_value=1,
+            bucket_width_unit="week",
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert resp.pagination == {}
+        assert resp.etag == "etag_analysis_energy_cons_site"
+        assert resp.data == {
+            "energy": {
+                "all": {
+                    "all": [0, 0, 0, 0, 0],
+                    "appliances": [0, 0, 0, 0, 0],
+                    "lighting": [0, 0, 0, 0, 0],
+                    "ventilation": [0, 0, 0, 0, 0],
+                },
+                "electricity": {
+                    "all": [0, 0, 0, 0, 0],
+                    "heating": [0, 0, 0, 0, 0],
                 },
             },
             "timestamps": [
