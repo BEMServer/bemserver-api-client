@@ -18,6 +18,8 @@ coverage[toml]==6.4.4
     # via pytest-cov
 distlib==0.3.6
     # via virtualenv
+exceptiongroup==1.0.0rc9
+    # via pytest
 filelock==3.8.0
     # via virtualenv
 identify==2.5.5
@@ -36,11 +38,9 @@ pluggy==1.0.0
     # via pytest
 pre-commit==2.20.0
     # via -r requirements/dev.in
-py==1.11.0
-    # via pytest
 pyparsing==3.0.9
     # via packaging
-pytest==7.1.3
+pytest==7.2.0
     # via
     #   -r requirements/tests.in
     #   pytest-cov
