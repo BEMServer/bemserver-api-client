@@ -17,10 +17,6 @@ from bemserver_api_client.resources import (
     TimeseriesPropertyResources,
     TimeseriesPropertyDataResources,
     TimeseriesDataResources,
-    EventResources,
-    EventStateResources,
-    EventLevelResources,
-    EventCategoryResources,
     StructuralElementPropertyResources,
     SiteResources,
     SitePropertyResources,
@@ -115,15 +111,6 @@ class TestAPIClient:
         )
         assert hasattr(apicli, "timeseries_data")
         assert isinstance(apicli.timeseries_data, TimeseriesDataResources)
-
-        assert hasattr(apicli, "events")
-        assert isinstance(apicli.events, EventResources)
-        assert hasattr(apicli, "event_states")
-        assert isinstance(apicli.event_states, EventStateResources)
-        assert hasattr(apicli, "event_levels")
-        assert isinstance(apicli.event_levels, EventLevelResources)
-        assert hasattr(apicli, "event_categories")
-        assert isinstance(apicli.event_categories, EventCategoryResources)
 
         assert hasattr(apicli, "sites")
         assert isinstance(apicli.sites, SiteResources)
