@@ -17,10 +17,6 @@ from .resources import (
     TimeseriesPropertyResources,
     TimeseriesPropertyDataResources,
     TimeseriesDataResources,
-    EventResources,
-    EventStateResources,
-    EventLevelResources,
-    EventCategoryResources,
     StructuralElementPropertyResources,
     SiteResources,
     SitePropertyResources,
@@ -95,11 +91,6 @@ class BEMServerApiClient:
             self._request_manager
         )
         self.timeseries_data = TimeseriesDataResources(self._request_manager)
-
-        self.events = EventResources(self._request_manager)
-        self.event_states = EventStateResources(self._request_manager)
-        self.event_levels = EventLevelResources(self._request_manager)
-        self.event_categories = EventCategoryResources(self._request_manager)
 
         self.sites = SiteResources(self._request_manager)
         self.buildings = BuildingResources(self._request_manager)
