@@ -1,7 +1,9 @@
 """BEMServer API client"""
 import logging
+from packaging.version import Version, InvalidVersion
 from requests.auth import HTTPBasicAuth
 
+from .exceptions import BEMServerAPIVersionError
 from .request import BEMServerApiClientRequest
 from .resources import (
     AboutResources,
@@ -51,24 +53,40 @@ from .resources import (
 
 APICLI_LOGGER = logging.getLogger(__name__)
 
+REQUIRED_API_VERSION = {
+    "min": Version("0.0.1"),
+    "max": Version("0.1.0"),
+}
+
 
 class BEMServerApiClient:
     """API client"""
 
     def __init__(
-        self, host, use_ssl=True, authentication_method=None, uri_prefix="http"
+        self,
+        host,
+        use_ssl=True,
+        authentication_method=None,
+        uri_prefix="http",
+        auto_check=False,
+        request_manager=None,
     ):
         self.base_uri_prefix = uri_prefix or "http"
         self.host = host
         self.use_ssl = use_ssl
 
-        self._request_manager = BEMServerApiClientRequest(
+        self._request_manager = request_manager or BEMServerApiClientRequest(
             self.base_uri,
             authentication_method,
             logger=APICLI_LOGGER,
         )
 
         self.about = AboutResources(self._request_manager)
+
+        if auto_check:
+            api_version = self.about.getall().data["versions"]["bemserver_api"]
+            self.check_api_version(api_version)
+
         self.io = IOResources(self._request_manager)
 
         self.users = UserResources(self._request_manager)
@@ -158,3 +176,17 @@ class BEMServerApiClient:
             email.encode(encoding="utf-8"),
             password.encode(encoding="utf-8"),
         )
+
+    @classmethod
+    def check_api_version(cls, api_version):
+        try:
+            version_api = Version(str(api_version))
+        except InvalidVersion as exc:
+            raise BEMServerAPIVersionError(f"Invalid API version: {str(exc)}")
+        version_min = REQUIRED_API_VERSION["min"]
+        version_max = REQUIRED_API_VERSION["max"]
+        if not (version_min <= version_api < version_max):
+            raise BEMServerAPIVersionError(
+                f"API version ({str(version_api)}) not supported!"
+                f" (expected: >={str(version_min)},<{str(version_max)})"
+            )

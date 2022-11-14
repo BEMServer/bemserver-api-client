@@ -4,6 +4,7 @@ import requests_mock
 import json
 import urllib
 
+from bemserver_api_client.client import REQUIRED_API_VERSION
 from bemserver_api_client.request import BEMServerApiClientRequest
 from bemserver_api_client.resources import (
     UserResources,
@@ -118,6 +119,7 @@ def mock_request(request):
 def mock_session(uri_prefix, base_uri):
     adapter = requests_mock.Adapter()
     mock_fake_uris(adapter, base_uri)
+    mock_about_uris(adapter, base_uri)
     mock_users_uris(adapter, base_uri)
     mock_io_uris(adapter, base_uri)
     mock_timeseries_uris(adapter, base_uri)
@@ -127,6 +129,57 @@ def mock_session(uri_prefix, base_uri):
     session = requests.Session()
     session.mount(f"{uri_prefix}://", adapter)
     return session
+
+
+def mock_about_uris(mock_adapter, base_uri):
+    about_api_uri = "/about/"
+
+    # Get all
+    #  - First time: check version OK,
+    #  - Second time: check version NOK,
+    #  - Third time: invalid API version,
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{about_api_uri}",
+        [
+            {
+                "headers": {
+                    "Content-Type": "application/json",
+                    "ETag": "etag_about",
+                },
+                "json": {
+                    "versions": {
+                        "bemserver_core": "0.0.1",
+                        "bemserver_api": str(REQUIRED_API_VERSION["min"]),
+                    },
+                },
+            },
+            {
+                "headers": {
+                    "Content-Type": "application/json",
+                    "ETag": "etag_about",
+                },
+                "json": {
+                    "versions": {
+                        "bemserver_core": "9999.0.0",
+                        "bemserver_api": "9999.0.0",
+                    },
+                },
+            },
+            {
+                "headers": {
+                    "Content-Type": "application/json",
+                    "ETag": "etag_about",
+                },
+                "json": {
+                    "versions": {
+                        "bemserver_core": "9999.0.0",
+                        "bemserver_api": "invalid",
+                    },
+                },
+            },
+        ],
+    )
 
 
 def mock_fake_uris(mock_adapter, base_uri):

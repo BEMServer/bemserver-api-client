@@ -1,6 +1,10 @@
 """BEMServer API client errors"""
 
 
+class BEMServerAPIVersionError(Exception):
+    """BEMServer API version error"""
+
+
 class BEMServerAPIError(Exception):
     """BEMServer API error"""
 

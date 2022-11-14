@@ -1,7 +1,9 @@
 """BEMServer API client tests"""
+import pytest
 from requests.auth import HTTPBasicAuth
 
 from bemserver_api_client import BEMServerApiClient
+from bemserver_api_client.exceptions import BEMServerAPIVersionError
 from bemserver_api_client.request import BEMServerApiClientRequest
 from bemserver_api_client.resources import (
     AboutResources,
@@ -170,3 +172,31 @@ class TestAPIClient:
         )
 
         assert not hasattr(apicli, "whatever_resources_that_does_not_exist")
+
+    def test_api_client_required_api_version_manual(self):
+        BEMServerApiClient.check_api_version("0.0.42")
+
+        # API version not compatible with client.
+        with pytest.raises(BEMServerAPIVersionError):
+            BEMServerApiClient.check_api_version("1.0.0")
+
+        # Invalid API versionning.
+        with pytest.raises(BEMServerAPIVersionError):
+            BEMServerApiClient.check_api_version(None)
+        with pytest.raises(BEMServerAPIVersionError):
+            BEMServerApiClient.check_api_version("invalid")
+
+    def test_api_client_required_api_version_auto_check(self, mock_request):
+        host = "localhost:5000"
+        auto_check = True
+        req_mngr = mock_request
+
+        BEMServerApiClient(host, auto_check=auto_check, request_manager=req_mngr)
+
+        # API version not compatible with client.
+        with pytest.raises(BEMServerAPIVersionError):
+            BEMServerApiClient(host, auto_check=auto_check, request_manager=req_mngr)
+
+        # Invalid API versionning.
+        with pytest.raises(BEMServerAPIVersionError):
+            BEMServerApiClient(host, auto_check=auto_check, request_manager=req_mngr)
