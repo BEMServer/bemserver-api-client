@@ -10,7 +10,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="bemserver-api-client",
-    version="0.0.1",
+    version="0.1.0",
     description="BEMServer API client",
     long_description=long_description,
     url="https://github.com/BEMServer/bemserver-api-client",

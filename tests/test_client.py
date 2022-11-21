@@ -4,6 +4,7 @@ from requests.auth import HTTPBasicAuth
 
 from bemserver_api_client import BEMServerApiClient
 from bemserver_api_client.exceptions import BEMServerAPIVersionError
+from bemserver_api_client.client import REQUIRED_API_VERSION
 from bemserver_api_client.request import BEMServerApiClientRequest
 from bemserver_api_client.resources import (
     AboutResources,
@@ -174,7 +175,9 @@ class TestAPIClient:
         assert not hasattr(apicli, "whatever_resources_that_does_not_exist")
 
     def test_api_client_required_api_version_manual(self):
-        BEMServerApiClient.check_api_version("0.0.42")
+        req_version_min = REQUIRED_API_VERSION["min"]
+        v = f"{req_version_min.major}.{req_version_min.minor}.42"
+        BEMServerApiClient.check_api_version(str(v))
 
         # API version not compatible with client.
         with pytest.raises(BEMServerAPIVersionError):
