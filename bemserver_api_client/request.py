@@ -4,6 +4,7 @@ import os
 import requests
 import requests.exceptions as req_exc
 
+from .enums import DataFormat
 from .response import BEMServerApiClientResponse
 from .exceptions import BEMServerAPIInternalError
 
@@ -27,6 +28,15 @@ class BEMServerApiClientRequest:
     def _build_uri(self, endpoint_uri):
         return f"{self.base_uri}{endpoint_uri}"
 
+    def _prepare_accept_header(self, format):
+        accept_header = {}
+        try:
+            if format in DataFormat:
+                accept_header = {"Accept": format.value}
+        except TypeError:
+            pass
+        return accept_header
+
     def _prepare_etag_header(self, http_method, etag):
         etag_header = {}
         if etag is not None:
@@ -40,7 +50,13 @@ class BEMServerApiClientRequest:
 
     def _execute(self, http_method, endpoint, *, etag=None, **kwargs):
         full_endpoint_uri = self._build_uri(endpoint)
-        headers = self._prepare_etag_header(http_method, etag)
+        headers = {
+            **kwargs.pop("headers", {}),
+            **self._prepare_etag_header(http_method, etag),
+        }
+
+        print(headers)
+
         self._logger.debug(f"{http_method} {full_endpoint_uri}")
         try:
             raw_resp = self._session.request(
@@ -83,7 +99,7 @@ class BEMServerApiClientRequest:
     def delete(self, endpoint, etag):
         return self._execute("DELETE", endpoint, etag=etag)
 
-    def upload(self, endpoint, files, **kwargs):
+    def upload_files(self, endpoint, files, **kwargs):
         """Upload files.
 
         :param dict files:
@@ -93,6 +109,27 @@ class BEMServerApiClientRequest:
         not_empty_files = self._exclude_empty_files(files)
         return self._execute("POST", endpoint, files=not_empty_files, **kwargs)
 
-    def download(self, endpoint, **kwargs):
-        """Download files."""
+    def upload_data(self, endpoint, data, *, format=DataFormat.json, **kwargs):
+        """Upload data from specified format.
+
+        :param str data: data to upload (for example a read content of file stream)
+        :param DataFormat format: (optional, default JSON)
+            data format, either CSV or JSON
+        """
+        kwargs["headers"] = {
+            **kwargs.pop("headers", {}),
+            **self._prepare_accept_header(format),
+        }
+        return self._execute("POST", endpoint, data=data, **kwargs)
+
+    def download(self, endpoint, *, format=DataFormat.json, **kwargs):
+        """Download data in specified format.
+
+        :param DataFormat format: (optional, default JSON)
+            data format, either CSV or JSON
+        """
+        kwargs["headers"] = {
+            **kwargs.pop("headers", {}),
+            **self._prepare_accept_header(format),
+        }
         return self._execute("GET", endpoint, **kwargs)

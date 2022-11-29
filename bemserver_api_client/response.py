@@ -1,7 +1,6 @@
 """BEMServer API client response"""
 import logging
 import json
-from io import BytesIO
 
 from .exceptions import (
     BEMServerAPIValidationError,
@@ -58,6 +57,16 @@ class BEMServerApiClientResponse:
         )
 
     @property
+    def is_csv(self):
+        """Check if the mimetype indicates CSV data, either
+        :mimetype:`application/csv` or :mimetype:`application/*+csv`.
+        """
+        return self._mimetype == "application/csv" or (
+            self._mimetype.startswith("application/")
+            and self._mimetype.endswith("+csv")
+        )
+
+    @property
     def data(self):
         if self.is_json:
             return self._raw_response.json()
@@ -109,15 +118,6 @@ class BEMServerApiClientResponse:
 
         # Issue in BEMServer
         raise BEMServerAPIInternalError(status_code=self.status_code)
-
-    def get_data_as_file(self):
-        # Example of headers when downloading a file:
-        #   {'Content-Type': 'text/csv; charset=utf-8', 'Content-Length': '103',
-        #    'Content-Disposition': 'attachment; filename=timeseries.csv',...
-        return (
-            self._raw_response.headers["Content-Disposition"].split("filename=")[1],
-            BytesIO(self.data),
-        )
 
     def toJSON(self):
         # Allows to set this response instance in a serializable object.

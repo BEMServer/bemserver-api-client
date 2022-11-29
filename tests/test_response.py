@@ -14,6 +14,7 @@ class TestAPIClientResponse:
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
         assert resp.is_json
+        assert not resp.is_csv
         assert resp.toJSON() == {
             "status_code": resp.status_code,
             "data": resp.data,

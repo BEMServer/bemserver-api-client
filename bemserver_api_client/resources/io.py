@@ -18,7 +18,7 @@ class IOResources(BaseResources):
         """
         endpoint = f"{self.endpoint_base_uri}timeseries"
         q_params = {"campaign_id": campaign_id}
-        return self._req.upload(endpoint, params=q_params, files=csv_files)
+        return self._req.upload_files(endpoint, params=q_params, files=csv_files)
 
     def upload_sites_csv(self, campaign_id, csv_files):
         """
@@ -29,4 +29,4 @@ class IOResources(BaseResources):
         """
         endpoint = f"{self.endpoint_base_uri}sites"
         q_params = {"campaign_id": campaign_id}
-        return self._req.upload(endpoint, params=q_params, files=csv_files)
+        return self._req.upload_files(endpoint, params=q_params, files=csv_files)
