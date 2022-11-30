@@ -13,7 +13,7 @@ from bemserver_api_client.resources import (
     TimeseriesByZoneResources,
 )
 from bemserver_api_client.response import BEMServerApiClientResponse
-from bemserver_api_client.enums import DataFormat
+from bemserver_api_client.enums import DataFormat, Aggregation
 
 
 class TestAPIClientResourcesTimeseries:
@@ -197,7 +197,7 @@ class TestAPIClientResourcesTimeseries:
             "2020-01-01T00:30:00+00:00",
             1,
             [0, 1, 2],
-            aggregation="sum",
+            aggregation=Aggregation.sum,
             format=DataFormat.csv,
         )
         assert isinstance(resp, BEMServerApiClientResponse)
@@ -214,7 +214,7 @@ class TestAPIClientResourcesTimeseries:
             "2020-01-01T00:30:00+00:00",
             1,
             ["Timeseries 1", "Timeseries 2", "Timeseries 3"],
-            aggregation="sum",
+            aggregation=Aggregation.sum,
             format=DataFormat.csv,
         )
         assert isinstance(resp, BEMServerApiClientResponse)
@@ -296,7 +296,7 @@ class TestAPIClientResourcesTimeseries:
             "2020-01-01T00:30:00+00:00",
             1,
             [0, 1, 2],
-            aggregation="sum",
+            aggregation=Aggregation.sum,
         )
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
@@ -316,7 +316,7 @@ class TestAPIClientResourcesTimeseries:
             "2020-01-01T00:30:00+00:00",
             1,
             ["Timeseries 1", "Timeseries 2", "Timeseries 3"],
-            aggregation="sum",
+            aggregation=Aggregation.sum,
         )
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200

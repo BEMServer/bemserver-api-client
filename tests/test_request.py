@@ -1,11 +1,12 @@
 """BEMServer API client request tests"""
 import io
-import enum
 import pytest
 
 from bemserver_api_client.request import BEMServerApiClientRequest
 from bemserver_api_client.exceptions import BEMServerAPIClientValueError
 from bemserver_api_client.enums import DataFormat
+
+from tests.conftest import FakeEnum
 
 
 class TestAPIClientRequest:
@@ -54,14 +55,10 @@ class TestAPIClientRequest:
         with pytest.raises(TypeError):
             req._prepare_accept_header("other")
 
-        class OtherEnum(enum.Enum):
-            a = "a"
-            b = "b"
-
         with pytest.raises(
-            BEMServerAPIClientValueError, match=f"Invalid data format: {OtherEnum.a}"
+            BEMServerAPIClientValueError, match=f"Invalid data format: {FakeEnum.a}"
         ):
-            req._prepare_accept_header(OtherEnum.a)
+            req._prepare_accept_header(FakeEnum.a)
 
     def test_api_client_request_exclude_empty_files(self):
         sites_csv_data = "Name,Description,IFC_ID,Area\n" "Site 1,Great site,,2000\n"

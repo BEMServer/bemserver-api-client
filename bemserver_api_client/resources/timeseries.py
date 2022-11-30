@@ -12,7 +12,7 @@
 /timeseries_by_zones/ endpoints
 """
 from .base import BaseResources
-from ..enums import DataFormat
+from ..enums import DataFormat, Aggregation, BucketWidthUnit
 
 
 class TimeseriesResources(BaseResources):
@@ -118,9 +118,9 @@ class TimeseriesDataResources(BaseResources):
         data_state,
         timeseries_ids,
         timezone="UTC",
-        aggregation="avg",
+        aggregation=Aggregation.avg,
         bucket_width_value="1",
-        bucket_width_unit="hour",
+        bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
     ):
         return self._req.download(
@@ -132,9 +132,9 @@ class TimeseriesDataResources(BaseResources):
                 "data_state": data_state,
                 "timeseries": timeseries_ids,
                 "timezone": timezone,
-                "aggregation": aggregation,
+                "aggregation": aggregation.value,
                 "bucket_width_value": bucket_width_value,
-                "bucket_width_unit": bucket_width_unit,
+                "bucket_width_unit": bucket_width_unit.value,
             },
         )
 
@@ -146,9 +146,9 @@ class TimeseriesDataResources(BaseResources):
         data_state,
         timeseries_names,
         timezone="UTC",
-        aggregation="avg",
+        aggregation=Aggregation.avg,
         bucket_width_value="1",
-        bucket_width_unit="hour",
+        bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
     ):
         return self._req.download(
@@ -160,9 +160,9 @@ class TimeseriesDataResources(BaseResources):
                 "data_state": data_state,
                 "timeseries": timeseries_names,
                 "timezone": timezone,
-                "aggregation": aggregation,
+                "aggregation": aggregation.value,
                 "bucket_width_value": bucket_width_value,
-                "bucket_width_unit": bucket_width_unit,
+                "bucket_width_unit": bucket_width_unit.value,
             },
         )
 

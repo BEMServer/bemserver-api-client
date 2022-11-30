@@ -1,7 +1,13 @@
 """BEMServer API client analysis resources tests"""
+import pytest
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources import AnalysisResources
 from bemserver_api_client.response import BEMServerApiClientResponse
+from bemserver_api_client.enums import BucketWidthUnit
+from bemserver_api_client.exceptions import BEMServerAPIClientValueError
+
+from tests.conftest import FakeEnum
 
 
 class TestAPIClientResourcesAnalysis:
@@ -27,7 +33,7 @@ class TestAPIClientResourcesAnalysis:
             timeseries=[1, 2],
             data_state=1,
             bucket_width_value=1,
-            bucket_width_unit="week",
+            bucket_width_unit=BucketWidthUnit.week,
         )
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
@@ -75,7 +81,7 @@ class TestAPIClientResourcesAnalysis:
             start_time="2020-01-01T00:00:00+00:00",
             end_time="2020-02-01T00:00:00+00:00",
             bucket_width_value=1,
-            bucket_width_unit="week",
+            bucket_width_unit=BucketWidthUnit.week,
         )
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
@@ -103,3 +109,54 @@ class TestAPIClientResourcesAnalysis:
                 "2020-01-27T00:00:00+00:00",
             ],
         }
+
+    def test_api_client_resources_analysis_endpoints_errors(self, mock_request):
+        analysis_res = AnalysisResources(mock_request)
+
+        for bad_bucket_width_unit in [None, "week", "other", 42]:
+            with pytest.raises(TypeError):
+                analysis_res.get_completeness(
+                    start_time="2020-01-01T00:00:00+00:00",
+                    end_time="2020-02-01T00:00:00+00:00",
+                    timeseries=[1, 2],
+                    data_state=1,
+                    bucket_width_value=1,
+                    bucket_width_unit=bad_bucket_width_unit,
+                )
+
+        with pytest.raises(
+            BEMServerAPIClientValueError,
+            match=f"Invalid bucket width unit: {FakeEnum.b}",
+        ):
+            analysis_res.get_completeness(
+                start_time="2020-01-01T00:00:00+00:00",
+                end_time="2020-02-01T00:00:00+00:00",
+                timeseries=[1, 2],
+                data_state=1,
+                bucket_width_value=1,
+                bucket_width_unit=FakeEnum.b,
+            )
+
+        for bad_bucket_width_unit in [None, "week", "other", 42]:
+            with pytest.raises(TypeError):
+                analysis_res.get_energy_consumption_breakdown(
+                    "site",
+                    1,
+                    start_time="2020-01-01T00:00:00+00:00",
+                    end_time="2020-02-01T00:00:00+00:00",
+                    bucket_width_value=1,
+                    bucket_width_unit=bad_bucket_width_unit,
+                )
+
+        with pytest.raises(
+            BEMServerAPIClientValueError,
+            match=f"Invalid bucket width unit: {FakeEnum.b}",
+        ):
+            analysis_res.get_energy_consumption_breakdown(
+                "site",
+                1,
+                start_time="2020-01-01T00:00:00+00:00",
+                end_time="2020-02-01T00:00:00+00:00",
+                bucket_width_value=1,
+                bucket_width_unit=FakeEnum.b,
+            )
