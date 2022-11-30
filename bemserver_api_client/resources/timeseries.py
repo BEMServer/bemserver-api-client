@@ -12,6 +12,7 @@
 /timeseries_by_zones/ endpoints
 """
 from .base import BaseResources
+from ..enums import DataFormat
 
 
 class TimeseriesResources(BaseResources):
@@ -32,47 +33,53 @@ class TimeseriesPropertyDataResources(BaseResources):
 
 class TimeseriesDataResources(BaseResources):
     endpoint_base_uri = "/timeseries_data/"
-    disabled_endpoints = ["getall", "getone", "create", "update", "delete"]
+    disabled_endpoints = ["getall", "getone", "create", "update"]
 
     def endpoint_uri_by_campaign(self, campaign_id):
         return f"{self.endpoint_base_uri}campaign/{str(campaign_id)}/"
 
-    def upload_csv(self, data_state, csv_files):
+    def upload(self, data_state, data, format=DataFormat.json):
         """
 
-        :param dict csv_files:
-            key is the upload field name (csv_file)
-            value is a file stream (tempfile.SpooledTemporaryFile)
+        :param int data_state: timeseries data state id to feed
+        :param str data: data to upload (for example a read content of file stream)
+        :param DataFormat format: (optional, default JSON)
+            data format, either CSV or JSON
         """
-        return self._req.upload(
+        return self._req.upload_data(
             self.endpoint_base_uri,
+            data,
+            format=format,
             params={"data_state": data_state},
-            files=csv_files,
         )
 
-    def upload_csv_by_names(self, campaign_id, data_state, csv_files):
+    def upload_by_names(self, campaign_id, data_state, data, format=DataFormat.json):
         """
 
-        :param dict csv_files:
-            key is the upload field name (csv_file)
-            value is a file stream (tempfile.SpooledTemporaryFile)
+        :param int data_state: timeseries data state id to feed
+        :param str data: data to upload (for example a read content of file stream)
+        :param DataFormat format: (optional, default JSON)
+            data format, either CSV or JSON
         """
-        return self._req.upload(
+        return self._req.upload_data(
             self.endpoint_uri_by_campaign(campaign_id),
+            data,
+            format=format,
             params={"data_state": data_state},
-            files=csv_files,
         )
 
-    def download_csv(
+    def download(
         self,
         start_time,
         end_time,
         data_state,
         timeseries_ids,
         timezone="UTC",
+        format=DataFormat.json,
     ):
         return self._req.download(
             self.endpoint_base_uri,
+            format=format,
             params={
                 "start_time": start_time,
                 "end_time": end_time,
@@ -82,7 +89,7 @@ class TimeseriesDataResources(BaseResources):
             },
         )
 
-    def download_csv_by_names(
+    def download_by_names(
         self,
         campaign_id,
         start_time,
@@ -90,9 +97,11 @@ class TimeseriesDataResources(BaseResources):
         data_state,
         timeseries_names,
         timezone="UTC",
+        format=DataFormat.json,
     ):
         return self._req.download(
             self.endpoint_uri_by_campaign(campaign_id),
+            format=format,
             params={
                 "start_time": start_time,
                 "end_time": end_time,
@@ -102,7 +111,7 @@ class TimeseriesDataResources(BaseResources):
             },
         )
 
-    def download_csv_aggregate(
+    def download_aggregate(
         self,
         start_time,
         end_time,
@@ -112,9 +121,11 @@ class TimeseriesDataResources(BaseResources):
         aggregation="avg",
         bucket_width_value="1",
         bucket_width_unit="hour",
+        format=DataFormat.json,
     ):
         return self._req.download(
             f"{self.endpoint_base_uri}aggregate",
+            format=format,
             params={
                 "start_time": start_time,
                 "end_time": end_time,
@@ -127,7 +138,7 @@ class TimeseriesDataResources(BaseResources):
             },
         )
 
-    def download_csv_aggregate_by_names(
+    def download_aggregate_by_names(
         self,
         campaign_id,
         start_time,
@@ -138,9 +149,11 @@ class TimeseriesDataResources(BaseResources):
         aggregation="avg",
         bucket_width_value="1",
         bucket_width_unit="hour",
+        format=DataFormat.json,
     ):
         return self._req.download(
             f"{self.endpoint_uri_by_campaign(campaign_id)}aggregate",
+            format=format,
             params={
                 "start_time": start_time,
                 "end_time": end_time,

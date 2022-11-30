@@ -2,6 +2,7 @@
 import io
 
 from bemserver_api_client.request import BEMServerApiClientRequest
+from bemserver_api_client.enums import DataFormat
 
 
 class TestAPIClientRequest:
@@ -35,6 +36,17 @@ class TestAPIClientRequest:
             "If-Match": "etag_value"
         }
         assert req._prepare_etag_header("GET", None) == {}
+
+    def test_api_client_request_accept_header(self):
+        req = BEMServerApiClientRequest("http://localhost:5000", None)
+        assert req._prepare_accept_header(DataFormat.csv) == {
+            "Accept": DataFormat.csv.value
+        }
+        assert req._prepare_accept_header(DataFormat.json) == {
+            "Accept": DataFormat.json.value
+        }
+        assert req._prepare_accept_header(None) == {}
+        assert req._prepare_accept_header("other") == {}
 
     def test_api_client_request_exclude_empty_files(self):
         sites_csv_data = "Name,Description,IFC_ID,Area\n" "Site 1,Great site,,2000\n"

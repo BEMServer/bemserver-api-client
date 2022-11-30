@@ -3,6 +3,7 @@ import requests
 import requests_mock
 import json
 import urllib
+import copy
 
 from bemserver_api_client.client import REQUIRED_API_VERSION
 from bemserver_api_client.request import BEMServerApiClientRequest
@@ -15,6 +16,7 @@ from bemserver_api_client.resources import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
 )
+from bemserver_api_client.enums import DataFormat
 
 
 @pytest.fixture(params=[{"status_code": 500}])
@@ -494,6 +496,12 @@ def mock_timeseries_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "POST",
         f"{endpoint_uri}?data_state=1",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
         status_code=201,
     )
 
@@ -501,6 +509,38 @@ def mock_timeseries_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "POST",
         f"{endpoint_uri}campaign/0/?data_state=1",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
+        status_code=201,
+    )
+
+    # Upload timeseries data JSON (by ids)
+    mock_adapter.register_uri(
+        "POST",
+        f"{endpoint_uri}?data_state=1",
+        request_headers={
+            "Accept": DataFormat.json.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
+        status_code=201,
+    )
+
+    # Upload timeseries data JSON (by names)
+    mock_adapter.register_uri(
+        "POST",
+        f"{endpoint_uri}campaign/0/?data_state=1",
+        request_headers={
+            "Accept": DataFormat.json.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
         status_code=201,
     )
 
@@ -520,9 +560,11 @@ def mock_timeseries_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
         headers={
-            "Content-Type": "text/csv; charset=utf-8",
-            "Content-Disposition": "attachment; filename=timeseries.csv",
+            "Content-Type": "application/csv",
         },
         content=(data_csv_header_ids + data_csv).encode(),
     )
@@ -534,11 +576,69 @@ def mock_timeseries_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri_camp}?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
         headers={
-            "Content-Type": "text/csv; charset=utf-8",
-            "Content-Disposition": "attachment; filename=timeseries.csv",
+            "Content-Type": "application/csv",
         },
         content=(data_csv_header_names + data_csv).encode(),
+    )
+
+    # Download timeseries data JSON (by ids)
+    data_json = {
+        "0": {
+            "2020-01-01T00:00:00+00:00": 0.1,
+            "2020-01-01T00:10:00+00:00": 0.2,
+            "2020-01-01T00:20:00+00:00": 0.3,
+        },
+        "1": {
+            "2020-01-01T00:00:00+00:00": 1.1,
+            "2020-01-01T00:10:00+00:00": 1.2,
+            "2020-01-01T00:20:00+00:00": 1.3,
+        },
+        "2": {
+            "2020-01-01T00:00:00+00:00": 2.1,
+            "2020-01-01T00:10:00+00:00": 2.2,
+            "2020-01-01T00:20:00+00:00": 2.3,
+        },
+    }
+    q_params = {
+        "start_time": "2020-01-01T00:00:00+00:00",
+        "end_time": "2020-01-01T00:30:00+00:00",
+        "data_state": 1,
+        "timeseries": [0, 1, 2],
+    }
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.json.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
+        json=data_json,
+    )
+
+    # Download timeseries data JSON (by names)
+    data_json_names = copy.deepcopy(data_json)
+    q_params["timeseries"] = []
+    for i in range(len(data_json_names.keys())):
+        data_json_names[f"Timeseries {i+1}"] = data_json_names[str(i)]
+        del data_json_names[str(i)]
+        q_params["timeseries"].append(f"Timeseries {i+1}")
+    endpoint_uri_camp = f"{endpoint_uri}campaign/0/"
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri_camp}?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.json.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
+        json=data_json_names,
     )
 
     # Download aggregated timeseries data CSV (by ids)
@@ -553,9 +653,11 @@ def mock_timeseries_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri}aggregate?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
         headers={
-            "Content-Type": "text/csv; charset=utf-8",
-            "Content-Disposition": "attachment; filename=timeseries.csv",
+            "Content-Type": "application/csv",
         },
         content=(data_csv_header_ids + data_csv_agg).encode(),
     )
@@ -565,11 +667,63 @@ def mock_timeseries_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri_camp}aggregate?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
         headers={
-            "Content-Type": "text/csv; charset=utf-8",
-            "Content-Disposition": "attachment; filename=timeseries.csv",
+            "Content-Type": "application/csv",
         },
         content=(data_csv_header_names + data_csv_agg).encode(),
+    )
+
+    # Download aggregated timeseries data JSON (by ids)
+    data_json_agg = {
+        "0": {
+            "2020-01-01T00:00:00+00:00": 0.6,
+        },
+        "1": {
+            "2020-01-01T00:00:00+00:00": 3.6,
+        },
+        "2": {
+            "2020-01-01T00:00:00+00:00": 6.6,
+        },
+    }
+    q_params = {
+        "start_time": "2020-01-01T00:00:00+00:00",
+        "end_time": "2020-01-01T00:30:00+00:00",
+        "data_state": 1,
+        "timeseries": [0, 1, 2],
+        "aggregation": "sum",
+    }
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}aggregate?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.json.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
+        json=data_json_agg,
+    )
+
+    # Download aggregated timeseries data JSON (by names)
+    data_json_agg_names = copy.deepcopy(data_json_agg)
+    q_params["timeseries"] = []
+    for i in range(len(data_json_agg_names.keys())):
+        data_json_agg_names[f"Timeseries {i+1}"] = data_json_agg_names[str(i)]
+        del data_json_agg_names[str(i)]
+        q_params["timeseries"].append(f"Timeseries {i+1}")
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri_camp}aggregate?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.json.value,
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
+        json=data_json_agg_names,
     )
 
     # Delete timeseries data (by ids)
