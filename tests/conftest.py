@@ -4,6 +4,7 @@ import requests_mock
 import json
 import urllib
 import copy
+import enum
 
 from bemserver_api_client.client import REQUIRED_API_VERSION
 from bemserver_api_client.request import BEMServerApiClientRequest
@@ -16,7 +17,12 @@ from bemserver_api_client.resources import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
 )
-from bemserver_api_client.enums import DataFormat, Aggregation
+from bemserver_api_client.enums import DataFormat, Aggregation, BucketWidthUnit
+
+
+class FakeEnum(enum.Enum):
+    a = "a"
+    b = "b"
 
 
 @pytest.fixture(params=[{"status_code": 500}])
@@ -769,7 +775,7 @@ def mock_analysis_uris(mock_adapter, base_uri):
         "timeseries": [1, 2],
         "data_state": 1,
         "bucket_width_value": 1,
-        "bucket_width_unit": "week",
+        "bucket_width_unit": BucketWidthUnit.week.value,
         "timezone": "UTC",
     }
     endpoint_uri = f"{base_uri}{AnalysisResources.endpoint_base_uri}completeness"
@@ -820,7 +826,7 @@ def mock_analysis_uris(mock_adapter, base_uri):
         "start_time": "2020-01-01T00:00:00+00:00",
         "end_time": "2020-02-01T00:00:00+00:00",
         "bucket_width_value": 1,
-        "bucket_width_unit": "week",
+        "bucket_width_unit": BucketWidthUnit.week.value,
         "timezone": "UTC",
     }
     endpoint_uri = (

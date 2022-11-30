@@ -12,7 +12,7 @@
 /timeseries_by_zones/ endpoints
 """
 from .base import BaseResources
-from ..enums import DataFormat, Aggregation
+from ..enums import DataFormat, Aggregation, BucketWidthUnit
 
 
 class TimeseriesResources(BaseResources):
@@ -120,7 +120,7 @@ class TimeseriesDataResources(BaseResources):
         timezone="UTC",
         aggregation=Aggregation.avg,
         bucket_width_value="1",
-        bucket_width_unit="hour",
+        bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
     ):
         return self._req.download(
@@ -134,7 +134,7 @@ class TimeseriesDataResources(BaseResources):
                 "timezone": timezone,
                 "aggregation": aggregation.value,
                 "bucket_width_value": bucket_width_value,
-                "bucket_width_unit": bucket_width_unit,
+                "bucket_width_unit": bucket_width_unit.value,
             },
         )
 
@@ -148,7 +148,7 @@ class TimeseriesDataResources(BaseResources):
         timezone="UTC",
         aggregation=Aggregation.avg,
         bucket_width_value="1",
-        bucket_width_unit="hour",
+        bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
     ):
         return self._req.download(
@@ -162,7 +162,7 @@ class TimeseriesDataResources(BaseResources):
                 "timezone": timezone,
                 "aggregation": aggregation.value,
                 "bucket_width_value": bucket_width_value,
-                "bucket_width_unit": bucket_width_unit,
+                "bucket_width_unit": bucket_width_unit.value,
             },
         )
 

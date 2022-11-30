@@ -3,6 +3,8 @@
 /analysis/ endpoints
 """
 from .base import BaseResources
+from ..enums import BucketWidthUnit
+from ..exceptions import BEMServerAPIClientValueError
 
 
 class AnalysisResources(BaseResources):
@@ -21,6 +23,11 @@ class AnalysisResources(BaseResources):
         *,
         etag=None,
     ):
+        if bucket_width_unit not in BucketWidthUnit:
+            raise BEMServerAPIClientValueError(
+                f"Invalid bucket width unit: {bucket_width_unit}"
+            )
+
         endpoint = f"{self.endpoint_base_uri}completeness"
         q_params = {
             "start_time": start_time,
@@ -28,7 +35,7 @@ class AnalysisResources(BaseResources):
             "timeseries": timeseries,
             "data_state": data_state,
             "bucket_width_value": bucket_width_value,
-            "bucket_width_unit": bucket_width_unit,
+            "bucket_width_unit": bucket_width_unit.value,
             "timezone": timezone,
         }
         return self._req.getall(endpoint, etag=etag, params=q_params)
@@ -45,6 +52,11 @@ class AnalysisResources(BaseResources):
         *,
         etag=None,
     ):
+        if bucket_width_unit not in BucketWidthUnit:
+            raise BEMServerAPIClientValueError(
+                f"Invalid bucket width unit: {bucket_width_unit}"
+            )
+
         endpoint = (
             f"{self.endpoint_base_uri}energy_consumption/"
             f"{structural_element_type}/{structural_element_id}"
@@ -53,7 +65,7 @@ class AnalysisResources(BaseResources):
             "start_time": start_time,
             "end_time": end_time,
             "bucket_width_value": bucket_width_value,
-            "bucket_width_unit": bucket_width_unit,
+            "bucket_width_unit": bucket_width_unit.value,
             "timezone": timezone,
         }
         return self._req.getall(endpoint, etag=etag, params=q_params)

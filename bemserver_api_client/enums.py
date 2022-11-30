@@ -13,3 +13,13 @@ class Aggregation(enum.Enum):
     min = "min"
     max = "max"
     count = "count"
+
+
+class BucketWidthUnit(enum.Enum):
+    second = "second"
+    minute = "minute"
+    hour = "hour"
+    day = "day"
+    week = "week"
+    month = "month"
+    year = "year"
