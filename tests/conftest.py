@@ -16,7 +16,7 @@ from bemserver_api_client.resources import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
 )
-from bemserver_api_client.enums import DataFormat
+from bemserver_api_client.enums import DataFormat, Aggregation
 
 
 @pytest.fixture(params=[{"status_code": 500}])
@@ -648,7 +648,7 @@ def mock_timeseries_uris(mock_adapter, base_uri):
         "end_time": "2020-01-01T00:30:00+00:00",
         "data_state": 1,
         "timeseries": [0, 1, 2],
-        "aggregation": "sum",
+        "aggregation": Aggregation.sum.value,
     }
     mock_adapter.register_uri(
         "GET",
@@ -693,7 +693,7 @@ def mock_timeseries_uris(mock_adapter, base_uri):
         "end_time": "2020-01-01T00:30:00+00:00",
         "data_state": 1,
         "timeseries": [0, 1, 2],
-        "aggregation": "sum",
+        "aggregation": Aggregation.sum.value,
     }
     mock_adapter.register_uri(
         "GET",
