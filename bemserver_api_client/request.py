@@ -6,7 +6,7 @@ import requests.exceptions as req_exc
 
 from .enums import DataFormat
 from .response import BEMServerApiClientResponse
-from .exceptions import BEMServerAPIInternalError
+from .exceptions import BEMServerAPIInternalError, BEMServerAPIClientValueError
 
 
 class BEMServerApiClientRequest:
@@ -29,13 +29,14 @@ class BEMServerApiClientRequest:
         return f"{self.base_uri}{endpoint_uri}"
 
     def _prepare_accept_header(self, format):
-        accept_header = {}
-        try:
-            if format in DataFormat:
-                accept_header = {"Accept": format.value}
-        except TypeError:
-            pass
-        return accept_header
+        """
+
+        :raises TypeError: when format is None or not an enum type
+        :raises BEMServerAPIClientValueError: when format is not in DataFormat enum
+        """
+        if format not in DataFormat:
+            raise BEMServerAPIClientValueError(f"Invalid data format: {format}")
+        return {"Accept": format.value}
 
     def _prepare_etag_header(self, http_method, etag):
         etag_header = {}
@@ -54,9 +55,6 @@ class BEMServerApiClientRequest:
             **kwargs.pop("headers", {}),
             **self._prepare_etag_header(http_method, etag),
         }
-
-        print(headers)
-
         self._logger.debug(f"{http_method} {full_endpoint_uri}")
         try:
             raw_resp = self._session.request(

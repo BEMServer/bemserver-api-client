@@ -47,3 +47,7 @@ class BEMServerAPIInternalError(BEMServerAPIError):
 
     def __init__(self, status_code=500):
         super().__init__(status_code=status_code)
+
+
+class BEMServerAPIClientValueError(ValueError):
+    """BEMServer API client value error"""

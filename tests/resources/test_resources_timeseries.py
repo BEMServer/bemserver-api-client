@@ -254,8 +254,6 @@ class TestAPIClientResourcesTimeseries:
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
 
-        print(resp.data)
-
         assert resp.is_json
         assert not resp.is_csv
         assert len(resp.data.keys()) == len(tsdata_json.keys())
