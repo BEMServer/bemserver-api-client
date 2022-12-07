@@ -23,6 +23,7 @@ from .io import IOResources  # noqa
 from .services import (  # noqa
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
+    ST_CheckMissingByCampaignResources,
 )
 from .structural_elements import (  # noqa
     SiteResources,
