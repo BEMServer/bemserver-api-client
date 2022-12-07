@@ -14,6 +14,11 @@ from .energy import (  # noqa
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
 )
+from .events import (  # noqa
+    EventResources,
+    EventLevelResources,
+    EventCategoryResources,
+)
 from .io import IOResources  # noqa
 from .services import (  # noqa
     ST_CleanupByCampaignResources,
@@ -48,6 +53,7 @@ from .timeseries import (  # noqa
     TimeseriesByStoreyResources,
     TimeseriesBySpaceResources,
     TimeseriesByZoneResources,
+    TimeseriesByEventResources,
 )
 from .users import (  # noqa
     UserResources,

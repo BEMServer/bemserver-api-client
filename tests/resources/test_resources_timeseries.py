@@ -11,6 +11,7 @@ from bemserver_api_client.resources import (
     TimeseriesByStoreyResources,
     TimeseriesBySpaceResources,
     TimeseriesByZoneResources,
+    TimeseriesByEventResources,
 )
 from bemserver_api_client.response import BEMServerApiClientResponse
 from bemserver_api_client.enums import DataFormat, Aggregation
@@ -82,6 +83,10 @@ class TestAPIClientResourcesTimeseries:
         assert issubclass(TimeseriesByZoneResources, BaseResources)
         assert TimeseriesByZoneResources.endpoint_base_uri == "/timeseries_by_zones/"
         assert TimeseriesByZoneResources.disabled_endpoints == ["update"]
+
+        assert issubclass(TimeseriesByEventResources, BaseResources)
+        assert TimeseriesByEventResources.endpoint_base_uri == "/timeseries_by_events/"
+        assert TimeseriesByEventResources.disabled_endpoints == []
 
     def test_api_client_resources_timeseries_endpoints(self, mock_request):
         ts_res = TimeseriesResources(mock_request)
