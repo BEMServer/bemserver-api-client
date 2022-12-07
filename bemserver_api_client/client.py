@@ -48,14 +48,18 @@ from .resources import (
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
+    EventResources,
+    EventLevelResources,
+    EventCategoryResources,
+    TimeseriesByEventResources,
 )
 
 
 APICLI_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_API_VERSION = {
-    "min": Version("0.2.0"),
-    "max": Version("0.3.0"),
+    "min": Version("0.3.0"),
+    "max": Version("0.4.0"),
 }
 
 
@@ -158,6 +162,11 @@ class BEMServerApiClient:
         self.energy_cons_ts_by_buildings = (
             EnergyConsumptionTimseriesByBuildingResources(self._request_manager)
         )
+
+        self.events = EventResources(self._request_manager)
+        self.event_levels = EventLevelResources(self._request_manager)
+        self.event_categories = EventCategoryResources(self._request_manager)
+        self.timeseries_by_events = TimeseriesByEventResources(self._request_manager)
 
     @property
     def uri_prefix(self):

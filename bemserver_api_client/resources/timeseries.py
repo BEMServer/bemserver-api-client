@@ -10,6 +10,7 @@
 /timeseries_by_storeys/ endpoints
 /timeseries_by_spaces/ endpoints
 /timeseries_by_zones/ endpoints
+/timeseries_by_events/ endpoints
 """
 from .base import BaseResources
 from ..enums import DataFormat, Aggregation, BucketWidthUnit
@@ -221,3 +222,7 @@ class TimeseriesBySpaceResources(BaseResources):
 class TimeseriesByZoneResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_zones/"
     disabled_endpoints = ["update"]
+
+
+class TimeseriesByEventResources(BaseResources):
+    endpoint_base_uri = "/timeseries_by_events/"
