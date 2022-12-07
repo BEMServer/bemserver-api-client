@@ -16,6 +16,7 @@ from bemserver_api_client.resources import (
     AnalysisResources,
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
+    ST_CheckMissingByCampaignResources,
 )
 from bemserver_api_client.enums import DataFormat, Aggregation, BucketWidthUnit
 
@@ -133,6 +134,7 @@ def mock_session(uri_prefix, base_uri):
     mock_timeseries_uris(adapter, base_uri)
     mock_analysis_uris(adapter, base_uri)
     mock_cleanup_uris(adapter, base_uri)
+    mock_check_missing_uris(adapter, base_uri)
 
     session = requests.Session()
     session.mount(f"{uri_prefix}://", adapter)
@@ -937,6 +939,38 @@ def mock_cleanup_uris(mock_adapter, base_uri):
                 "timeseries_id": 5,
                 "timeseries_name": "ElecPowerBdx",
                 "timeseries_unit_symbol": "W",
+            },
+        ],
+    )
+
+
+def mock_check_missing_uris(mock_adapter, base_uri):
+    # Get check missing state for all campaigns
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{ST_CheckMissingByCampaignResources.endpoint_base_uri}full",
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "etag_check_missing_campaigns",
+        },
+        json=[
+            {
+                "campaign_id": 3,
+                "campaign_name": "Nobatek offices EPC",
+                "id": 1,
+                "is_enabled": True,
+            },
+            {
+                "campaign_id": 4,
+                "campaign_name": "BET windows tests",
+                "id": 2,
+                "is_enabled": False,
+            },
+            {
+                "campaign_id": 5,
+                "campaign_name": "test",
+                "id": 3,
+                "is_enabled": False,
             },
         ],
     )

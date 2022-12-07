@@ -45,6 +45,7 @@ from bemserver_api_client.resources import (
     AnalysisResources,
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
+    ST_CheckMissingByCampaignResources,
     EventResources,
     EventLevelResources,
     EventCategoryResources,
@@ -174,6 +175,11 @@ class TestAPIClient:
         assert hasattr(apicli, "st_cleanup_by_timeseries")
         assert isinstance(
             apicli.st_cleanup_by_timeseries, ST_CleanupByTimeseriesResources
+        )
+
+        assert hasattr(apicli, "st_check_missing_by_campaign")
+        assert isinstance(
+            apicli.st_check_missing_by_campaign, ST_CheckMissingByCampaignResources
         )
 
         assert hasattr(apicli, "events")
