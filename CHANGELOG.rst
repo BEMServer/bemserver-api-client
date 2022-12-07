@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+0.3.0 (2022-12-07)
+++++++++++++++++++
+
+Features:
+
+- Add Events (levels, categories...) resources
+- Add check missing service resources
+
 0.2.0 (2022-11-30)
 ++++++++++++++++++
 
