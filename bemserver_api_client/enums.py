@@ -23,3 +23,11 @@ class BucketWidthUnit(enum.Enum):
     week = "week"
     month = "month"
     year = "year"
+
+
+class EventLevel(enum.Enum):
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    CRITICAL = "CRITICAL"
