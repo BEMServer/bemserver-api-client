@@ -86,7 +86,7 @@ class TestAPIClientResourcesTimeseries:
 
         assert issubclass(TimeseriesByEventResources, BaseResources)
         assert TimeseriesByEventResources.endpoint_base_uri == "/timeseries_by_events/"
-        assert TimeseriesByEventResources.disabled_endpoints == []
+        assert TimeseriesByEventResources.disabled_endpoints == ["update"]
 
     def test_api_client_resources_timeseries_endpoints(self, mock_request):
         ts_res = TimeseriesResources(mock_request)

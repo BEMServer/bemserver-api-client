@@ -226,3 +226,4 @@ class TimeseriesByZoneResources(BaseResources):
 
 class TimeseriesByEventResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_events/"
+    disabled_endpoints = ["update"]
