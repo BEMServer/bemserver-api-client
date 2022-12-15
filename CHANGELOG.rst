@@ -1,6 +1,18 @@
 Changelog
 ---------
 
+0.4.0 (2022-12-15)
+++++++++++++++++++
+
+Features:
+
+- Add events by sites/buildings/storeys/spaces/zones resources
+- Remove update on timeseries_by_events resources
+
+Other changes:
+
+- Require bemserver-api >=0.4.0 and <0.5.0
+
 0.3.0 (2022-12-07)
 ++++++++++++++++++
 
@@ -9,6 +21,10 @@ Features:
 - Add Events (levels, categories...) resources
 - Add check missing service resources
 
+Other changes:
+
+- Require bemserver-api >=0.3.0 and <0.4.0
+
 0.2.0 (2022-11-30)
 ++++++++++++++++++
 
@@ -16,6 +32,10 @@ Features:
 
 - Timeseries data upload/download in JSON format
 - Add DataFormat, Aggregation and BucketWidthUnit enums
+
+Other changes:
+
+- Require bemserver-api >=0.2.0 and <0.3.0
 
 0.1.0 (2022-11-22)
 ++++++++++++++++++
@@ -26,3 +46,7 @@ Features:
 - Check required BEMServer API version
 - Implement all BEMServer API endpoints
 - Manage BEMServer API responses (errors, ETag, pagination...)
+
+Other changes:
+
+- Require bemserver-api >=0.1.0 and <0.2.0
