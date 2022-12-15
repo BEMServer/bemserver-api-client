@@ -18,6 +18,11 @@ from .events import (  # noqa
     EventResources,
     EventLevelResources,
     EventCategoryResources,
+    EventBySiteResources,
+    EventByBuildingResources,
+    EventByStoreyResources,
+    EventBySpaceResources,
+    EventByZoneResources,
 )
 from .io import IOResources  # noqa
 from .services import (  # noqa
