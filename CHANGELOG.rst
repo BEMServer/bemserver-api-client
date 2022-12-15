@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.5.0 (2022-12-15)
+++++++++++++++++++
+
+Features:
+
+- Event API updates on query args:
+    - replace `level_id` with `level` enum
+    - add `level_min` and `source_in`
+- Timeseries API: add `event_id` query arg
+
+Other changes:
+
+- Require bemserver-api >=0.5.0 and <0.6.0
+
 0.4.0 (2022-12-15)
 ++++++++++++++++++
 
