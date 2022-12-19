@@ -14,6 +14,10 @@ BEMServer API client
     :target: https://github.com/bemserver/bemserver-api-client/actions?query=workflow%3Abuild
     :alt: Build status
 
+.. image:: https://codecov.io/gh/BEMServer/bemserver-api-client/branch/main/graph/badge.svg?token=FA5TO5HUKP
+    :target: https://codecov.io/gh/bemserver/bemserver-api-client
+    :alt: Code coverage
+
 
 BEMServer is a free Building Energy Management software platform.
 
