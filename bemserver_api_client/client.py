@@ -50,7 +50,6 @@ from .resources import (
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
     EventResources,
-    EventLevelResources,
     EventCategoryResources,
     EventBySiteResources,
     EventByBuildingResources,
@@ -64,8 +63,8 @@ from .resources import (
 APICLI_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_API_VERSION = {
-    "min": Version("0.5.0"),
-    "max": Version("0.6.0"),
+    "min": Version("0.6.0"),
+    "max": Version("0.7.0"),
 }
 
 
@@ -174,7 +173,6 @@ class BEMServerApiClient:
         )
 
         self.events = EventResources(self._request_manager)
-        self.event_levels = EventLevelResources(self._request_manager)
         self.event_categories = EventCategoryResources(self._request_manager)
         self.event_by_sites = EventBySiteResources(self._request_manager)
         self.event_by_buildings = EventByBuildingResources(self._request_manager)

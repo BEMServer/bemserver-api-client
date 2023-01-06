@@ -1,6 +1,17 @@
 Changelog
 ---------
 
+0.5.1 (2023-01-06)
+++++++++++++++++++
+
+Bug fixes:
+
+- Remove obsolete event_levels resources
+
+Other changes:
+
+- Support Python 3.11
+
 0.5.0 (2022-12-15)
 ++++++++++++++++++
 
@@ -8,7 +19,7 @@ Features:
 
 - Event API updates on query args:
     - replace `level_id` with `level` enum
-    - add `level_min` and `source_in`
+    - add `level_min` and `in_source`
 - Timeseries API: add `event_id` query arg
 
 Other changes:
