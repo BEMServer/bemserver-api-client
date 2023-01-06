@@ -1,6 +1,12 @@
 """BEMServer API client resources
 
 /timeseries/ endpoints
+/timeseries/by_site endpoint
+/timeseries/by_building endpoint
+/timeseries/by_storey endpoint
+/timeseries/by_space endpoint
+/timeseries/by_zone endpoint
+/timeseries/by_event endpoint
 /timeseries_data_states/ endpoints
 /timeseries_properties/ endpoints
 /timeseries_property_data/ endpoints
@@ -18,6 +24,51 @@ from ..enums import DataFormat, Aggregation, BucketWidthUnit
 
 class TimeseriesResources(BaseResources):
     endpoint_base_uri = "/timeseries/"
+
+    def endpoint_uri_getall_by(self, item_type, item_id):
+        return f"{self.endpoint_base_uri}by_{item_type}/{str(item_id)}"
+
+    def getall_by_site(self, site_id, *, etag=None, **kwargs):
+        return self._req.getall(
+            self.endpoint_uri_getall_by("site", site_id),
+            etag=etag,
+            params=kwargs,
+        )
+
+    def getall_by_building(self, building_id, *, etag=None, **kwargs):
+        return self._req.getall(
+            self.endpoint_uri_getall_by("building", building_id),
+            etag=etag,
+            params=kwargs,
+        )
+
+    def getall_by_storey(self, storey_id, *, etag=None, **kwargs):
+        return self._req.getall(
+            self.endpoint_uri_getall_by("storey", storey_id),
+            etag=etag,
+            params=kwargs,
+        )
+
+    def getall_by_space(self, space_id, *, etag=None, **kwargs):
+        return self._req.getall(
+            self.endpoint_uri_getall_by("space", space_id),
+            etag=etag,
+            params=kwargs,
+        )
+
+    def getall_by_zone(self, zone_id, *, etag=None, **kwargs):
+        return self._req.getall(
+            self.endpoint_uri_getall_by("zone", zone_id),
+            etag=etag,
+            params=kwargs,
+        )
+
+    def getall_by_event(self, event_id, *, etag=None, **kwargs):
+        return self._req.getall(
+            self.endpoint_uri_getall_by("event", event_id),
+            etag=etag,
+            params=kwargs,
+        )
 
 
 class TimeseriesDataStateResources(BaseResources):

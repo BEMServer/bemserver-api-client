@@ -134,6 +134,7 @@ def mock_session(uri_prefix, base_uri):
     mock_io_uris(adapter, base_uri)
     mock_events_uris(adapter, base_uri)
     mock_timeseries_uris(adapter, base_uri)
+    mock_timeseries_data_uris(adapter, base_uri)
     mock_analysis_uris(adapter, base_uri)
     mock_cleanup_uris(adapter, base_uri)
     mock_check_missing_uris(adapter, base_uri)
@@ -700,6 +701,172 @@ def mock_timeseries_uris(mock_adapter, base_uri):
         ],
     )
 
+    # Get timeseries by site (non recursive)
+    ts_by_site_non_rec_headers = {
+        "Content-Type": "application/json",
+        "ETag": "1f2784cf3037459bf0bf4c44d7856a43e001a55a",
+        "X-Pagination": json.dumps(
+            {
+                "total": 0,
+                "total_pages": 0,
+            },
+        ),
+    }
+    ts_by_site_non_rec_json = []
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{TimeseriesResources.endpoint_base_uri}by_site/1",
+        headers=ts_by_site_non_rec_headers,
+        json=ts_by_site_non_rec_json,
+    )
+    # Get timeseries by site (explicit non recursive)
+    q_params = {
+        "recurse": False,
+    }
+    mock_adapter.register_uri(
+        "GET",
+        (
+            f"{base_uri}{TimeseriesResources.endpoint_base_uri}by_site/1"
+            f"?{urllib.parse.urlencode(q_params, True)}"
+        ),
+        headers=ts_by_site_non_rec_headers,
+        json=ts_by_site_non_rec_json,
+    )
+
+    # Get timeseries by site (recursive)
+    q_params = {
+        "recurse": True,
+        "page_size": 5,
+    }
+    mock_adapter.register_uri(
+        "GET",
+        (
+            f"{base_uri}{TimeseriesResources.endpoint_base_uri}by_site/1"
+            f"?{urllib.parse.urlencode(q_params, True)}"
+        ),
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "c1fb0a71af31a58f4bb71b7d48cf953edc9d50b7",
+            "X-Pagination": json.dumps(
+                {
+                    "total": 14,
+                    "total_pages": 3,
+                    "first_page": 1,
+                    "last_page": 3,
+                    "page": 1,
+                    "next_page": 2,
+                },
+            ),
+        },
+        json=[
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 2,
+                "description": "Air temperature in Anglet Floor 1 offices",
+                "id": 1,
+                "name": "AirTempAngF1Off",
+                "unit_symbol": "°C",
+            },
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 3,
+                "description": "Electric consumption of Anglet building (ventilation)",
+                "id": 20,
+                "name": "ElecEnergyAngVentilation",
+                "unit_symbol": "Wh",
+            },
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 2,
+                "description": "Air temperature in Anglet Floor 2 offices",
+                "id": 2,
+                "name": "AirTempAngF2Off",
+                "unit_symbol": "°C",
+            },
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 3,
+                "description": "Total power consumption of Anglet building",
+                "id": 4,
+                "name": "PowerAngAll",
+                "unit_symbol": "W",
+            },
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 3,
+                "description": "Electric consumption of Anglet building for lighting",
+                "id": 21,
+                "name": "ElecEnergyAngLighting",
+                "unit_symbol": "Wh",
+            },
+        ],
+    )
+
+    # Get timeseries by building/storey/space/zone (non recursive)
+    for struct_elmt in ["building", "storey", "space", "zone"]:
+        mock_adapter.register_uri(
+            "GET",
+            f"{base_uri}{TimeseriesResources.endpoint_base_uri}by_{struct_elmt}/1",
+            headers={
+                "Content-Type": "application/json",
+                "ETag": "1f2784cf3037459bf0bf4c44d7856a43e001a55a",
+                "X-Pagination": json.dumps(
+                    {
+                        "total": 0,
+                        "total_pages": 0,
+                    },
+                ),
+            },
+            json=[],
+        )
+
+    # Get timeseries by event
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{TimeseriesResources.endpoint_base_uri}by_event/1",
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "e7583a5795a6d3c39fb9c0b0882dd7acbe8d7140",
+            "X-Pagination": json.dumps(
+                {
+                    "total": 3,
+                    "total_pages": 1,
+                    "first_page": 1,
+                    "last_page": 1,
+                    "page": 1,
+                },
+            ),
+        },
+        json=[
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 3,
+                "description": "Electric energy consumption of Anglet building",
+                "id": 18,
+                "name": "ElecEnergyAngAll",
+                "unit_symbol": "Wh",
+            },
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 3,
+                "description": "Electric consumption of Anglet building for heating",
+                "id": 19,
+                "name": "ElecEnergyAngHeating",
+                "unit_symbol": "Wh",
+            },
+            {
+                "campaign_id": 1,
+                "campaign_scope_id": 3,
+                "description": "Electric consumption of Anglet building for lighting",
+                "id": 21,
+                "name": "ElecEnergyAngLighting",
+                "unit_symbol": "Wh",
+            },
+        ],
+    )
+
+
+def mock_timeseries_data_uris(mock_adapter, base_uri):
     endpoint_uri = f"{base_uri}{TimeseriesDataResources.endpoint_base_uri}"
 
     # Upload timeseries data CSV (by ids)
