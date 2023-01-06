@@ -1,6 +1,17 @@
 Changelog
 ---------
 
+0.5.1 (2023-01-06)
+++++++++++++++++++
+
+Bug fixes:
+
+- Remove obsolete event_levels resources
+
+Other changes:
+
+- Support Python 3.11
+
 0.5.0 (2022-12-15)
 ++++++++++++++++++
 
