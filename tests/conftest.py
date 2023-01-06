@@ -17,6 +17,7 @@ from bemserver_api_client.resources import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
+    EventResources,
 )
 from bemserver_api_client.enums import DataFormat, Aggregation, BucketWidthUnit
 
@@ -131,6 +132,7 @@ def mock_session(uri_prefix, base_uri):
     mock_about_uris(adapter, base_uri)
     mock_users_uris(adapter, base_uri)
     mock_io_uris(adapter, base_uri)
+    mock_events_uris(adapter, base_uri)
     mock_timeseries_uris(adapter, base_uri)
     mock_analysis_uris(adapter, base_uri)
     mock_cleanup_uris(adapter, base_uri)
@@ -433,6 +435,206 @@ def mock_io_uris(mock_adapter, base_uri):
         f"{base_uri}{IOResources.endpoint_base_uri}sites?campaign_id=0",
         status_code=201,
     )
+
+
+def mock_events_uris(mock_adapter, base_uri):
+    # Get paginated events list
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{EventResources.endpoint_base_uri}?page_size=5",
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "5e848c32d0338815a739fa470e2d518aba47a077",
+            "X-Pagination": json.dumps(
+                {
+                    "total": 12,
+                    "total_pages": 3,
+                    "first_page": 1,
+                    "last_page": 3,
+                    "page": 1,
+                    "next_page": 2,
+                },
+            ),
+        },
+        json=[
+            {
+                "campaign_scope_id": 3,
+                "category_id": 3,
+                "description": "",
+                "id": 1,
+                "level": "DEBUG",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-09T14:46:00+00:00",
+            },
+            {
+                "campaign_scope_id": 1,
+                "category_id": 1,
+                "id": 2,
+                "level": "ERROR",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-09T19:00:00+00:00",
+            },
+            {
+                "campaign_scope_id": 4,
+                "category_id": 4,
+                "id": 3,
+                "level": "WARNING",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-09T18:47:00+00:00",
+            },
+            {
+                "campaign_scope_id": 2,
+                "category_id": 1,
+                "id": 5,
+                "level": "CRITICAL",
+                "source": "other source",
+                "timestamp": "2022-12-09T19:01:00+00:00",
+            },
+            {
+                "campaign_scope_id": 3,
+                "category_id": 3,
+                "id": 6,
+                "level": "INFO",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-12T15:52:00+00:00",
+            },
+        ],
+    )
+
+    # Get events by site (non recursive)
+    evts_by_site_non_rec_headers = {
+        "Content-Type": "application/json",
+        "ETag": "355357a06f8251097b114b6627bcc97a229c948b",
+        "X-Pagination": json.dumps(
+            {
+                "total": 1,
+                "total_pages": 1,
+                "first_page": 1,
+                "last_page": 1,
+                "page": 1,
+            },
+        ),
+    }
+    evts_by_site_non_rec_json = [
+        {
+            "campaign_scope_id": 3,
+            "category_id": 4,
+            "description": "test event",
+            "id": 4,
+            "level": "DEBUG",
+            "source": "bemserver-ui",
+            "timestamp": "2022-12-09T14:49:00+00:00",
+        },
+    ]
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{EventResources.endpoint_base_uri}by_site/1",
+        headers=evts_by_site_non_rec_headers,
+        json=evts_by_site_non_rec_json,
+    )
+    # Get events by site (explicit non recursive)
+    q_params = {
+        "recurse": False,
+    }
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}by_site/1?{urllib.parse.urlencode(q_params, True)}",
+        headers=evts_by_site_non_rec_headers,
+        json=evts_by_site_non_rec_json,
+    )
+
+    # Get events by site (recursive)
+    q_params = {
+        "recurse": True,
+    }
+    mock_adapter.register_uri(
+        "GET",
+        (
+            f"{base_uri}{EventResources.endpoint_base_uri}by_site/1"
+            f"?{urllib.parse.urlencode(q_params, True)}"
+        ),
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "7cf1cc641ff08204a4a570cc15dcda2325590181",
+            "X-Pagination": json.dumps(
+                {
+                    "total": 2,
+                    "total_pages": 1,
+                    "first_page": 1,
+                    "last_page": 1,
+                    "page": 1,
+                },
+            ),
+        },
+        json=[
+            {
+                "campaign_scope_id": 3,
+                "category_id": 3,
+                "description": "",
+                "id": 1,
+                "level": "DEBUG",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-09T14:46:00+00:00",
+            },
+            {
+                "campaign_scope_id": 3,
+                "category_id": 4,
+                "description": "test event",
+                "id": 4,
+                "level": "DEBUG",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-09T14:49:00+00:00",
+            },
+        ],
+    )
+
+    # Get events by building (non recursive)
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{EventResources.endpoint_base_uri}by_building/1",
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "6b87edffd8984b43b687c3e7b4fda04ae12c390e",
+            "X-Pagination": json.dumps(
+                {
+                    "total": 1,
+                    "total_pages": 1,
+                    "first_page": 1,
+                    "last_page": 1,
+                    "page": 1,
+                },
+            ),
+        },
+        json=[
+            {
+                "campaign_scope_id": 3,
+                "category_id": 3,
+                "description": "",
+                "id": 1,
+                "level": "DEBUG",
+                "source": "bemserver-ui",
+                "timestamp": "2022-12-09T14:46:00+00:00",
+            },
+        ],
+    )
+
+    # Get events by storey/space/zone (non recursive)
+    for struct_elmt in ["storey", "space", "zone"]:
+        mock_adapter.register_uri(
+            "GET",
+            f"{base_uri}{EventResources.endpoint_base_uri}by_{struct_elmt}/1",
+            headers={
+                "Content-Type": "application/json",
+                "ETag": "1f2784cf3037459bf0bf4c44d7856a43e001a55a",
+                "X-Pagination": json.dumps(
+                    {
+                        "total": 0,
+                        "total_pages": 0,
+                    },
+                ),
+            },
+            json=[],
+        )
 
 
 def mock_timeseries_uris(mock_adapter, base_uri):
