@@ -1,6 +1,5 @@
 """BEMServer API client resources
 
-/event_levels/ endpoints
 /event_categories/ endpoints
 /events/ endpoints
 /events_by_sites/ endpoints
@@ -10,11 +9,6 @@
 /events_by_zones/ endpoints
 """
 from .base import BaseResources
-
-
-class EventLevelResources(BaseResources):
-    endpoint_base_uri = "/event_levels/"
-    disabled_endpoints = ["getone", "create", "update", "delete"]
 
 
 class EventCategoryResources(BaseResources):

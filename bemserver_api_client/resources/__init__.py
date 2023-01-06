@@ -16,7 +16,6 @@ from .energy import (  # noqa
 )
 from .events import (  # noqa
     EventResources,
-    EventLevelResources,
     EventCategoryResources,
     EventBySiteResources,
     EventByBuildingResources,
