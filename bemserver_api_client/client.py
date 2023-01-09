@@ -58,6 +58,7 @@ from .resources import (
     EventBySpaceResources,
     EventByZoneResources,
     TimeseriesByEventResources,
+    NotificationResources,
 )
 
 
@@ -184,6 +185,8 @@ class BEMServerApiClient:
         self.event_by_spaces = EventBySpaceResources(self._request_manager)
         self.event_by_zones = EventByZoneResources(self._request_manager)
         self.timeseries_by_events = TimeseriesByEventResources(self._request_manager)
+
+        self.notifications = NotificationResources(self._request_manager)
 
     @property
     def uri_prefix(self):
