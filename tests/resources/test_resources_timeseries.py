@@ -22,6 +22,16 @@ class TestAPIClientResourcesTimeseries:
         assert issubclass(TimeseriesResources, BaseResources)
         assert TimeseriesResources.endpoint_base_uri == "/timeseries/"
         assert TimeseriesResources.disabled_endpoints == []
+        assert hasattr(TimeseriesResources, "getall_by_site")
+        assert hasattr(TimeseriesResources, "getall_by_building")
+        assert hasattr(TimeseriesResources, "getall_by_storey")
+        assert hasattr(TimeseriesResources, "getall_by_space")
+        assert hasattr(TimeseriesResources, "getall_by_zone")
+        assert hasattr(TimeseriesResources, "getall_by_event")
+        res = TimeseriesResources(mock_request)
+        assert res.endpoint_uri_getall_by("whatever", 42) == (
+            "/timeseries/by_whatever/42"
+        )
 
         assert issubclass(TimeseriesDataStateResources, BaseResources)
         assert TimeseriesDataStateResources.endpoint_base_uri == (
@@ -105,6 +115,72 @@ class TestAPIClientResourcesTimeseries:
         }
         assert resp.etag == "482a37693019e59f16f1d0c36bdbd0a4f8f4fff3"
         assert len(resp.data) == 5
+
+    def test_api_client_resources_timeseries_getall_by(self, mock_request):
+        ts_res = TimeseriesResources(mock_request)
+
+        resp = ts_res.getall_by_site(1)
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert resp.pagination == {
+            "total": 0,
+            "total_pages": 0,
+        }
+        assert resp.etag == "1f2784cf3037459bf0bf4c44d7856a43e001a55a"
+        assert len(resp.data) == 0
+
+        resp = ts_res.getall_by_site(1, recurse=False)
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert resp.pagination == {
+            "total": 0,
+            "total_pages": 0,
+        }
+        assert resp.etag == "1f2784cf3037459bf0bf4c44d7856a43e001a55a"
+        assert len(resp.data) == 0
+
+        resp = ts_res.getall_by_site(1, recurse=True, page_size=5)
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert resp.pagination == {
+            "total": 14,
+            "total_pages": 3,
+            "first_page": 1,
+            "last_page": 3,
+            "page": 1,
+            "next_page": 2,
+        }
+        assert resp.etag == "c1fb0a71af31a58f4bb71b7d48cf953edc9d50b7"
+        assert len(resp.data) == 5
+
+        for struct_elmt in ["building", "storey", "space", "zone"]:
+            resp = getattr(ts_res, f"getall_by_{struct_elmt}")(1)
+            assert isinstance(resp, BEMServerApiClientResponse)
+            assert resp.status_code == 200
+            assert resp.is_json
+            assert resp.pagination == {
+                "total": 0,
+                "total_pages": 0,
+            }
+            assert resp.etag == "1f2784cf3037459bf0bf4c44d7856a43e001a55a"
+            assert len(resp.data) == 0
+
+        resp = ts_res.getall_by_event(1)
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert resp.pagination == {
+            "total": 3,
+            "total_pages": 1,
+            "first_page": 1,
+            "last_page": 1,
+            "page": 1,
+        }
+        assert resp.etag == "e7583a5795a6d3c39fb9c0b0882dd7acbe8d7140"
+        assert len(resp.data) == 3
 
     def test_api_client_resources_timeseries_data_upload_csv(self, mock_request):
         tsdata_res = TimeseriesDataResources(mock_request)
