@@ -1,6 +1,17 @@
 Changelog
 ---------
 
+0.5.2 (2023-01-09)
+++++++++++++++++++
+
+Bug fixes:
+
+- Require bemserver-api still >=0.5.0 and <0.6.0
+
+Other changes:
+
+- Remove unusable 0.5.1 release from PyPI
+
 0.5.1 (2023-01-06)
 ++++++++++++++++++
 
