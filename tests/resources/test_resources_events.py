@@ -3,6 +3,7 @@ from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources import (
     EventResources,
     EventCategoryResources,
+    EventCategoryByUserResources,
     EventBySiteResources,
     EventByBuildingResources,
     EventByStoreyResources,
@@ -28,6 +29,12 @@ class TestAPIClientResourcesEvents:
         assert issubclass(EventCategoryResources, BaseResources)
         assert EventCategoryResources.endpoint_base_uri == "/event_categories/"
         assert EventCategoryResources.disabled_endpoints == []
+
+        assert issubclass(EventCategoryByUserResources, BaseResources)
+        assert EventCategoryByUserResources.endpoint_base_uri == (
+            "/event_categories_by_users/"
+        )
+        assert EventCategoryByUserResources.disabled_endpoints == []
 
         assert issubclass(EventBySiteResources, BaseResources)
         assert EventBySiteResources.endpoint_base_uri == "/events_by_sites/"

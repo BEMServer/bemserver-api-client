@@ -51,6 +51,7 @@ from .resources import (
     EnergyConsumptionTimseriesByBuildingResources,
     EventResources,
     EventCategoryResources,
+    EventCategoryByUserResources,
     EventBySiteResources,
     EventByBuildingResources,
     EventByStoreyResources,
@@ -174,6 +175,9 @@ class BEMServerApiClient:
 
         self.events = EventResources(self._request_manager)
         self.event_categories = EventCategoryResources(self._request_manager)
+        self.event_categories_by_users = EventCategoryByUserResources(
+            self._request_manager
+        )
         self.event_by_sites = EventBySiteResources(self._request_manager)
         self.event_by_buildings = EventByBuildingResources(self._request_manager)
         self.event_by_storeys = EventByStoreyResources(self._request_manager)
