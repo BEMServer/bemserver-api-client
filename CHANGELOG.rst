@@ -1,6 +1,18 @@
 Changelog
 ---------
 
+0.7.0 (2023-01-09)
+++++++++++++++++++
+
+Features:
+
+- Add event categories by users resources
+- Add notifications resources
+
+Other changes:
+
+- Require bemserver-api >=0.7.0 and <0.8.0
+
 0.6.0 (2023-01-09)
 ++++++++++++++++++
 
