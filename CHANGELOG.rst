@@ -1,6 +1,18 @@
 Changelog
 ---------
 
+0.6.0 (2023-01-09)
+++++++++++++++++++
+
+Features:
+
+- Add get events by sites/buildings/storeys/spaces/zones resources
+- Add timeseries get by sites/buildings/storeys/spaces/zones and events resources
+
+Other changes:
+
+- Require bemserver-api >=0.6.0 and <0.7.0
+
 0.5.2 (2023-01-09)
 ++++++++++++++++++
 
