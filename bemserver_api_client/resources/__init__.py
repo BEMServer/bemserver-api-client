@@ -17,6 +17,7 @@ from .energy import (  # noqa
 from .events import (  # noqa
     EventResources,
     EventCategoryResources,
+    EventCategoryByUserResources,
     EventBySiteResources,
     EventByBuildingResources,
     EventByStoreyResources,
@@ -24,6 +25,7 @@ from .events import (  # noqa
     EventByZoneResources,
 )
 from .io import IOResources  # noqa
+from .notifications import NotificationResources  # noqa
 from .services import (  # noqa
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,

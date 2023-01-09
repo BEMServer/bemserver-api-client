@@ -1,6 +1,7 @@
 """BEMServer API client resources
 
 /event_categories/ endpoints
+/event_categories_by_users/ endpoints
 /events/ endpoints
 /events/by_site endpoint
 /events/by_building endpoint
@@ -18,6 +19,10 @@ from .base import BaseResources
 
 class EventCategoryResources(BaseResources):
     endpoint_base_uri = "/event_categories/"
+
+
+class EventCategoryByUserResources(BaseResources):
+    endpoint_base_uri = "/event_categories_by_users/"
 
 
 class EventResources(BaseResources):

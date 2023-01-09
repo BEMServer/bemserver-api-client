@@ -51,20 +51,22 @@ from .resources import (
     EnergyConsumptionTimseriesByBuildingResources,
     EventResources,
     EventCategoryResources,
+    EventCategoryByUserResources,
     EventBySiteResources,
     EventByBuildingResources,
     EventByStoreyResources,
     EventBySpaceResources,
     EventByZoneResources,
     TimeseriesByEventResources,
+    NotificationResources,
 )
 
 
 APICLI_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_API_VERSION = {
-    "min": Version("0.6.0"),
-    "max": Version("0.7.0"),
+    "min": Version("0.7.0"),
+    "max": Version("0.8.0"),
 }
 
 
@@ -174,12 +176,17 @@ class BEMServerApiClient:
 
         self.events = EventResources(self._request_manager)
         self.event_categories = EventCategoryResources(self._request_manager)
+        self.event_categories_by_users = EventCategoryByUserResources(
+            self._request_manager
+        )
         self.event_by_sites = EventBySiteResources(self._request_manager)
         self.event_by_buildings = EventByBuildingResources(self._request_manager)
         self.event_by_storeys = EventByStoreyResources(self._request_manager)
         self.event_by_spaces = EventBySpaceResources(self._request_manager)
         self.event_by_zones = EventByZoneResources(self._request_manager)
         self.timeseries_by_events = TimeseriesByEventResources(self._request_manager)
+
+        self.notifications = NotificationResources(self._request_manager)
 
     @property
     def uri_prefix(self):
