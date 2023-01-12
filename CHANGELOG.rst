@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+0.9.0 (2023-01-12)
+++++++++++++++++++
+
+Client not really affected by API changes in version 0.9.0 (some ETags removed...).
+
+Other changes:
+
+- Require bemserver-api >=0.9.0 and <0.10.0
+
 0.8.0 (2023-01-12)
 ++++++++++++++++++
 
