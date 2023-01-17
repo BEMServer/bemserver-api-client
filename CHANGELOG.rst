@@ -74,8 +74,10 @@ Other changes:
 Features:
 
 - Event API updates on query args:
-    - replace `level_id` with `level` enum
-    - add `level_min` and `in_source`
+
+  - replace `level_id` with `level` enum
+  - add `level_min` and `in_source`
+
 - Timeseries API: add `event_id` query arg
 
 Other changes:
