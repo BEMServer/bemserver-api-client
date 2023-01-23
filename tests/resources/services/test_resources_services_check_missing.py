@@ -6,7 +6,7 @@ from bemserver_api_client.resources import (
 from bemserver_api_client.response import BEMServerApiClientResponse
 
 
-class TestAPIClientResourcesServicesCleanup:
+class TestAPIClientResourcesServicesMissing:
     def test_api_client_resources_services_check_missing(self):
         assert issubclass(ST_CheckMissingByCampaignResources, BaseResources)
         assert ST_CheckMissingByCampaignResources.endpoint_base_uri == (
@@ -16,8 +16,8 @@ class TestAPIClientResourcesServicesCleanup:
         assert hasattr(ST_CheckMissingByCampaignResources, "get_full")
 
     def test_api_client_resources_services_check_missing_endpoints(self, mock_request):
-        cleanup_camp_res = ST_CheckMissingByCampaignResources(mock_request)
-        resp = cleanup_camp_res.get_full()
+        check_missing_res = ST_CheckMissingByCampaignResources(mock_request)
+        resp = check_missing_res.get_full()
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
         assert resp.is_json
