@@ -45,6 +45,7 @@ from .resources import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
+    ST_CheckOutlierByCampaignResources,
     EnergySourceResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
@@ -162,6 +163,10 @@ class BEMServerApiClient:
         )
 
         self.st_check_missing_by_campaign = ST_CheckMissingByCampaignResources(
+            self._request_manager
+        )
+
+        self.st_check_outlier_by_campaign = ST_CheckOutlierByCampaignResources(
             self._request_manager
         )
 

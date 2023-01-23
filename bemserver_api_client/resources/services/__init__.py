@@ -7,3 +7,6 @@ from .cleanup import (  # noqa
 from .check_missing import (  # noqa
     ST_CheckMissingByCampaignResources,
 )
+from .check_outliers import (  # noqa
+    ST_CheckOutlierByCampaignResources,
+)
