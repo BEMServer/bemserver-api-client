@@ -30,6 +30,7 @@ from .services import (  # noqa
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
+    ST_CheckOutlierByCampaignResources,
 )
 from .structural_elements import (  # noqa
     SiteResources,
