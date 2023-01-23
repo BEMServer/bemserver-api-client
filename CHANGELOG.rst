@@ -1,6 +1,16 @@
 Changelog
 ---------
 
+0.10.0 (2023-01-23)
+++++++++++++++++++
+
+Features:
+- Add check outliers data service resources
+
+Other changes:
+
+- Require bemserver-api >=0.10.0 and <0.11.0
+
 0.9.0 (2023-01-12)
 ++++++++++++++++++
 
