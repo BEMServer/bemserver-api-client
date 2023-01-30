@@ -32,7 +32,7 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "requests>=2.27.1",
-        "packaging>=21.3",
+        "packaging>=23.0",
     ],
     packages=find_packages(exclude=["tests*"]),
 )
