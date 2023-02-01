@@ -19,6 +19,7 @@ from bemserver_api_client.resources import (
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
     EventResources,
+    NotificationResources,
 )
 from bemserver_api_client.enums import DataFormat, Aggregation, BucketWidthUnit
 
@@ -134,6 +135,7 @@ def mock_session(uri_prefix, base_uri):
     mock_users_uris(adapter, base_uri)
     mock_io_uris(adapter, base_uri)
     mock_events_uris(adapter, base_uri)
+    mock_notifications_uris(adapter, base_uri)
     mock_timeseries_uris(adapter, base_uri)
     mock_timeseries_data_uris(adapter, base_uri)
     mock_analysis_uris(adapter, base_uri)
@@ -502,6 +504,43 @@ def mock_events_uris(mock_adapter, base_uri):
                 "timestamp": "2022-12-12T15:52:00+00:00",
             },
         ],
+    )
+
+
+def mock_notifications_uris(mock_adapter, base_uri):
+    # GET count by campaign
+    mock_adapter.register_uri(
+        "GET",
+        (
+            f"{base_uri}{NotificationResources.endpoint_base_uri}"
+            "count_by_campaign?user_id=42"
+        ),
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "734ab7a416e0c0b1b1ded1a96cd53425f9bcd7f8",
+        },
+        json={
+            "campaigns": [
+                {
+                    "campaign_id": 1,
+                    "campaign_name": "Nobatek offices EPC",
+                    "count": 1,
+                }
+            ],
+            "total": 1,
+        },
+    )
+
+    # PUT mark all as read
+    mock_adapter.register_uri(
+        "PUT",
+        (
+            f"{base_uri}{NotificationResources.endpoint_base_uri}"
+            "mark_all_as_read?user_id=42"
+        ),
+        headers={
+            "Content-Type": "application/json",
+        },
     )
 
 
