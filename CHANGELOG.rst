@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.10.1 (2023-02-01)
+++++++++++++++++++
+
+Features:
+- Update notifications resources:
+
+  - add *campaign_id* filter on list endpoint
+  - add *count_by_campaign* endpoint
+  - add *mark_all_as_read* endpoint
+
+Other changes:
+
+- Require bemserver-api >=0.10.2 and <0.11.0
+
 0.10.0 (2023-01-23)
 ++++++++++++++++++
 
