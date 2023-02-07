@@ -1,8 +1,15 @@
 Changelog
 ---------
 
+0.10.2 (2023-02-07)
++++++++++++++++++++
+
+Other changes:
+
+- Require bemserver-api >=0.10.3 and <0.11.0
+
 0.10.1 (2023-02-01)
-++++++++++++++++++
++++++++++++++++++++
 
 Features:
 
@@ -15,9 +22,10 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.10.2 and <0.11.0
+- Require bemserver-core 0.8.1
 
 0.10.0 (2023-01-23)
-++++++++++++++++++
++++++++++++++++++++
 
 Features:
 
@@ -26,6 +34,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.10.0 and <0.11.0
+- Require bemserver-core 0.8.0
 
 0.9.0 (2023-01-12)
 ++++++++++++++++++
@@ -35,6 +44,7 @@ Client not really affected by API changes in version 0.9.0 (some ETags removed..
 Other changes:
 
 - Require bemserver-api >=0.9.0 and <0.10.0
+- Require bemserver-core 0.7.0
 
 0.8.0 (2023-01-12)
 ++++++++++++++++++
@@ -47,6 +57,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.8.0 and <0.9.0
+- Require bemserver-core 0.7.0
 
 0.7.0 (2023-01-09)
 ++++++++++++++++++
@@ -59,6 +70,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.7.0 and <0.8.0
+- Require bemserver-core 0.6.0
 
 0.6.0 (2023-01-09)
 ++++++++++++++++++
@@ -71,6 +83,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.6.0 and <0.7.0
+- Require bemserver-core 0.5.0
 
 0.5.2 (2023-01-09)
 ++++++++++++++++++
@@ -109,6 +122,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.5.0 and <0.6.0
+- Require bemserver-core 0.4.0
 
 0.4.0 (2022-12-15)
 ++++++++++++++++++
@@ -121,6 +135,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.4.0 and <0.5.0
+- Require bemserver-core 0.3.0
 
 0.3.0 (2022-12-07)
 ++++++++++++++++++
@@ -133,6 +148,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.3.0 and <0.4.0
+- Require bemserver-core 0.2.1
 
 0.2.0 (2022-11-30)
 ++++++++++++++++++
@@ -145,6 +161,7 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.2.0 and <0.3.0
+- Require bemserver-core 0.2.0
 
 0.1.0 (2022-11-22)
 ++++++++++++++++++
@@ -159,3 +176,4 @@ Features:
 Other changes:
 
 - Require bemserver-api >=0.1.0 and <0.2.0
+- Require bemserver-core 0.1.0
