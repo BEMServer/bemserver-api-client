@@ -28,7 +28,7 @@ iniconfig==1.1.1
     # via pytest
 nodeenv==1.7.0
     # via pre-commit
-packaging==21.3
+packaging==23.0
     # via pytest
 platformdirs==2.5.2
     # via virtualenv
@@ -36,8 +36,6 @@ pluggy==1.0.0
     # via pytest
 pre-commit==3.0.4
     # via -r requirements/dev.in
-pyparsing==3.0.9
-    # via packaging
 pytest==7.2.1
     # via
     #   -r requirements/tests.in
