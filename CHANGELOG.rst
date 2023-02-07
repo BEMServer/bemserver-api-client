@@ -5,6 +5,7 @@ Changelog
 ++++++++++++++++++
 
 Features:
+
 - Update notifications resources:
 
   - add *campaign_id* filter on list endpoint
@@ -19,6 +20,7 @@ Other changes:
 ++++++++++++++++++
 
 Features:
+
 - Add check outliers data service resources
 
 Other changes:
