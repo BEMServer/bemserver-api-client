@@ -66,7 +66,7 @@ from .resources import (
 APICLI_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_API_VERSION = {
-    "min": Version("0.10.2"),
+    "min": Version("0.10.3"),
     "max": Version("0.11.0"),
 }
 
