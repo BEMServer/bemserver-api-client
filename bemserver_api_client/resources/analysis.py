@@ -3,7 +3,7 @@
 /analysis/ endpoints
 """
 from .base import BaseResources
-from ..enums import BucketWidthUnit
+from ..enums import BucketWidthUnit, StructuralElement
 from ..exceptions import BEMServerAPIClientValueError
 
 
@@ -52,6 +52,10 @@ class AnalysisResources(BaseResources):
         *,
         etag=None,
     ):
+        if structural_element_type not in StructuralElement:
+            raise BEMServerAPIClientValueError(
+                f"Invalid structural element type: {structural_element_type}"
+            )
         if bucket_width_unit not in BucketWidthUnit:
             raise BEMServerAPIClientValueError(
                 f"Invalid bucket width unit: {bucket_width_unit}"
@@ -59,7 +63,7 @@ class AnalysisResources(BaseResources):
 
         endpoint = (
             f"{self.endpoint_base_uri}energy_consumption/"
-            f"{structural_element_type}/{structural_element_id}"
+            f"{structural_element_type.value}/{structural_element_id}"
         )
         q_params = {
             "start_time": start_time,
