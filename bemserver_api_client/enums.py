@@ -31,3 +31,11 @@ class EventLevel(enum.Enum):
     WARNING = "WARNING"
     ERROR = "ERROR"
     CRITICAL = "CRITICAL"
+
+
+class StructuralElement(enum.Enum):
+    site = "site"
+    building = "building"
+    storey = "storey"
+    space = "space"
+    zone = "zone"
