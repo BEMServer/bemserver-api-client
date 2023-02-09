@@ -1,6 +1,19 @@
 Changelog
 ---------
 
+0.11.0 (2023-02-09)
++++++++++++++++++++
+
+Features:
+
+- Add ``StructuralElement`` enum
+- Change ``get_energy_consumption_breakdown()``'s ``structural_element_type`` parameter type (uses ``StructuralElement`` enum)
+
+Other changes:
+
+- Require bemserver-api >=0.11.0 and <0.12.0
+- Require bemserver-core 0.9.1
+
 0.10.2 (2023-02-07)
 +++++++++++++++++++
 
