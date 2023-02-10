@@ -21,7 +21,12 @@ from bemserver_api_client.resources import (
     EventResources,
     NotificationResources,
 )
-from bemserver_api_client.enums import DataFormat, Aggregation, BucketWidthUnit
+from bemserver_api_client.enums import (
+    DataFormat,
+    Aggregation,
+    BucketWidthUnit,
+    StructuralElement,
+)
 
 
 class FakeEnum(enum.Enum):
@@ -943,7 +948,8 @@ def mock_analysis_uris(mock_adapter, base_uri):
         "timezone": "UTC",
     }
     endpoint_uri = (
-        f"{base_uri}{AnalysisResources.endpoint_base_uri}energy_consumption/site/1"
+        f"{base_uri}{AnalysisResources.endpoint_base_uri}"
+        f"energy_consumption/{StructuralElement.site.value}/1"
     )
     mock_adapter.register_uri(
         "GET",
