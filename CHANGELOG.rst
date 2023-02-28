@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+0.12.0 (2023-02-28)
++++++++++++++++++++
+
+Other changes:
+
+- Require bemserver-api >=0.12.0 and <0.13.0
+- Require bemserver-core 0.10.1
+
 0.11.1 (2023-02-13)
 +++++++++++++++++++
 
