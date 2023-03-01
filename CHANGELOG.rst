@@ -1,6 +1,17 @@
 Changelog
 ---------
 
+0.12.1 (2023-03-01)
++++++++++++++++++++
+
+Fixes:
+
+- Improve 409 client error processing (raises BEMServerAPIConflictError, with message)
+
+Other changes:
+
+- Require bemserver-api >=0.12.1 and <0.13.0
+
 0.12.0 (2023-02-28)
 +++++++++++++++++++
 
@@ -116,7 +127,7 @@ Other changes:
 0.5.2 (2023-01-09)
 ++++++++++++++++++
 
-Bug fixes:
+Fixes:
 
 - Require bemserver-api still >=0.5.0 and <0.6.0
 
@@ -127,7 +138,7 @@ Other changes:
 0.5.1 (2023-01-06)
 ++++++++++++++++++
 
-Bug fixes:
+Fixes:
 
 - Remove obsolete event_levels resources
 
