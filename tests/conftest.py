@@ -55,9 +55,8 @@ def mock_raw_response_internal_error(request):
     )
 
 
-@pytest.fixture(params=[{"is_general": False, "is_json": True}])
+@pytest.fixture(params=[{"is_json": True}])
 def mock_raw_response_409(request):
-    is_general = request.param.get("is_general", False)
     is_json = request.param.get("is_json", True)
 
     resp = requests.Response()
@@ -68,17 +67,12 @@ def mock_raw_response_409(request):
             "code": 409,
             "errors": {},
             "status": "Conflict",
+            "message": "Unique constraint violation",
         }
-        if not is_general:
-            resp_content["errors"] = {
-                "type": "unique_constraint",
-                "fields": ["name"],
-            }
         resp._content = json.dumps(resp_content).encode("utf-8")
 
     return (
         resp,
-        is_general,
         is_json,
     )
 

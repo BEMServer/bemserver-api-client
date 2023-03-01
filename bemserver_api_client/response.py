@@ -3,6 +3,7 @@ import logging
 import json
 
 from .exceptions import (
+    BEMServerAPIConflictError,
     BEMServerAPIValidationError,
     BEMServerAPINotFoundError,
     BEMServerAPINotModified,
@@ -87,33 +88,32 @@ class BEMServerApiClientResponse:
         elif self.status_code == 404:
             raise BEMServerAPINotFoundError
 
-        # Conflict or validation error
-        elif self.status_code in (409, 422):
-            # TODO: rework this part
+        # Conflict error
+        elif self.status_code == 409:
+            message = "Operation failed (409)!"
+            if self.is_json:
+                message = self.data.get("message")
+            raise BEMServerAPIConflictError(message=message)
+
+        # Validation error
+        elif self.status_code == 422:
+            # Example of response:
+            #  {'code': 422, 'errors': {'json': {
+            #    'campaign_scope_id': ['Missing data for required field.'],
+            #    'campaign_id': ['Not a valid integer.'],
+            #  }}, 'status': 'Unprocessable Entity'}
             errors = {}
             if self.is_json:
-                if self.status_code == 409:
-                    # Unique constraint error
-                    if self.data.get("errors", {}).get("type") == "unique_constraint":
-                        errors = {
-                            # TODO: manage multiple columns constraint
-                            field: ["Must be unique."]
-                            for field in self.data["errors"]["fields"]
-                        }
-                    # Foreign key constraint error (and default case)
-                    else:
-                        errors = {"_general": ["Operation failed (409)."]}
-                elif self.status_code == 422:
-                    if "errors" in self.data:
-                        # Marshmallow ValidationError
-                        for loc in ("json", "query", "files"):
-                            if loc in self.data["errors"]:
-                                errors = {**errors, **self.data["errors"][loc]}
-                                if "_schema" in errors:
-                                    errors["_general"] = errors.pop("_schema")
-                    # BEMServer ValidationError
-                    elif "message" in self.data:
-                        errors = {"_general": [self.data["message"]]}
+                if "errors" in self.data:
+                    # Marshmallow ValidationError
+                    for loc in ("json", "query", "files"):
+                        if loc in self.data["errors"]:
+                            errors = {**errors, **self.data["errors"][loc]}
+                            if "_schema" in errors:
+                                errors["_general"] = errors.pop("_schema")
+                # BEMServer ValidationError
+                elif "message" in self.data:
+                    errors = {"_general": [self.data["message"]]}
             raise BEMServerAPIValidationError(errors=errors)
 
         # Issue in BEMServer
