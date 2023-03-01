@@ -12,6 +12,14 @@ class BEMServerAPIError(Exception):
         self.status_code = status_code
 
 
+class BEMServerAPIConflictError(BEMServerAPIError):
+    """BEMServer API conflict error"""
+
+    def __init__(self, message=None):
+        super().__init__(status_code=409)
+        self.message = message
+
+
 class BEMServerAPIValidationError(BEMServerAPIError):
     """BEMServer API validation error"""
 

@@ -3,6 +3,7 @@ import pytest
 
 from bemserver_api_client.response import BEMServerApiClientResponse
 from bemserver_api_client.response import (
+    BEMServerAPIConflictError,
     BEMServerAPIValidationError,
     BEMServerAPIInternalError,
 )
@@ -42,27 +43,19 @@ class TestAPIClientResponse:
     @pytest.mark.parametrize(
         "mock_raw_response_409",
         (
-            {"is_general": False},
-            {"is_general": True},
+            {"is_json": True},
             {"is_json": False},
         ),
         indirect=True,
     )
     def test_api_client_response_error_409(self, mock_raw_response_409):
-        raw_resp, is_general, is_json = mock_raw_response_409
-        with pytest.raises(BEMServerAPIValidationError) as excinfo:
+        raw_resp, is_json = mock_raw_response_409
+        with pytest.raises(BEMServerAPIConflictError) as excinfo:
             BEMServerApiClientResponse(raw_resp)
         if is_json:
-            if is_general:
-                assert excinfo.value.errors == {
-                    "_general": ["Operation failed (409)."],
-                }
-            else:
-                assert excinfo.value.errors == {
-                    "name": ["Must be unique."],
-                }
+            assert excinfo.value.message == "Unique constraint violation"
         else:
-            assert excinfo.value.errors == {}
+            assert excinfo.value.message == "Operation failed (409)!"
 
     @pytest.mark.parametrize(
         "mock_raw_response_422",
