@@ -53,6 +53,7 @@ from .resources import (
     EnergyProductionTechnologyResources,
     EnergyProductionTimseriesBySiteResources,
     EnergyProductionTimseriesByBuildingResources,
+    WeatherTimseriesBySiteResources,
     EventResources,
     EventCategoryResources,
     EventCategoryByUserResources,
@@ -188,6 +189,9 @@ class BEMServerApiClient:
             self._request_manager
         )
         self.energy_prod_ts_by_buildings = EnergyProductionTimseriesByBuildingResources(
+            self._request_manager
+        )
+        self.weather_ts_by_sites = WeatherTimseriesBySiteResources(
             self._request_manager
         )
 

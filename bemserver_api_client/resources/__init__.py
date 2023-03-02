@@ -71,3 +71,4 @@ from .users import (  # noqa
     UserGroupResources,
     UserByUserGroupResources,
 )
+from .weather import WeatherTimseriesBySiteResources  # noqa
