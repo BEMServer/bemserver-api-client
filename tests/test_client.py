@@ -46,10 +46,21 @@ from bemserver_api_client.resources import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
+    ST_CheckOutlierByCampaignResources,
     EnergyResources,
+    EnergyEndUseResources,
+    EnergyConsumptionTimseriesBySiteResources,
+    EnergyConsumptionTimseriesByBuildingResources,
     EventResources,
     EventCategoryResources,
+    EventCategoryByUserResources,
+    EventBySiteResources,
+    EventByBuildingResources,
+    EventByStoreyResources,
+    EventBySpaceResources,
+    EventByZoneResources,
     TimeseriesByEventResources,
+    NotificationResources,
 )
 
 
@@ -182,16 +193,49 @@ class TestAPIClient:
             apicli.st_check_missing_by_campaign, ST_CheckMissingByCampaignResources
         )
 
+        assert hasattr(apicli, "st_check_outlier_by_campaign")
+        assert isinstance(
+            apicli.st_check_outlier_by_campaign, ST_CheckOutlierByCampaignResources
+        )
+
         assert hasattr(apicli, "energies")
         assert isinstance(apicli.energies, EnergyResources)
+        assert hasattr(apicli, "energy_end_uses")
+        assert isinstance(apicli.energy_end_uses, EnergyEndUseResources)
+        assert hasattr(apicli, "energy_cons_ts_by_sites")
+        assert isinstance(
+            apicli.energy_cons_ts_by_sites, EnergyConsumptionTimseriesBySiteResources
+        )
+        assert hasattr(apicli, "energy_cons_ts_by_buildings")
+        assert isinstance(
+            apicli.energy_cons_ts_by_buildings,
+            EnergyConsumptionTimseriesByBuildingResources,
+        )
 
         assert hasattr(apicli, "events")
         assert isinstance(apicli.events, EventResources)
         assert hasattr(apicli, "event_categories")
         assert isinstance(apicli.event_categories, EventCategoryResources)
+        assert hasattr(apicli, "event_categories_by_users")
+        assert isinstance(
+            apicli.event_categories_by_users, EventCategoryByUserResources
+        )
 
+        assert hasattr(apicli, "event_by_sites")
+        assert isinstance(apicli.event_by_sites, EventBySiteResources)
+        assert hasattr(apicli, "event_by_buildings")
+        assert isinstance(apicli.event_by_buildings, EventByBuildingResources)
+        assert hasattr(apicli, "event_by_storeys")
+        assert isinstance(apicli.event_by_storeys, EventByStoreyResources)
+        assert hasattr(apicli, "event_by_spaces")
+        assert isinstance(apicli.event_by_spaces, EventBySpaceResources)
+        assert hasattr(apicli, "event_by_zones")
+        assert isinstance(apicli.event_by_zones, EventByZoneResources)
         assert hasattr(apicli, "timeseries_by_events")
         assert isinstance(apicli.timeseries_by_events, TimeseriesByEventResources)
+
+        assert hasattr(apicli, "notifications")
+        assert isinstance(apicli.notifications, NotificationResources)
 
         assert not hasattr(apicli, "whatever_resources_that_does_not_exist")
 
