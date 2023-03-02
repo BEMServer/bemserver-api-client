@@ -51,6 +51,8 @@ from .resources import (
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
     EnergyProductionTechnologyResources,
+    EnergyProductionTimseriesBySiteResources,
+    EnergyProductionTimseriesByBuildingResources,
     EventResources,
     EventCategoryResources,
     EventCategoryByUserResources,
@@ -180,6 +182,12 @@ class BEMServerApiClient:
             EnergyConsumptionTimseriesByBuildingResources(self._request_manager)
         )
         self.energy_prod_technologies = EnergyProductionTechnologyResources(
+            self._request_manager
+        )
+        self.energy_prod_ts_by_sites = EnergyProductionTimseriesBySiteResources(
+            self._request_manager
+        )
+        self.energy_prod_ts_by_buildings = EnergyProductionTimseriesByBuildingResources(
             self._request_manager
         )
 

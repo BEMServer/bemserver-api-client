@@ -52,6 +52,8 @@ from bemserver_api_client.resources import (
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
     EnergyProductionTechnologyResources,
+    EnergyProductionTimseriesBySiteResources,
+    EnergyProductionTimseriesByBuildingResources,
     EventResources,
     EventCategoryResources,
     EventCategoryByUserResources,
@@ -215,6 +217,15 @@ class TestAPIClient:
         assert hasattr(apicli, "energy_prod_technologies")
         assert isinstance(
             apicli.energy_prod_technologies, EnergyProductionTechnologyResources
+        )
+        assert hasattr(apicli, "energy_prod_ts_by_sites")
+        assert isinstance(
+            apicli.energy_prod_ts_by_sites, EnergyProductionTimseriesBySiteResources
+        )
+        assert hasattr(apicli, "energy_prod_ts_by_buildings")
+        assert isinstance(
+            apicli.energy_prod_ts_by_buildings,
+            EnergyProductionTimseriesByBuildingResources,
         )
 
         assert hasattr(apicli, "events")
