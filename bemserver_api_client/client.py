@@ -46,10 +46,14 @@ from .resources import (
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
-    EnergySourceResources,
+    EnergyResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
+    EnergyProductionTechnologyResources,
+    EnergyProductionTimseriesBySiteResources,
+    EnergyProductionTimseriesByBuildingResources,
+    WeatherTimseriesBySiteResources,
     EventResources,
     EventCategoryResources,
     EventCategoryByUserResources,
@@ -66,8 +70,8 @@ from .resources import (
 APICLI_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_API_VERSION = {
-    "min": Version("0.12.1"),
-    "max": Version("0.13.0"),
+    "min": Version("0.13.0"),
+    "max": Version("0.14.0"),
 }
 
 
@@ -170,13 +174,25 @@ class BEMServerApiClient:
             self._request_manager
         )
 
-        self.energy_sources = EnergySourceResources(self._request_manager)
+        self.energies = EnergyResources(self._request_manager)
         self.energy_end_uses = EnergyEndUseResources(self._request_manager)
         self.energy_cons_ts_by_sites = EnergyConsumptionTimseriesBySiteResources(
             self._request_manager
         )
         self.energy_cons_ts_by_buildings = (
             EnergyConsumptionTimseriesByBuildingResources(self._request_manager)
+        )
+        self.energy_prod_technologies = EnergyProductionTechnologyResources(
+            self._request_manager
+        )
+        self.energy_prod_ts_by_sites = EnergyProductionTimseriesBySiteResources(
+            self._request_manager
+        )
+        self.energy_prod_ts_by_buildings = EnergyProductionTimseriesByBuildingResources(
+            self._request_manager
+        )
+        self.weather_ts_by_sites = WeatherTimseriesBySiteResources(
+            self._request_manager
         )
 
         self.events = EventResources(self._request_manager)

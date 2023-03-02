@@ -9,10 +9,13 @@ from .campaigns import (  # noqa
     UserGroupByCampaignScopeResources,
 )
 from .energy import (  # noqa
-    EnergySourceResources,
+    EnergyResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
+    EnergyProductionTechnologyResources,
+    EnergyProductionTimseriesBySiteResources,
+    EnergyProductionTimseriesByBuildingResources,
 )
 from .events import (  # noqa
     EventResources,
@@ -68,3 +71,4 @@ from .users import (  # noqa
     UserGroupResources,
     UserByUserGroupResources,
 )
+from .weather import WeatherTimseriesBySiteResources  # noqa
