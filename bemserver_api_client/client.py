@@ -46,7 +46,7 @@ from .resources import (
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
-    EnergySourceResources,
+    EnergyResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
@@ -170,7 +170,7 @@ class BEMServerApiClient:
             self._request_manager
         )
 
-        self.energy_sources = EnergySourceResources(self._request_manager)
+        self.energies = EnergyResources(self._request_manager)
         self.energy_end_uses = EnergyEndUseResources(self._request_manager)
         self.energy_cons_ts_by_sites = EnergyConsumptionTimseriesBySiteResources(
             self._request_manager

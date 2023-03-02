@@ -1,18 +1,18 @@
 """BEMServer API client energy resources tests"""
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources import (
-    EnergySourceResources,
+    EnergyResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
 )
 
 
-class TestAPIClientResourcesEnergySources:
-    def test_api_client_resources_energy_sources(self):
-        assert issubclass(EnergySourceResources, BaseResources)
-        assert EnergySourceResources.endpoint_base_uri == "/energy_sources/"
-        assert EnergySourceResources.disabled_endpoints == [
+class TestAPIClientResourcesEnergies:
+    def test_api_client_resources_energies(self):
+        assert issubclass(EnergyResources, BaseResources)
+        assert EnergyResources.endpoint_base_uri == "/energies/"
+        assert EnergyResources.disabled_endpoints == [
             "getone",
             "create",
             "update",

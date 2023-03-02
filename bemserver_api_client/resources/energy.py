@@ -1,6 +1,6 @@
 """BEMServer API client resources
 
-/energy_sources/ endpoints
+/energies/ endpoints
 /energy_end_uses/ endpoints
 /energy_consumption_timeseries_by_sites/ endpoints
 /energy_consumption_timeseries_by_buildings/ endpoints
@@ -8,8 +8,8 @@
 from .base import BaseResources
 
 
-class EnergySourceResources(BaseResources):
-    endpoint_base_uri = "/energy_sources/"
+class EnergyResources(BaseResources):
+    endpoint_base_uri = "/energies/"
     disabled_endpoints = ["getone", "create", "update", "delete"]
 
 

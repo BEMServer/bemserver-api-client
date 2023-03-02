@@ -9,7 +9,7 @@ from .campaigns import (  # noqa
     UserGroupByCampaignScopeResources,
 )
 from .energy import (  # noqa
-    EnergySourceResources,
+    EnergyResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
