@@ -13,6 +13,7 @@ from .energy import (  # noqa
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
+    EnergyProductionTechnologyResources,
 )
 from .events import (  # noqa
     EventResources,

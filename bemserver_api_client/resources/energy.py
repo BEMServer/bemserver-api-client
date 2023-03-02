@@ -4,6 +4,7 @@
 /energy_end_uses/ endpoints
 /energy_consumption_timeseries_by_sites/ endpoints
 /energy_consumption_timeseries_by_buildings/ endpoints
+/energy_production_technologies/ endpoints
 """
 from .base import BaseResources
 
@@ -24,3 +25,8 @@ class EnergyConsumptionTimseriesBySiteResources(BaseResources):
 
 class EnergyConsumptionTimseriesByBuildingResources(BaseResources):
     endpoint_base_uri = "/energy_consumption_timeseries_by_buildings/"
+
+
+class EnergyProductionTechnologyResources(BaseResources):
+    endpoint_base_uri = "/energy_production_technologies/"
+    disabled_endpoints = ["getone", "create", "update", "delete"]

@@ -5,6 +5,7 @@ from bemserver_api_client.resources import (
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
+    EnergyProductionTechnologyResources,
 )
 
 
@@ -45,3 +46,17 @@ class TestAPIClientResourcesEnergyConsumption:
             "/energy_consumption_timeseries_by_buildings/"
         )
         assert EnergyConsumptionTimseriesByBuildingResources.disabled_endpoints == []
+
+
+class TestAPIClientResourcesEnergyProductionTechnologies:
+    def test_api_client_resources_energy_prod_technos(self):
+        assert issubclass(EnergyProductionTechnologyResources, BaseResources)
+        assert EnergyProductionTechnologyResources.endpoint_base_uri == (
+            "/energy_production_technologies/"
+        )
+        assert EnergyProductionTechnologyResources.disabled_endpoints == [
+            "getone",
+            "create",
+            "update",
+            "delete",
+        ]
