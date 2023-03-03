@@ -24,7 +24,7 @@ class AnalysisResources(BaseResources):
         *,
         etag=None,
     ):
-        if bucket_width_unit not in BucketWidthUnit:
+        if bucket_width_unit not in list(BucketWidthUnit):
             raise BEMServerAPIClientValueError(
                 f"Invalid bucket width unit: {bucket_width_unit}"
             )
@@ -53,12 +53,15 @@ class AnalysisResources(BaseResources):
         *,
         etag=None,
     ):
-        # TODO: just accept StructuralElement site and building
-        if structural_element_type not in StructuralElement:
+        # Only site and building structural element types are accepted.
+        if structural_element_type not in [
+            StructuralElement.site,
+            StructuralElement.building,
+        ]:
             raise BEMServerAPIClientValueError(
                 f"Invalid structural element type: {structural_element_type}"
             )
-        if bucket_width_unit not in BucketWidthUnit:
+        if bucket_width_unit not in list(BucketWidthUnit):
             raise BEMServerAPIClientValueError(
                 f"Invalid bucket width unit: {bucket_width_unit}"
             )

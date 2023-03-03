@@ -114,8 +114,11 @@ class TestAPIClientResourcesAnalysis:
     def test_api_client_resources_analysis_endpoints_errors(self, mock_request):
         analysis_res = AnalysisResources(mock_request)
 
-        for bad_bucket_width_unit in [None, "week", "other", 42]:
-            with pytest.raises(TypeError):
+        for bad_bucket_width_unit in [None, "week", "other", 42, FakeEnum.b]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid bucket width unit: {bad_bucket_width_unit}",
+            ):
                 analysis_res.get_completeness(
                     start_time="2020-01-01T00:00:00+00:00",
                     end_time="2020-02-01T00:00:00+00:00",
@@ -125,21 +128,11 @@ class TestAPIClientResourcesAnalysis:
                     bucket_width_unit=bad_bucket_width_unit,
                 )
 
-        with pytest.raises(
-            BEMServerAPIClientValueError,
-            match=f"Invalid bucket width unit: {FakeEnum.b}",
-        ):
-            analysis_res.get_completeness(
-                start_time="2020-01-01T00:00:00+00:00",
-                end_time="2020-02-01T00:00:00+00:00",
-                timeseries=[1, 2],
-                data_state=1,
-                bucket_width_value=1,
-                bucket_width_unit=FakeEnum.b,
-            )
-
-        for bad_bucket_width_unit in [None, "week", "other", 42]:
-            with pytest.raises(TypeError):
+        for bad_bucket_width_unit in [None, "week", "other", 42, FakeEnum.b]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid bucket width unit: {bad_bucket_width_unit}",
+            ):
                 analysis_res.get_energy_consumption_breakdown(
                     StructuralElement.site,
                     1,
@@ -149,21 +142,20 @@ class TestAPIClientResourcesAnalysis:
                     bucket_width_unit=bad_bucket_width_unit,
                 )
 
-        with pytest.raises(
-            BEMServerAPIClientValueError,
-            match=f"Invalid bucket width unit: {FakeEnum.b}",
-        ):
-            analysis_res.get_energy_consumption_breakdown(
-                StructuralElement.site,
-                1,
-                start_time="2020-01-01T00:00:00+00:00",
-                end_time="2020-02-01T00:00:00+00:00",
-                bucket_width_value=1,
-                bucket_width_unit=FakeEnum.b,
-            )
-
-        for bad_structural_element_type in [None, "site", "other", 42]:
-            with pytest.raises(TypeError):
+        for bad_structural_element_type in [
+            None,
+            "site",
+            "other",
+            42,
+            FakeEnum.b,
+            StructuralElement.storey,
+            StructuralElement.space,
+            StructuralElement.zone,
+        ]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid structural element type: {bad_structural_element_type}",
+            ):
                 analysis_res.get_energy_consumption_breakdown(
                     bad_structural_element_type,
                     1,
@@ -172,16 +164,3 @@ class TestAPIClientResourcesAnalysis:
                     bucket_width_value=1,
                     bucket_width_unit=BucketWidthUnit.week,
                 )
-
-        with pytest.raises(
-            BEMServerAPIClientValueError,
-            match=f"Invalid structural element type: {FakeEnum.b}",
-        ):
-            analysis_res.get_energy_consumption_breakdown(
-                FakeEnum.b,
-                1,
-                start_time="2020-01-01T00:00:00+00:00",
-                end_time="2020-02-01T00:00:00+00:00",
-                bucket_width_value=1,
-                bucket_width_unit=BucketWidthUnit.week,
-            )
