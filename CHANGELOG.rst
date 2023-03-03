@@ -1,6 +1,30 @@
 Changelog
 ---------
 
+0.13.0 (2023-03-03)
++++++++++++++++++++
+
+Features:
+
+- Rename ``EnergySourceResources`` to ``EnergyResources``
+- Add energy_production_technologies endpoints (``EnergyProductionTechnologyResources``)
+- Add energy_production_timeseries_by_* endpoints (``EnergyProductionTimseriesBySiteResources`` and ``EnergyProductionTimseriesByBuildingResources``)
+- Add weather_timeseries_by_sites endpoints (``WeatherTimseriesBySiteResources``)
+
+Fixes:
+
+- Raise ``BEMServerAPIClientValueError`` when ``AnalysisResources.get_completeness()`` is called with an unsupported bucket width
+- Raise ``BEMServerAPIClientValueError`` when ``AnalysisResources.get_energy_consumption_breakdown()`` is called with an unsupported structural element type (not site or building)
+- Raise ``BEMServerAPIClientValueError`` when ``TimeseriesDataResources.download_aggregate()`` is called with an unsupported aggregation or bucket width
+- Raise ``BEMServerAPIClientValueError`` when ``TimeseriesDataResources.download_aggregate_by_names()`` is called with an unsupported aggregation or bucket width
+
+Other changes:
+
+- Require bemserver-api >=0.13.0 and <0.14.0
+- Require bemserver-core 0.11.0
+
+Follows `API update 0.13.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0130-2023-03-01>`_
+
 0.12.1 (2023-03-01)
 +++++++++++++++++++
 
