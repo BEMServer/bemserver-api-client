@@ -1,6 +1,6 @@
 """BEMServer API client timeseries resources tests"""
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import (
+from bemserver_api_client.resources.timeseries import (
     TimeseriesResources,
     TimeseriesDataStateResources,
     TimeseriesPropertyResources,
@@ -22,24 +22,34 @@ class TestAPIClientResourcesTimeseries:
         assert issubclass(TimeseriesResources, BaseResources)
         assert TimeseriesResources.endpoint_base_uri == "/timeseries/"
         assert TimeseriesResources.disabled_endpoints == []
+        assert TimeseriesResources.client_entrypoint == "timeseries"
 
         assert issubclass(TimeseriesDataStateResources, BaseResources)
         assert TimeseriesDataStateResources.endpoint_base_uri == (
             "/timeseries_data_states/"
         )
         assert TimeseriesDataStateResources.disabled_endpoints == []
+        assert TimeseriesDataStateResources.client_entrypoint == (
+            "timeseries_data_states"
+        )
 
         assert issubclass(TimeseriesPropertyResources, BaseResources)
         assert TimeseriesPropertyResources.endpoint_base_uri == (
             "/timeseries_properties/"
         )
         assert TimeseriesPropertyResources.disabled_endpoints == []
+        assert TimeseriesPropertyResources.client_entrypoint == (
+            "timeseries_properties"
+        )
 
         assert issubclass(TimeseriesPropertyDataResources, BaseResources)
         assert TimeseriesPropertyDataResources.endpoint_base_uri == (
             "/timeseries_property_data/"
         )
         assert TimeseriesPropertyDataResources.disabled_endpoints == []
+        assert TimeseriesPropertyDataResources.client_entrypoint == (
+            "timeseries_property_data"
+        )
 
         assert issubclass(TimeseriesDataResources, BaseResources)
         assert TimeseriesDataResources.endpoint_base_uri == "/timeseries_data/"
@@ -49,6 +59,7 @@ class TestAPIClientResourcesTimeseries:
             "create",
             "update",
         ]
+        assert TimeseriesDataResources.client_entrypoint == "timeseries_data"
         assert hasattr(TimeseriesDataResources, "upload")
         assert hasattr(TimeseriesDataResources, "upload_by_names")
         assert hasattr(TimeseriesDataResources, "download")
@@ -63,30 +74,40 @@ class TestAPIClientResourcesTimeseries:
         assert issubclass(TimeseriesBySiteResources, BaseResources)
         assert TimeseriesBySiteResources.endpoint_base_uri == "/timeseries_by_sites/"
         assert TimeseriesBySiteResources.disabled_endpoints == ["update"]
+        assert TimeseriesBySiteResources.client_entrypoint == "timeseries_by_sites"
 
         assert issubclass(TimeseriesByBuildingResources, BaseResources)
         assert TimeseriesByBuildingResources.endpoint_base_uri == (
             "/timeseries_by_buildings/"
         )
         assert TimeseriesByBuildingResources.disabled_endpoints == ["update"]
+        assert TimeseriesByBuildingResources.client_entrypoint == (
+            "timeseries_by_buildings"
+        )
 
         assert issubclass(TimeseriesByStoreyResources, BaseResources)
         assert TimeseriesByStoreyResources.endpoint_base_uri == (
             "/timeseries_by_storeys/"
         )
         assert TimeseriesByStoreyResources.disabled_endpoints == ["update"]
+        assert TimeseriesByStoreyResources.client_entrypoint == (
+            "timeseries_by_storeys"
+        )
 
         assert issubclass(TimeseriesBySpaceResources, BaseResources)
         assert TimeseriesBySpaceResources.endpoint_base_uri == "/timeseries_by_spaces/"
         assert TimeseriesBySpaceResources.disabled_endpoints == ["update"]
+        assert TimeseriesBySpaceResources.client_entrypoint == "timeseries_by_spaces"
 
         assert issubclass(TimeseriesByZoneResources, BaseResources)
         assert TimeseriesByZoneResources.endpoint_base_uri == "/timeseries_by_zones/"
         assert TimeseriesByZoneResources.disabled_endpoints == ["update"]
+        assert TimeseriesByZoneResources.client_entrypoint == "timeseries_by_zones"
 
         assert issubclass(TimeseriesByEventResources, BaseResources)
         assert TimeseriesByEventResources.endpoint_base_uri == "/timeseries_by_events/"
         assert TimeseriesByEventResources.disabled_endpoints == ["update"]
+        assert TimeseriesByEventResources.client_entrypoint == "timeseries_by_events"
 
     def test_api_client_resources_timeseries_endpoints(self, mock_request):
         ts_res = TimeseriesResources(mock_request)

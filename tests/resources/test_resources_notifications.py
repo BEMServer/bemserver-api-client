@@ -1,8 +1,6 @@
 """BEMServer API client notifications resources tests"""
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import (
-    NotificationResources,
-)
+from bemserver_api_client.resources.notifications import NotificationResources
 from bemserver_api_client.response import BEMServerApiClientResponse
 
 
@@ -11,6 +9,7 @@ class TestAPIClientResourcesNotifications:
         assert issubclass(NotificationResources, BaseResources)
         assert NotificationResources.endpoint_base_uri == "/notifications/"
         assert NotificationResources.disabled_endpoints == []
+        assert NotificationResources.client_entrypoint == "notifications"
 
     def test_api_client_resources_notifications_endpoints(self, mock_request):
         notif_res = NotificationResources(mock_request)

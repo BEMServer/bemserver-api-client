@@ -4,6 +4,7 @@
 class BaseResources:
     endpoint_base_uri = ""
     disabled_endpoints = []
+    client_entrypoint = None
 
     def __init__(self, request_manager):
         self._req = request_manager

@@ -9,6 +9,7 @@ from .base import BaseResources
 
 class UserResources(BaseResources):
     endpoint_base_uri = "/users/"
+    client_entrypoint = "users"
 
     def set_admin(self, id, state, *, etag=None):
         endpoint = f"{self.enpoint_uri_by_id(id)}/set_admin"
@@ -21,8 +22,10 @@ class UserResources(BaseResources):
 
 class UserGroupResources(BaseResources):
     endpoint_base_uri = "/user_groups/"
+    client_entrypoint = "user_groups"
 
 
 class UserByUserGroupResources(BaseResources):
     endpoint_base_uri = "/users_by_user_groups/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "user_by_user_groups"

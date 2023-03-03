@@ -1,6 +1,6 @@
 """BEMServer API client energy resources tests"""
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import (
+from bemserver_api_client.resources.energy import (
     EnergyResources,
     EnergyEndUseResources,
     EnergyConsumptionTimseriesBySiteResources,
@@ -21,6 +21,7 @@ class TestAPIClientResourcesEnergies:
             "update",
             "delete",
         ]
+        assert EnergyResources.client_entrypoint == "energies"
 
 
 class TestAPIClientResourcesEnergyEndUses:
@@ -33,6 +34,7 @@ class TestAPIClientResourcesEnergyEndUses:
             "update",
             "delete",
         ]
+        assert EnergyEndUseResources.client_entrypoint == "energy_end_uses"
 
 
 class TestAPIClientResourcesEnergyConsumption:
@@ -42,12 +44,18 @@ class TestAPIClientResourcesEnergyConsumption:
             "/energy_consumption_timeseries_by_sites/"
         )
         assert EnergyConsumptionTimseriesBySiteResources.disabled_endpoints == []
+        assert EnergyConsumptionTimseriesBySiteResources.client_entrypoint == (
+            "energy_cons_ts_by_sites"
+        )
 
         assert issubclass(EnergyConsumptionTimseriesByBuildingResources, BaseResources)
         assert EnergyConsumptionTimseriesByBuildingResources.endpoint_base_uri == (
             "/energy_consumption_timeseries_by_buildings/"
         )
         assert EnergyConsumptionTimseriesByBuildingResources.disabled_endpoints == []
+        assert EnergyConsumptionTimseriesByBuildingResources.client_entrypoint == (
+            "energy_cons_ts_by_buildings"
+        )
 
 
 class TestAPIClientResourcesEnergyProductionTechnologies:
@@ -62,6 +70,9 @@ class TestAPIClientResourcesEnergyProductionTechnologies:
             "update",
             "delete",
         ]
+        assert EnergyProductionTechnologyResources.client_entrypoint == (
+            "energy_prod_technologies"
+        )
 
 
 class TestAPIClientResourcesEnergyProduction:
@@ -71,9 +82,15 @@ class TestAPIClientResourcesEnergyProduction:
             "/energy_production_timeseries_by_sites/"
         )
         assert EnergyProductionTimseriesBySiteResources.disabled_endpoints == []
+        assert EnergyProductionTimseriesBySiteResources.client_entrypoint == (
+            "energy_prod_ts_by_sites"
+        )
 
         assert issubclass(EnergyProductionTimseriesByBuildingResources, BaseResources)
         assert EnergyProductionTimseriesByBuildingResources.endpoint_base_uri == (
             "/energy_production_timeseries_by_buildings/"
         )
         assert EnergyProductionTimseriesByBuildingResources.disabled_endpoints == []
+        assert EnergyProductionTimseriesByBuildingResources.client_entrypoint == (
+            "energy_prod_ts_by_buildings"
+        )

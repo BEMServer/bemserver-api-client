@@ -10,6 +10,7 @@ from ..exceptions import BEMServerAPIClientValueError
 class AnalysisResources(BaseResources):
     endpoint_base_uri = "/analysis/"
     disabled_endpoints = ["getall", "getone", "create", "update", "delete"]
+    client_entrypoint = "analysis"
 
     def get_completeness(
         self,
@@ -52,6 +53,7 @@ class AnalysisResources(BaseResources):
         *,
         etag=None,
     ):
+        # TODO: just accept StructuralElement site and building
         if structural_element_type not in StructuralElement:
             raise BEMServerAPIClientValueError(
                 f"Invalid structural element type: {structural_element_type}"
