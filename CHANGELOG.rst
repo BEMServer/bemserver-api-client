@@ -1,6 +1,19 @@
 Changelog
 ---------
 
+0.13.1 (2023-03-03)
++++++++++++++++++++
+
+Fixes:
+
+- Rollback ``TimeseriesDataResources.client_entrypoint`` value to "timesries_datastates" (to fix a regression since previous version)
+
+Other changes:
+
+- Require bemserver-api >=0.13.1 and <0.14.0
+
+Follows `API update 0.13.1 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0131-2023-03-03>`_
+
 0.13.0 (2023-03-03)
 +++++++++++++++++++
 
