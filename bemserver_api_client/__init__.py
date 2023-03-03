@@ -2,4 +2,4 @@
 from .client import BEMServerApiClient  # noqa
 
 
-__version__ = "0.13.0"
+__version__ = "0.13.1"
