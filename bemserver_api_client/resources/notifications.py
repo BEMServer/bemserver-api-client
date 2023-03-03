@@ -7,6 +7,7 @@ from .base import BaseResources
 
 class NotificationResources(BaseResources):
     endpoint_base_uri = "/notifications/"
+    client_entrypoint = "notifications"
 
     def count_by_campaign(self, *, etag=None, **kwargs):
         endpoint = f"{self.endpoint_base_uri}count_by_campaign"

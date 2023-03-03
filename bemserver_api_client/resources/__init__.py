@@ -1,74 +1,83 @@
 """BEMServer API client resources"""
 
-from .about import AboutResources  # noqa
-from .analysis import AnalysisResources  # noqa
-from .campaigns import (  # noqa
-    CampaignResources,
-    UserGroupByCampaignResources,
-    CampaignScopeResources,
-    UserGroupByCampaignScopeResources,
+from . import (
+    about,
+    analysis,
+    campaigns,
+    energy,
+    events,
+    io,
+    notifications,
+    services,
+    structural_elements,
+    users,
+    weather,
+    timeseries,
 )
-from .energy import (  # noqa
-    EnergyResources,
-    EnergyEndUseResources,
-    EnergyConsumptionTimseriesBySiteResources,
-    EnergyConsumptionTimseriesByBuildingResources,
-    EnergyProductionTechnologyResources,
-    EnergyProductionTimseriesBySiteResources,
-    EnergyProductionTimseriesByBuildingResources,
-)
-from .events import (  # noqa
-    EventResources,
-    EventCategoryResources,
-    EventCategoryByUserResources,
-    EventBySiteResources,
-    EventByBuildingResources,
-    EventByStoreyResources,
-    EventBySpaceResources,
-    EventByZoneResources,
-)
-from .io import IOResources  # noqa
-from .notifications import NotificationResources  # noqa
-from .services import (  # noqa
-    ST_CleanupByCampaignResources,
-    ST_CleanupByTimeseriesResources,
-    ST_CheckMissingByCampaignResources,
-    ST_CheckOutlierByCampaignResources,
-)
-from .structural_elements import (  # noqa
-    SiteResources,
-    BuildingResources,
-    StoreyResources,
-    SpaceResources,
-    ZoneResources,
-    StructuralElementPropertyResources,
-    SitePropertyResources,
-    BuildingPropertyResources,
-    StoreyPropertyResources,
-    SpacePropertyResources,
-    ZonePropertyResources,
-    SitePropertyDataResources,
-    BuildingPropertyDataResources,
-    StoreyPropertyDataResources,
-    SpacePropertyDataResources,
-    ZonePropertyDataResources,
-)
-from .timeseries import (  # noqa
-    TimeseriesResources,
-    TimeseriesDataStateResources,
-    TimeseriesPropertyResources,
-    TimeseriesPropertyDataResources,
-    TimeseriesDataResources,
-    TimeseriesBySiteResources,
-    TimeseriesByBuildingResources,
-    TimeseriesByStoreyResources,
-    TimeseriesBySpaceResources,
-    TimeseriesByZoneResources,
-    TimeseriesByEventResources,
-)
-from .users import (  # noqa
-    UserResources,
-    UserGroupResources,
-    UserByUserGroupResources,
-)
-from .weather import WeatherTimseriesBySiteResources  # noqa
+
+
+__all__ = [
+    about.AboutResources,
+    analysis.AnalysisResources,
+    campaigns.CampaignResources,
+    campaigns.UserGroupByCampaignResources,
+    campaigns.CampaignScopeResources,
+    campaigns.UserGroupByCampaignScopeResources,
+    energy.EnergyResources,
+    energy.EnergyEndUseResources,
+    energy.EnergyConsumptionTimseriesBySiteResources,
+    energy.EnergyConsumptionTimseriesByBuildingResources,
+    energy.EnergyProductionTechnologyResources,
+    energy.EnergyProductionTimseriesBySiteResources,
+    energy.EnergyProductionTimseriesByBuildingResources,
+    events.EventResources,
+    events.EventCategoryResources,
+    events.EventCategoryByUserResources,
+    events.EventBySiteResources,
+    events.EventByBuildingResources,
+    events.EventByStoreyResources,
+    events.EventBySpaceResources,
+    events.EventByZoneResources,
+    io.IOResources,
+    notifications.NotificationResources,
+    services.ST_CleanupByCampaignResources,
+    services.ST_CleanupByTimeseriesResources,
+    services.ST_CheckMissingByCampaignResources,
+    services.ST_CheckOutlierByCampaignResources,
+    structural_elements.SiteResources,
+    structural_elements.BuildingResources,
+    structural_elements.StoreyResources,
+    structural_elements.SpaceResources,
+    structural_elements.ZoneResources,
+    structural_elements.StructuralElementPropertyResources,
+    structural_elements.SitePropertyResources,
+    structural_elements.BuildingPropertyResources,
+    structural_elements.StoreyPropertyResources,
+    structural_elements.SpacePropertyResources,
+    structural_elements.ZonePropertyResources,
+    structural_elements.SitePropertyDataResources,
+    structural_elements.BuildingPropertyDataResources,
+    structural_elements.StoreyPropertyDataResources,
+    structural_elements.SpacePropertyDataResources,
+    structural_elements.ZonePropertyDataResources,
+    timeseries.TimeseriesResources,
+    timeseries.TimeseriesDataStateResources,
+    timeseries.TimeseriesPropertyResources,
+    timeseries.TimeseriesPropertyDataResources,
+    timeseries.TimeseriesDataResources,
+    timeseries.TimeseriesBySiteResources,
+    timeseries.TimeseriesByBuildingResources,
+    timeseries.TimeseriesByStoreyResources,
+    timeseries.TimeseriesBySpaceResources,
+    timeseries.TimeseriesByZoneResources,
+    timeseries.TimeseriesByEventResources,
+    users.UserResources,
+    users.UserGroupResources,
+    users.UserByUserGroupResources,
+    weather.WeatherTimseriesBySiteResources,
+]
+
+
+RESOURCES_MAP = {
+    resource_cls.client_entrypoint: resource_cls for resource_cls in __all__
+}

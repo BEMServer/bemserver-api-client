@@ -2,7 +2,7 @@
 import pytest
 
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import AboutResources
+from bemserver_api_client.resources.about import AboutResources
 
 
 class TestAPIClientResourcesAbout:
@@ -15,6 +15,7 @@ class TestAPIClientResourcesAbout:
             "update",
             "delete",
         ]
+        assert AboutResources.client_entrypoint == "about"
 
     def test_api_client_resources_about_errors(self, mock_request):
         res = AboutResources(mock_request)

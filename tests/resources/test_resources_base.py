@@ -18,6 +18,7 @@ class TestAPIClientResourcesBase:
     def test_api_client_resources_base(self):
         assert BaseResources.endpoint_base_uri == ""
         assert BaseResources.disabled_endpoints == []
+        assert BaseResources.client_entrypoint is None
 
     def test_api_client_resources_base_verify_disabled(self):
         res = BaseResources(None)

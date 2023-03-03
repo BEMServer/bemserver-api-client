@@ -18,23 +18,28 @@ from ..enums import DataFormat, Aggregation, BucketWidthUnit
 
 class TimeseriesResources(BaseResources):
     endpoint_base_uri = "/timeseries/"
+    client_entrypoint = "timeseries"
 
 
 class TimeseriesDataStateResources(BaseResources):
     endpoint_base_uri = "/timeseries_data_states/"
+    client_entrypoint = "timeseries_data_states"
 
 
 class TimeseriesPropertyResources(BaseResources):
     endpoint_base_uri = "/timeseries_properties/"
+    client_entrypoint = "timeseries_properties"
 
 
 class TimeseriesPropertyDataResources(BaseResources):
     endpoint_base_uri = "/timeseries_property_data/"
+    client_entrypoint = "timeseries_property_data"
 
 
 class TimeseriesDataResources(BaseResources):
     endpoint_base_uri = "/timeseries_data/"
     disabled_endpoints = ["getall", "getone", "create", "update"]
+    client_entrypoint = "timeseries_data"
 
     def endpoint_uri_by_campaign(self, campaign_id):
         return f"{self.endpoint_base_uri}campaign/{str(campaign_id)}/"
@@ -202,28 +207,34 @@ class TimeseriesDataResources(BaseResources):
 class TimeseriesBySiteResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_sites/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "timeseries_by_sites"
 
 
 class TimeseriesByBuildingResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_buildings/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "timeseries_by_buildings"
 
 
 class TimeseriesByStoreyResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_storeys/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "timeseries_by_storeys"
 
 
 class TimeseriesBySpaceResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_spaces/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "timeseries_by_spaces"
 
 
 class TimeseriesByZoneResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_zones/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "timeseries_by_zones"
 
 
 class TimeseriesByEventResources(BaseResources):
     endpoint_base_uri = "/timeseries_by_events/"
     disabled_endpoints = ["update"]
+    client_entrypoint = "timeseries_by_events"

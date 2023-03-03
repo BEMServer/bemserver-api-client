@@ -2,7 +2,7 @@
 import pytest
 
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import AnalysisResources
+from bemserver_api_client.resources.analysis import AnalysisResources
 from bemserver_api_client.response import BEMServerApiClientResponse
 from bemserver_api_client.enums import BucketWidthUnit, StructuralElement
 from bemserver_api_client.exceptions import BEMServerAPIClientValueError
@@ -21,6 +21,7 @@ class TestAPIClientResourcesAnalysis:
             "update",
             "delete",
         ]
+        assert AnalysisResources.client_entrypoint == "analysis"
         assert hasattr(AnalysisResources, "get_completeness")
         assert hasattr(AnalysisResources, "get_energy_consumption_breakdown")
 

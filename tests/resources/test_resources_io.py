@@ -2,7 +2,7 @@
 import io
 
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import IOResources
+from bemserver_api_client.resources.io import IOResources
 from bemserver_api_client.response import BEMServerApiClientResponse
 
 
@@ -17,6 +17,7 @@ class TestAPIClientResourcesIO:
             "update",
             "delete",
         ]
+        assert IOResources.client_entrypoint == "io"
         assert hasattr(IOResources, "upload_timeseries_csv")
         assert hasattr(IOResources, "upload_sites_csv")
 

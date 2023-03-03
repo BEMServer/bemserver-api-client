@@ -1,6 +1,6 @@
 """BEMServer API client services cleanup resources tests"""
 from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources import (
+from bemserver_api_client.resources.services import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
 )
@@ -15,6 +15,9 @@ class TestAPIClientResourcesServicesCleanup:
         )
         assert ST_CleanupByCampaignResources.disabled_endpoints == []
         assert hasattr(ST_CleanupByCampaignResources, "get_full")
+        assert ST_CleanupByCampaignResources.client_entrypoint == (
+            "st_cleanup_by_campaign"
+        )
 
         assert issubclass(ST_CleanupByTimeseriesResources, BaseResources)
         assert ST_CleanupByTimeseriesResources.endpoint_base_uri == (
@@ -25,6 +28,9 @@ class TestAPIClientResourcesServicesCleanup:
             "update",
             "delete",
         ]
+        assert ST_CleanupByTimeseriesResources.client_entrypoint == (
+            "st_cleanup_by_timeseries"
+        )
         assert hasattr(ST_CleanupByTimeseriesResources, "get_full")
 
     def test_api_client_resources_services_cleanup_endpoints(self, mock_request):

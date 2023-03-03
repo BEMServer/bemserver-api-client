@@ -8,18 +8,20 @@ import enum
 
 from bemserver_api_client.client import REQUIRED_API_VERSION
 from bemserver_api_client.request import BEMServerApiClientRequest
-from bemserver_api_client.resources import (
-    UserResources,
-    IOResources,
+from bemserver_api_client.resources.users import UserResources
+from bemserver_api_client.resources.io import IOResources
+from bemserver_api_client.resources.timeseries import (
     TimeseriesResources,
     TimeseriesDataResources,
-    AnalysisResources,
+)
+from bemserver_api_client.resources.analysis import AnalysisResources
+from bemserver_api_client.resources.events import EventResources
+from bemserver_api_client.resources.notifications import NotificationResources
+from bemserver_api_client.resources.services import (
     ST_CleanupByCampaignResources,
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
-    EventResources,
-    NotificationResources,
 )
 from bemserver_api_client.enums import (
     DataFormat,

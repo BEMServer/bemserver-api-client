@@ -8,6 +8,7 @@ from .base import BaseResources
 class IOResources(BaseResources):
     endpoint_base_uri = "/io/"
     disabled_endpoints = ["getall", "getone", "create", "update", "delete"]
+    client_entrypoint = "io"
 
     def upload_timeseries_csv(self, campaign_id, csv_files):
         """
