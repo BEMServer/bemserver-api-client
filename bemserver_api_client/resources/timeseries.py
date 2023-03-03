@@ -14,6 +14,7 @@
 """
 from .base import BaseResources
 from ..enums import DataFormat, Aggregation, BucketWidthUnit
+from ..exceptions import BEMServerAPIClientValueError
 
 
 class TimeseriesResources(BaseResources):
@@ -129,6 +130,13 @@ class TimeseriesDataResources(BaseResources):
         bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
     ):
+        if aggregation not in list(Aggregation):
+            raise BEMServerAPIClientValueError(f"Invalid aggregation: {aggregation}")
+        if bucket_width_unit not in list(BucketWidthUnit):
+            raise BEMServerAPIClientValueError(
+                f"Invalid bucket width unit: {bucket_width_unit}"
+            )
+
         return self._req.download(
             f"{self.endpoint_base_uri}aggregate",
             format=format,
@@ -157,6 +165,13 @@ class TimeseriesDataResources(BaseResources):
         bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
     ):
+        if aggregation not in list(Aggregation):
+            raise BEMServerAPIClientValueError(f"Invalid aggregation: {aggregation}")
+        if bucket_width_unit not in list(BucketWidthUnit):
+            raise BEMServerAPIClientValueError(
+                f"Invalid bucket width unit: {bucket_width_unit}"
+            )
+
         return self._req.download(
             f"{self.endpoint_uri_by_campaign(campaign_id)}aggregate",
             format=format,

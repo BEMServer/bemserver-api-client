@@ -1,4 +1,5 @@
 """BEMServer API client timeseries resources tests"""
+import pytest
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.timeseries import (
     TimeseriesResources,
@@ -15,6 +16,9 @@ from bemserver_api_client.resources.timeseries import (
 )
 from bemserver_api_client.response import BEMServerApiClientResponse
 from bemserver_api_client.enums import DataFormat, Aggregation
+from bemserver_api_client.exceptions import BEMServerAPIClientValueError
+
+from tests.conftest import FakeEnum
 
 
 class TestAPIClientResourcesTimeseries:
@@ -384,3 +388,58 @@ class TestAPIClientResourcesTimeseries:
         assert resp.pagination == {}
         assert resp.etag == ""
         assert resp.data == {}
+
+    def test_api_client_resources_timeseries_data_download_errors(self, mock_request):
+        tsdata_res = TimeseriesDataResources(mock_request)
+
+        for bad_agg in [None, "count", "other", 42, FakeEnum.b]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid aggregation: {bad_agg}",
+            ):
+                tsdata_res.download_aggregate(
+                    "2020-01-01T00:00:00+00:00",
+                    "2020-01-01T00:30:00+00:00",
+                    1,
+                    [0, 1, 2],
+                    aggregation=bad_agg,
+                )
+
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid aggregation: {bad_agg}",
+            ):
+                tsdata_res.download_aggregate_by_names(
+                    0,
+                    "2020-01-01T00:00:00+00:00",
+                    "2020-01-01T00:30:00+00:00",
+                    1,
+                    ["Timeseries 1", "Timeseries 2", "Timeseries 3"],
+                    aggregation=bad_agg,
+                )
+
+        for bad_bucket_width_unit in [None, "week", "other", 42, FakeEnum.b]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid bucket width unit: {bad_bucket_width_unit}",
+            ):
+                tsdata_res.download_aggregate(
+                    "2020-01-01T00:00:00+00:00",
+                    "2020-01-01T00:30:00+00:00",
+                    1,
+                    [0, 1, 2],
+                    bucket_width_unit=bad_bucket_width_unit,
+                )
+
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid bucket width unit: {bad_bucket_width_unit}",
+            ):
+                tsdata_res.download_aggregate_by_names(
+                    0,
+                    "2020-01-01T00:00:00+00:00",
+                    "2020-01-01T00:30:00+00:00",
+                    1,
+                    ["Timeseries 1", "Timeseries 2", "Timeseries 3"],
+                    bucket_width_unit=bad_bucket_width_unit,
+                )
