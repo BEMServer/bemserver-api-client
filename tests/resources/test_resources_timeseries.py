@@ -34,7 +34,7 @@ class TestAPIClientResourcesTimeseries:
         )
         assert TimeseriesDataStateResources.disabled_endpoints == []
         assert TimeseriesDataStateResources.client_entrypoint == (
-            "timeseries_data_states"
+            "timeseries_datastates"
         )
 
         assert issubclass(TimeseriesPropertyResources, BaseResources)
