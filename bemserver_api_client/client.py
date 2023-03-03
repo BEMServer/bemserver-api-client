@@ -44,6 +44,7 @@ class BEMServerApiClient:
 
     def __getattr__(self, name):
         try:
+            # Here name value is expected to be a resource client_entrypoint value.
             return RESOURCES_MAP[name](self._request_manager)
         except KeyError:
             raise AttributeError
