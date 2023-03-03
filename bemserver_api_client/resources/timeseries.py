@@ -24,7 +24,7 @@ class TimeseriesResources(BaseResources):
 
 class TimeseriesDataStateResources(BaseResources):
     endpoint_base_uri = "/timeseries_data_states/"
-    client_entrypoint = "timeseries_data_states"
+    client_entrypoint = "timeseries_datastates"
 
 
 class TimeseriesPropertyResources(BaseResources):
