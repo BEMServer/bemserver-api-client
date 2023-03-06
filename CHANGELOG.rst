@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.14.0 (2023-03-06)
++++++++++++++++++++
+
+Features:
+
+- Add ``WeatherParameter`` enum
+
+Other changes:
+
+- Require bemserver-api >=0.14.0 and <0.15.0
+- Require bemserver-core 0.11.1
+
+Follows `API update 0.14.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0140-2023-03-06>`_
+
 0.13.1 (2023-03-03)
 +++++++++++++++++++
 
