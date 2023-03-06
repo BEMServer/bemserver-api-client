@@ -39,3 +39,16 @@ class StructuralElement(enum.Enum):
     storey = "storey"
     space = "space"
     zone = "zone"
+
+
+class WeatherParameter(enum.Enum):
+    AIR_TEMPERATURE = "Air temperature"
+    DEWPOINT_TEMPERATURE = "Dewpoint temperature"
+    WETBULB_TEMPERATURE = "Wetbulb temperature"
+    WIND_SPEED = "Wind speed"
+    WIND_DIRECTION = "Wind direction"
+    SURFACE_SOLAR_RADIATION = "Surface solar radiation"
+    DIRECT_NORMAL_SOLAR_RADIATION = "Direct normal solar radiation"
+    RELATIVE_HUMIDITY = "Relative humidity"
+    SURFACE_PRESSURE = "Surface pressure"
+    TOTAL_PRECIPITATION = "Total precipitation"
