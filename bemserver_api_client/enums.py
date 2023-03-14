@@ -48,6 +48,8 @@ class WeatherParameter(enum.Enum):
     WIND_SPEED = "Wind speed"
     WIND_DIRECTION = "Wind direction"
     SURFACE_SOLAR_RADIATION = "Surface solar radiation"
+    SURFACE_DIRECT_SOLAR_RADIATION = "Surface direct solar radiation"
+    SURFACE_DIFFUSE_SOLAR_RADIATION = "Surface diffuse solar radiation"
     DIRECT_NORMAL_SOLAR_RADIATION = "Direct normal solar radiation"
     RELATIVE_HUMIDITY = "Relative humidity"
     SURFACE_PRESSURE = "Surface pressure"
