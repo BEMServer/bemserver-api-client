@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.15.0 (2023-03-14)
++++++++++++++++++++
+
+Features:
+
+- Update ``WeatherParameter`` enum (add ``SURFACE_DIRECT_SOLAR_RADIATION`` and ``SURFACE_DIFFUSE_SOLAR_RADIATION``)
+
+Other changes:
+
+- Require bemserver-api >=0.15.0 and <0.16.0
+- Require bemserver-core 0.12.0
+
+Follows `API update 0.15.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0150-2023-03-14>`_
+
 0.14.0 (2023-03-06)
 +++++++++++++++++++
 
