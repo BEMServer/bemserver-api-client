@@ -41,24 +41,24 @@ class TestAPIClientRequest:
         }
         assert req._prepare_etag_header("GET", None) == {}
 
-    def test_api_client_request_accept_header(self):
+    def test_api_client_request_dataformat_header(self):
         req = BEMServerApiClientRequest("http://localhost:5000", None)
-        assert req._prepare_accept_header(DataFormat.csv) == {
-            "Accept": DataFormat.csv.value
+        assert req._prepare_dataformat_header(DataFormat.csv) == {
+            "Content-Type": DataFormat.csv.value
         }
-        assert req._prepare_accept_header(DataFormat.json) == {
-            "Accept": DataFormat.json.value
+        assert req._prepare_dataformat_header(DataFormat.json) == {
+            "Content-Type": DataFormat.json.value
         }
 
         with pytest.raises(TypeError):
-            req._prepare_accept_header(None)
+            req._prepare_dataformat_header(None)
         with pytest.raises(TypeError):
-            req._prepare_accept_header("other")
+            req._prepare_dataformat_header("other")
 
         with pytest.raises(
             BEMServerAPIClientValueError, match=f"Invalid data format: {FakeEnum.a}"
         ):
-            req._prepare_accept_header(FakeEnum.a)
+            req._prepare_dataformat_header(FakeEnum.a)
 
     def test_api_client_request_exclude_empty_files(self):
         sites_csv_data = "Name,Description,IFC_ID,Area\n" "Site 1,Great site,,2000\n"

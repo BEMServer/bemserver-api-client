@@ -28,7 +28,7 @@ class BEMServerApiClientRequest:
     def _build_uri(self, endpoint_uri):
         return f"{self.base_uri}{endpoint_uri}"
 
-    def _prepare_accept_header(self, format):
+    def _prepare_dataformat_header(self, format):
         """
 
         :raises TypeError: when format is None or not an enum type
@@ -36,7 +36,7 @@ class BEMServerApiClientRequest:
         """
         if format not in DataFormat:
             raise BEMServerAPIClientValueError(f"Invalid data format: {format}")
-        return {"Accept": format.value}
+        return {"Content-Type": format.value}
 
     def _prepare_etag_header(self, http_method, etag):
         etag_header = {}
@@ -116,7 +116,7 @@ class BEMServerApiClientRequest:
         """
         kwargs["headers"] = {
             **kwargs.pop("headers", {}),
-            **self._prepare_accept_header(format),
+            **self._prepare_dataformat_header(format),
         }
         return self._execute("POST", endpoint, data=data, **kwargs)
 
@@ -128,6 +128,6 @@ class BEMServerApiClientRequest:
         """
         kwargs["headers"] = {
             **kwargs.pop("headers", {}),
-            **self._prepare_accept_header(format),
+            **self._prepare_dataformat_header(format),
         }
         return self._execute("GET", endpoint, **kwargs)

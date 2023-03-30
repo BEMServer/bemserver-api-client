@@ -3,7 +3,7 @@ import enum
 
 
 class DataFormat(enum.Enum):
-    csv = "application/csv"
+    csv = "text/csv"
     json = "application/json"
 
 
