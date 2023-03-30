@@ -2,6 +2,7 @@
 import logging
 import json
 
+from .enums import DataFormat
 from .exceptions import (
     BEMServerAPIConflictError,
     BEMServerAPIValidationError,
@@ -52,7 +53,7 @@ class BEMServerApiClientResponse:
         """Check if the mimetype indicates JSON data, either
         :mimetype:`application/json` or :mimetype:`application/*+json`.
         """
-        return self._mimetype == "application/json" or (
+        return self._mimetype == DataFormat.json.value or (
             self._mimetype.startswith("application/")
             and self._mimetype.endswith("+json")
         )
@@ -60,11 +61,10 @@ class BEMServerApiClientResponse:
     @property
     def is_csv(self):
         """Check if the mimetype indicates CSV data, either
-        :mimetype:`application/csv` or :mimetype:`application/*+csv`.
+        :mimetype:`text/csv` or :mimetype:`text/*+csv`.
         """
-        return self._mimetype == "application/csv" or (
-            self._mimetype.startswith("application/")
-            and self._mimetype.endswith("+csv")
+        return self._mimetype == DataFormat.csv.value or (
+            self._mimetype.startswith("text/") and self._mimetype.endswith("+csv")
         )
 
     @property
