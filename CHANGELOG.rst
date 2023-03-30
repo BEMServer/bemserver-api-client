@@ -1,6 +1,21 @@
 Changelog
 ---------
 
+0.16.0 (2023-03-30)
++++++++++++++++++++
+
+Fixes:
+
+- Fix MIME type for CSV data (``application/csv`` -> ``text/csv``)
+- Fix header for upload requests (``Accept`` -> ``Content-Type``)
+
+Other changes:
+
+- Require bemserver-api >=0.16.0 and <0.17.0
+- Still require bemserver-core 0.12.0
+
+Follows `API update 0.16.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0160-2023-03-30>`_
+
 0.15.0 (2023-03-14)
 +++++++++++++++++++
 
