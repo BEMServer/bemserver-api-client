@@ -43,22 +43,27 @@ class TestAPIClientRequest:
 
     def test_api_client_request_dataformat_header(self):
         req = BEMServerApiClientRequest("http://localhost:5000", None)
-        assert req._prepare_dataformat_header(DataFormat.csv) == {
-            "Content-Type": DataFormat.csv.value
-        }
-        assert req._prepare_dataformat_header(DataFormat.json) == {
-            "Content-Type": DataFormat.json.value
-        }
+        for dataformat in list(DataFormat):
+            for http_method in ["POST", "post", "PUT", "put"]:
+                assert req._prepare_dataformat_header(http_method, dataformat) == {
+                    "Content-Type": dataformat.value
+                }
+            for http_method in ["GET", "get"]:
+                assert req._prepare_dataformat_header(http_method, dataformat) == {
+                    "Accept": dataformat.value
+                }
+            assert req._prepare_dataformat_header("whatever", dataformat) == {}
 
-        with pytest.raises(TypeError):
-            req._prepare_dataformat_header(None)
-        with pytest.raises(TypeError):
-            req._prepare_dataformat_header("other")
+        for http_method in ["POST", "post", "PUT", "put", "GET", "get"]:
+            with pytest.raises(TypeError):
+                req._prepare_dataformat_header(http_method, None)
+            with pytest.raises(TypeError):
+                req._prepare_dataformat_header(http_method, "other")
 
-        with pytest.raises(
-            BEMServerAPIClientValueError, match=f"Invalid data format: {FakeEnum.a}"
-        ):
-            req._prepare_dataformat_header(FakeEnum.a)
+            with pytest.raises(
+                BEMServerAPIClientValueError, match=f"Invalid data format: {FakeEnum.a}"
+            ):
+                req._prepare_dataformat_header(http_method, FakeEnum.a)
 
     def test_api_client_request_exclude_empty_files(self):
         sites_csv_data = "Name,Description,IFC_ID,Area\n" "Site 1,Great site,,2000\n"

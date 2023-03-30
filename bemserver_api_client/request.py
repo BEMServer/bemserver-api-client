@@ -28,7 +28,7 @@ class BEMServerApiClientRequest:
     def _build_uri(self, endpoint_uri):
         return f"{self.base_uri}{endpoint_uri}"
 
-    def _prepare_dataformat_header(self, format):
+    def _prepare_dataformat_header(self, http_method, format):
         """
 
         :raises TypeError: when format is None or not an enum type
@@ -36,7 +36,12 @@ class BEMServerApiClientRequest:
         """
         if format not in DataFormat:
             raise BEMServerAPIClientValueError(f"Invalid data format: {format}")
-        return {"Content-Type": format.value}
+        dataformat_header = {}
+        if http_method.upper() == "GET":
+            dataformat_header = {"Accept": format.value}
+        elif http_method.upper() in ["POST", "PUT"]:
+            dataformat_header = {"Content-Type": format.value}
+        return dataformat_header
 
     def _prepare_etag_header(self, http_method, etag):
         etag_header = {}
@@ -114,11 +119,12 @@ class BEMServerApiClientRequest:
         :param DataFormat format: (optional, default JSON)
             data format, either CSV or JSON
         """
+        http_method = "POST"
         kwargs["headers"] = {
             **kwargs.pop("headers", {}),
-            **self._prepare_dataformat_header(format),
+            **self._prepare_dataformat_header(http_method, format),
         }
-        return self._execute("POST", endpoint, data=data, **kwargs)
+        return self._execute(http_method, endpoint, data=data, **kwargs)
 
     def download(self, endpoint, *, format=DataFormat.json, **kwargs):
         """Download data in specified format.
@@ -126,8 +132,9 @@ class BEMServerApiClientRequest:
         :param DataFormat format: (optional, default JSON)
             data format, either CSV or JSON
         """
+        http_method = "GET"
         kwargs["headers"] = {
             **kwargs.pop("headers", {}),
-            **self._prepare_dataformat_header(format),
+            **self._prepare_dataformat_header(http_method, format),
         }
-        return self._execute("GET", endpoint, **kwargs)
+        return self._execute(http_method, endpoint, **kwargs)

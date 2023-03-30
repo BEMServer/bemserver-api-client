@@ -681,7 +681,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.csv.value,
+            "Accept": DataFormat.csv.value,
         },
         headers={
             "Content-Type": DataFormat.csv.value,
@@ -697,7 +697,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri_camp}?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.csv.value,
+            "Accept": DataFormat.csv.value,
         },
         headers={
             "Content-Type": DataFormat.csv.value,
@@ -733,7 +733,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.json.value,
+            "Accept": DataFormat.json.value,
         },
         headers={
             "Content-Type": DataFormat.json.value,
@@ -753,7 +753,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri_camp}?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.json.value,
+            "Accept": DataFormat.json.value,
         },
         headers={
             "Content-Type": DataFormat.json.value,
@@ -774,7 +774,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri}aggregate?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.csv.value,
+            "Accept": DataFormat.csv.value,
         },
         headers={
             "Content-Type": DataFormat.csv.value,
@@ -788,7 +788,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri_camp}aggregate?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.csv.value,
+            "Accept": DataFormat.csv.value,
         },
         headers={
             "Content-Type": DataFormat.csv.value,
@@ -819,7 +819,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri}aggregate?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.json.value,
+            "Accept": DataFormat.json.value,
         },
         headers={
             "Content-Type": "application/json",
@@ -838,7 +838,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         "GET",
         f"{endpoint_uri_camp}aggregate?{urllib.parse.urlencode(q_params, True)}",
         request_headers={
-            "Content-Type": DataFormat.json.value,
+            "Accept": DataFormat.json.value,
         },
         headers={
             "Content-Type": "application/json",
