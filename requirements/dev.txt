@@ -16,6 +16,8 @@ coverage[toml]==6.4.4
     # via pytest-cov
 distlib==0.3.6
     # via virtualenv
+exceptiongroup==1.1.1
+    # via pytest
 filelock==3.8.0
     # via virtualenv
 identify==2.5.5
@@ -26,7 +28,7 @@ iniconfig==1.1.1
     # via pytest
 nodeenv==1.7.0
     # via pre-commit
-packaging==23.0
+packaging==23.1
     # via
     #   -r requirements/tests.in
     #   pytest
@@ -52,6 +54,10 @@ requests-mock==1.10.0
     # via -r requirements/tests.in
 six==1.16.0
     # via requests-mock
+tomli==2.0.1
+    # via
+    #   coverage
+    #   pytest
 urllib3==1.26.12
     # via requests
 virtualenv==20.16.5
