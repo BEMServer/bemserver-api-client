@@ -44,6 +44,7 @@ __all__ = [
     services.ST_CleanupByTimeseriesResources,
     services.ST_CheckMissingByCampaignResources,
     services.ST_CheckOutlierByCampaignResources,
+    services.ST_DownloadWeatherDataBySiteResources,
     structural_elements.SiteResources,
     structural_elements.BuildingResources,
     structural_elements.StoreyResources,

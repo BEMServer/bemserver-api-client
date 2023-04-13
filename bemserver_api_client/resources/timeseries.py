@@ -83,6 +83,7 @@ class TimeseriesDataResources(BaseResources):
         timeseries_ids,
         timezone="UTC",
         format=DataFormat.json,
+        convert_to=None,
     ):
         return self._req.download(
             self.endpoint_base_uri,
@@ -93,6 +94,7 @@ class TimeseriesDataResources(BaseResources):
                 "data_state": data_state,
                 "timeseries": timeseries_ids,
                 "timezone": timezone,
+                "convert_to": convert_to,
             },
         )
 
@@ -105,6 +107,7 @@ class TimeseriesDataResources(BaseResources):
         timeseries_names,
         timezone="UTC",
         format=DataFormat.json,
+        convert_to=None,
     ):
         return self._req.download(
             self.endpoint_uri_by_campaign(campaign_id),
@@ -115,6 +118,7 @@ class TimeseriesDataResources(BaseResources):
                 "data_state": data_state,
                 "timeseries": timeseries_names,
                 "timezone": timezone,
+                "convert_to": convert_to,
             },
         )
 
@@ -129,6 +133,7 @@ class TimeseriesDataResources(BaseResources):
         bucket_width_value="1",
         bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
+        convert_to=None,
     ):
         if aggregation not in list(Aggregation):
             raise BEMServerAPIClientValueError(f"Invalid aggregation: {aggregation}")
@@ -149,6 +154,7 @@ class TimeseriesDataResources(BaseResources):
                 "aggregation": aggregation.value,
                 "bucket_width_value": bucket_width_value,
                 "bucket_width_unit": bucket_width_unit.value,
+                "convert_to": convert_to,
             },
         )
 
@@ -164,6 +170,7 @@ class TimeseriesDataResources(BaseResources):
         bucket_width_value="1",
         bucket_width_unit=BucketWidthUnit.hour,
         format=DataFormat.json,
+        convert_to=None,
     ):
         if aggregation not in list(Aggregation):
             raise BEMServerAPIClientValueError(f"Invalid aggregation: {aggregation}")
@@ -184,6 +191,7 @@ class TimeseriesDataResources(BaseResources):
                 "aggregation": aggregation.value,
                 "bucket_width_value": bucket_width_value,
                 "bucket_width_unit": bucket_width_unit.value,
+                "convert_to": convert_to,
             },
         )
 
