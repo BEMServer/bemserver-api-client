@@ -1,6 +1,21 @@
 Changelog
 ---------
 
+0.17.0 (2023-04-13)
++++++++++++++++++++
+
+Features:
+
+- Update timeseries_data.download* endpoints: add *convert_to* param
+- Add download weather data service resources
+
+Other changes:
+
+- Require bemserver-api >=0.17.1 and <0.18.0
+- Require bemserver-core 0.13.1
+
+Follows `API update 0.17.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0170-2023-04-13>`_ and `update 0.17.1 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0171-2023-04-13>`_
+
 0.16.0 (2023-03-30)
 +++++++++++++++++++
 
