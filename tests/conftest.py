@@ -22,6 +22,7 @@ from bemserver_api_client.resources.services import (
     ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
+    ST_DownloadWeatherDataBySiteResources,
 )
 from bemserver_api_client.enums import (
     DataFormat,
@@ -143,6 +144,7 @@ def mock_session(uri_prefix, base_uri):
     mock_cleanup_uris(adapter, base_uri)
     mock_check_missing_uris(adapter, base_uri)
     mock_check_outlier_uris(adapter, base_uri)
+    mock_download_weather_uris(adapter, base_uri)
 
     session = requests.Session()
     session.mount(f"{uri_prefix}://", adapter)
@@ -1179,6 +1181,38 @@ def mock_check_outlier_uris(mock_adapter, base_uri):
                 "campaign_name": "test",
                 "id": 3,
                 "is_enabled": False,
+            },
+        ],
+    )
+
+
+def mock_download_weather_uris(mock_adapter, base_uri):
+    # Get download weather data service state for all sites
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{ST_DownloadWeatherDataBySiteResources.endpoint_base_uri}full",
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "etag_download_weather_data_sites",
+        },
+        json=[
+            {
+                "id": 1,
+                "is_enabled": True,
+                "site_id": 1,
+                "site_name": "Anglet",
+            },
+            {
+                "id": 2,
+                "is_enabled": False,
+                "site_id": 2,
+                "site_name": "Bordeaux",
+            },
+            {
+                "id": None,
+                "is_enabled": False,
+                "site_id": 3,
+                "site_name": "Talence",
             },
         ],
     )

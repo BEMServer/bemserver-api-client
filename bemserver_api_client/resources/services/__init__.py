@@ -10,3 +10,6 @@ from .check_missing import (  # noqa
 from .check_outliers import (  # noqa
     ST_CheckOutlierByCampaignResources,
 )
+from .download_weather import (  # noqa
+    ST_DownloadWeatherDataBySiteResources,
+)
