@@ -688,11 +688,30 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         },
         content=(data_csv_header_ids + data_csv).encode(),
     )
+    # Download timeseries data CSV (by ids), with convert_to
+    data_csv_converted = (
+        "2020-01-01T00:00:00+00:00,273.16,274.16,275.16\n"
+        "2020-01-01T00:10:00+00:00,0.2,1.2,2.2\n"
+        "2020-01-01T00:20:00+00:00,0.3,1.3,2.3\n"
+    )
+    q_params["convert_to"] = ["kelvin", "", ""]
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
+        headers={
+            "Content-Type": DataFormat.csv.value,
+        },
+        content=(data_csv_header_ids + data_csv_converted).encode(),
+    )
 
     # Download timeseries data CSV (by names)
     data_csv_header_names = "Datetime,Timeseries 1,Timeseries 2,Timeseries 3\n"
     endpoint_uri_camp = f"{endpoint_uri}campaign/0/"
     q_params["timeseries"] = ["Timeseries 1", "Timeseries 2", "Timeseries 3"]
+    del q_params["convert_to"]
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri_camp}?{urllib.parse.urlencode(q_params, True)}",
@@ -703,6 +722,20 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
             "Content-Type": DataFormat.csv.value,
         },
         content=(data_csv_header_names + data_csv).encode(),
+    )
+    # Download timeseries data CSV (by names), with convert_to
+    data_csv_header_names = "Datetime,Timeseries 1,Timeseries 2,Timeseries 3\n"
+    q_params["convert_to"] = ["kelvin", "", ""]
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri_camp}?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
+        headers={
+            "Content-Type": DataFormat.csv.value,
+        },
+        content=(data_csv_header_names + data_csv_converted).encode(),
     )
 
     # Download timeseries data JSON (by ids)
@@ -782,7 +815,23 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
         content=(data_csv_header_ids + data_csv_agg).encode(),
     )
 
+    # Download aggregated timeseries data CSV (by ids), with convert_to
+    data_csv_agg_converted = "2020-01-01T00:00:00+00:00,820.05,823.45,826.45\n"
+    q_params["convert_to"] = ["kelvin", "kelvin", "kelvin"]
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}aggregate?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
+        headers={
+            "Content-Type": DataFormat.csv.value,
+        },
+        content=(data_csv_header_ids + data_csv_agg_converted).encode(),
+    )
+
     # Download aggregated timeseries data CSV (by names)
+    del q_params["convert_to"]
     q_params["timeseries"] = ["Timeseries 1", "Timeseries 2", "Timeseries 3"]
     mock_adapter.register_uri(
         "GET",
@@ -794,6 +843,20 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
             "Content-Type": DataFormat.csv.value,
         },
         content=(data_csv_header_names + data_csv_agg).encode(),
+    )
+
+    # Download aggregated timeseries data CSV (by names), with convert_to
+    q_params["convert_to"] = ["kelvin", "kelvin", "kelvin"]
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri_camp}aggregate?{urllib.parse.urlencode(q_params, True)}",
+        request_headers={
+            "Accept": DataFormat.csv.value,
+        },
+        headers={
+            "Content-Type": DataFormat.csv.value,
+        },
+        content=(data_csv_header_names + data_csv_agg_converted).encode(),
     )
 
     # Download aggregated timeseries data JSON (by ids)

@@ -191,6 +191,7 @@ class TestAPIClientResourcesTimeseries:
     def test_api_client_resources_timeseries_data_download_csv(self, mock_request):
         tsdata_res = TimeseriesDataResources(mock_request)
 
+        # Get data CSV from ts ids
         resp = tsdata_res.download(
             "2020-01-01T00:00:00+00:00",
             "2020-01-01T00:30:00+00:00",
@@ -205,7 +206,27 @@ class TestAPIClientResourcesTimeseries:
         ret_csv_lines = resp.data.decode("utf-8").splitlines()
         assert ret_csv_lines[0] == "Datetime,0,1,2"
         assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,0.1,1.1,2.1"
+        assert ret_csv_lines[2] == "2020-01-01T00:10:00+00:00,0.2,1.2,2.2"
 
+        # Get data CSV from ts ids, with convert_to
+        resp = tsdata_res.download(
+            "2020-01-01T00:00:00+00:00",
+            "2020-01-01T00:30:00+00:00",
+            1,
+            [0, 1, 2],
+            format=DataFormat.csv,
+            convert_to=["kelvin", "", ""],
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_csv
+        assert not resp.is_json
+        ret_csv_lines = resp.data.decode("utf-8").splitlines()
+        assert ret_csv_lines[0] == "Datetime,0,1,2"
+        assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,273.16,274.16,275.16"
+        assert ret_csv_lines[2] == "2020-01-01T00:10:00+00:00,0.2,1.2,2.2"
+
+        # Get data CSV from ts names
         resp = tsdata_res.download_by_names(
             0,
             "2020-01-01T00:00:00+00:00",
@@ -221,7 +242,28 @@ class TestAPIClientResourcesTimeseries:
         ret_csv_lines = resp.data.decode("utf-8").splitlines()
         assert ret_csv_lines[0] == "Datetime,Timeseries 1,Timeseries 2,Timeseries 3"
         assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,0.1,1.1,2.1"
+        assert ret_csv_lines[2] == "2020-01-01T00:10:00+00:00,0.2,1.2,2.2"
 
+        # Get data CSV from ts names, with convert_to
+        resp = tsdata_res.download_by_names(
+            0,
+            "2020-01-01T00:00:00+00:00",
+            "2020-01-01T00:30:00+00:00",
+            1,
+            ["Timeseries 1", "Timeseries 2", "Timeseries 3"],
+            format=DataFormat.csv,
+            convert_to=["kelvin", "", ""],
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_csv
+        assert not resp.is_json
+        ret_csv_lines = resp.data.decode("utf-8").splitlines()
+        assert ret_csv_lines[0] == "Datetime,Timeseries 1,Timeseries 2,Timeseries 3"
+        assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,273.16,274.16,275.16"
+        assert ret_csv_lines[2] == "2020-01-01T00:10:00+00:00,0.2,1.2,2.2"
+
+        # Get aggregated data as CSV from ts ids
         resp = tsdata_res.download_aggregate(
             "2020-01-01T00:00:00+00:00",
             "2020-01-01T00:30:00+00:00",
@@ -238,6 +280,25 @@ class TestAPIClientResourcesTimeseries:
         assert ret_csv_lines[0] == "Datetime,0,1,2"
         assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,0.6,3.6,6.6"
 
+        # Get aggregated data as CSV from ts ids, with convert_to
+        resp = tsdata_res.download_aggregate(
+            "2020-01-01T00:00:00+00:00",
+            "2020-01-01T00:30:00+00:00",
+            1,
+            [0, 1, 2],
+            aggregation=Aggregation.sum,
+            format=DataFormat.csv,
+            convert_to=["kelvin", "kelvin", "kelvin"],
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_csv
+        assert not resp.is_json
+        ret_csv_lines = resp.data.decode("utf-8").splitlines()
+        assert ret_csv_lines[0] == "Datetime,0,1,2"
+        assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,820.05,823.45,826.45"
+
+        # Get aggregated data as CSV from ts names
         resp = tsdata_res.download_aggregate_by_names(
             0,
             "2020-01-01T00:00:00+00:00",
@@ -254,6 +315,25 @@ class TestAPIClientResourcesTimeseries:
         ret_csv_lines = resp.data.decode("utf-8").splitlines()
         assert ret_csv_lines[0] == "Datetime,Timeseries 1,Timeseries 2,Timeseries 3"
         assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,0.6,3.6,6.6"
+
+        # Get aggregated data as CSV from ts names, with convert_to
+        resp = tsdata_res.download_aggregate_by_names(
+            0,
+            "2020-01-01T00:00:00+00:00",
+            "2020-01-01T00:30:00+00:00",
+            1,
+            ["Timeseries 1", "Timeseries 2", "Timeseries 3"],
+            aggregation=Aggregation.sum,
+            format=DataFormat.csv,
+            convert_to=["kelvin", "kelvin", "kelvin"],
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_csv
+        assert not resp.is_json
+        ret_csv_lines = resp.data.decode("utf-8").splitlines()
+        assert ret_csv_lines[0] == "Datetime,Timeseries 1,Timeseries 2,Timeseries 3"
+        assert ret_csv_lines[1] == "2020-01-01T00:00:00+00:00,820.05,823.45,826.45"
 
     def test_api_client_resources_timeseries_data_download_json(self, mock_request):
         tsdata_res = TimeseriesDataResources(mock_request)
