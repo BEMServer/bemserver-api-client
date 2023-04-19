@@ -18,6 +18,8 @@
 /zone_property_data/ endpoints
 """
 from .base import BaseResources
+from ..enums import DegreeDaysPeriod, DegreeDaysType
+from ..exceptions import BEMServerAPIClientValueError
 
 
 class SiteResources(BaseResources):
@@ -31,6 +33,34 @@ class SiteResources(BaseResources):
             params={
                 "start_time": start_time,
                 "end_time": end_time,
+            },
+        )
+
+    def get_degree_days(
+        self,
+        id,
+        start_time,
+        end_time,
+        *,
+        period=DegreeDaysPeriod.day,
+        type=DegreeDaysType.heating,
+        base=18,
+        unit="°C",
+    ):
+        if period not in list(DegreeDaysPeriod):
+            raise BEMServerAPIClientValueError(f"Invalid period: {period}")
+        if type not in list(DegreeDaysType):
+            raise BEMServerAPIClientValueError(f"Invalid type: {type}")
+        return self._req._execute(
+            "GET",
+            f"{self.enpoint_uri_by_id(id)}/degree_days",
+            params={
+                "start_time": start_time,
+                "end_time": end_time,
+                "period": period.value,
+                "type": type.value,
+                "base": base,
+                "unit": unit,
             },
         )
 

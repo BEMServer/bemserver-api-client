@@ -1,4 +1,6 @@
 """BEMServer API client structural element resources tests"""
+import pytest
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.structural_elements import (
     StructuralElementPropertyResources,
@@ -19,6 +21,10 @@ from bemserver_api_client.resources.structural_elements import (
     ZonePropertyDataResources,
 )
 from bemserver_api_client.response import BEMServerApiClientResponse
+from bemserver_api_client.enums import DegreeDaysPeriod, DegreeDaysType
+from bemserver_api_client.exceptions import BEMServerAPIClientValueError
+
+from tests.conftest import FakeEnum
 
 
 class TestAPIClientResourcesStructuralElements:
@@ -28,6 +34,7 @@ class TestAPIClientResourcesStructuralElements:
         assert SiteResources.disabled_endpoints == []
         assert SiteResources.client_entrypoint == "sites"
         assert hasattr(SiteResources, "download_weather_data")
+        assert hasattr(SiteResources, "get_degree_days")
 
         assert issubclass(BuildingResources, BaseResources)
         assert BuildingResources.endpoint_base_uri == "/buildings/"
@@ -115,9 +122,10 @@ class TestAPIClientResourcesStructuralElements:
         assert ZonePropertyDataResources.client_entrypoint == "zone_property_data"
 
     def test_api_client_resources_sites_endpoints(self, mock_request):
-        site_res = SiteResources(mock_request)
+        sites_res = SiteResources(mock_request)
 
-        resp = site_res.download_weather_data(
+        # Call a download weather data from an external weather service.
+        resp = sites_res.download_weather_data(
             1,
             "2020-01-01T00:00:00+00:00",
             "2020-01-01T00:30:00+00:00",
@@ -129,3 +137,71 @@ class TestAPIClientResourcesStructuralElements:
         assert resp.pagination == {}
         assert resp.etag == ""
         assert resp.data == {}
+
+        # Get degree days for a site.
+        dd_json = {
+            "2020-01-01T00:00:00+00:00": 7.1,
+            "2020-01-02T00:00:00+00:00": 7.2,
+            "2020-01-03T00:00:00+00:00": 7.3,
+            "2020-01-04T00:00:00+00:00": 7.4,
+        }
+        resp = sites_res.get_degree_days(
+            1,
+            "2020-01-01T00:00:00+00:00",
+            "2020-01-05T00:00:00+00:00",
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert not resp.is_csv
+        assert len(resp.data.keys()) == len(dd_json.keys())
+        for k, v in resp.data.items():
+            assert k in dd_json
+            assert v == dd_json[k]
+
+        dd_json = {
+            "2020-07-01T00:00:00+00:00": 297.4,
+        }
+        resp = sites_res.get_degree_days(
+            1,
+            "2020-07-01T00:00:00+00:00",
+            "2020-08-01T00:00:00+00:00",
+            period=DegreeDaysPeriod.month,
+            type=DegreeDaysType.cooling,
+            base=24,
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert not resp.is_csv
+        assert len(resp.data.keys()) == len(dd_json.keys())
+        for k, v in resp.data.items():
+            assert k in dd_json
+            assert v == dd_json[k]
+
+    def test_api_client_resources_sites_endpoints_errors(self, mock_request):
+        sites_res = SiteResources(mock_request)
+
+        for bad_period in [None, "hour", "other", 42, FakeEnum.b]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid period: {bad_period}",
+            ):
+                sites_res.get_degree_days(
+                    1,
+                    "2020-01-01T00:00:00+00:00",
+                    "2020-01-05T00:00:00+00:00",
+                    period=bad_period,
+                )
+
+        for bad_type in [None, "other", 42, FakeEnum.b]:
+            with pytest.raises(
+                BEMServerAPIClientValueError,
+                match=f"Invalid type: {bad_type}",
+            ):
+                sites_res.get_degree_days(
+                    1,
+                    "2020-01-01T00:00:00+00:00",
+                    "2020-01-05T00:00:00+00:00",
+                    type=bad_type,
+                )
