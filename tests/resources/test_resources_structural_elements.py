@@ -18,6 +18,7 @@ from bemserver_api_client.resources.structural_elements import (
     ZonePropertyResources,
     ZonePropertyDataResources,
 )
+from bemserver_api_client.response import BEMServerApiClientResponse
 
 
 class TestAPIClientResourcesStructuralElements:
@@ -26,6 +27,7 @@ class TestAPIClientResourcesStructuralElements:
         assert SiteResources.endpoint_base_uri == "/sites/"
         assert SiteResources.disabled_endpoints == []
         assert SiteResources.client_entrypoint == "sites"
+        assert hasattr(SiteResources, "download_weather_data")
 
         assert issubclass(BuildingResources, BaseResources)
         assert BuildingResources.endpoint_base_uri == "/buildings/"
@@ -111,3 +113,19 @@ class TestAPIClientResourcesStructuralElements:
         assert ZonePropertyDataResources.endpoint_base_uri == "/zone_property_data/"
         assert ZonePropertyDataResources.disabled_endpoints == []
         assert ZonePropertyDataResources.client_entrypoint == "zone_property_data"
+
+    def test_api_client_resources_sites_endpoints(self, mock_request):
+        site_res = SiteResources(mock_request)
+
+        resp = site_res.download_weather_data(
+            1,
+            "2020-01-01T00:00:00+00:00",
+            "2020-01-01T00:30:00+00:00",
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 204
+        assert resp.is_json
+        assert not resp.is_csv
+        assert resp.pagination == {}
+        assert resp.etag == ""
+        assert resp.data == {}

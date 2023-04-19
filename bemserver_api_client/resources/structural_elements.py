@@ -24,6 +24,16 @@ class SiteResources(BaseResources):
     endpoint_base_uri = "/sites/"
     client_entrypoint = "sites"
 
+    def download_weather_data(self, id, start_time, end_time):
+        return self._req._execute(
+            "PUT",
+            f"{self.enpoint_uri_by_id(id)}/download_weather_data",
+            params={
+                "start_time": start_time,
+                "end_time": end_time,
+            },
+        )
+
 
 class BuildingResources(BaseResources):
     endpoint_base_uri = "/buildings/"
