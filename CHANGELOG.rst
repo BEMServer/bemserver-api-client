@@ -1,6 +1,22 @@
 Changelog
 ---------
 
+0.17.1 (2023-04-19)
++++++++++++++++++++
+
+Features:
+
+- Add SiteResources.download_weather_data endpoint
+- Add SiteResources.get_degree_days endpoint
+- Add ``DegreeDaysPeriod`` and ``DegreeDaysType`` enums
+
+Other changes:
+
+- Require bemserver-api >=0.17.3 and <0.18.0
+- Require bemserver-core 0.13.2
+
+Follows `API update 0.17.2 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0172-2023-04-18>`_ and `update 0.17.3 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0173-2023-04-18>`_
+
 0.17.0 (2023-04-13)
 +++++++++++++++++++
 
