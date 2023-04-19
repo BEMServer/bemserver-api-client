@@ -24,6 +24,7 @@ from bemserver_api_client.resources.services import (
     ST_CheckOutlierByCampaignResources,
     ST_DownloadWeatherDataBySiteResources,
 )
+from bemserver_api_client.resources.structural_elements import SiteResources
 from bemserver_api_client.enums import (
     DataFormat,
     Aggregation,
@@ -145,6 +146,7 @@ def mock_session(uri_prefix, base_uri):
     mock_check_missing_uris(adapter, base_uri)
     mock_check_outlier_uris(adapter, base_uri)
     mock_download_weather_uris(adapter, base_uri)
+    mock_site_download_weather_data_uris(adapter, base_uri)
 
     session = requests.Session()
     session.mount(f"{uri_prefix}://", adapter)
@@ -1215,4 +1217,23 @@ def mock_download_weather_uris(mock_adapter, base_uri):
                 "site_name": "Talence",
             },
         ],
+    )
+
+
+def mock_site_download_weather_data_uris(mock_adapter, base_uri):
+    q_params = {
+        "start_time": "2020-01-01T00:00:00+00:00",
+        "end_time": "2020-01-01T00:30:00+00:00",
+    }
+    mock_adapter.register_uri(
+        "PUT",
+        (
+            f"{base_uri}{SiteResources.endpoint_base_uri}1/download_weather_data"
+            f"?{urllib.parse.urlencode(q_params, True)}"
+        ),
+        headers={
+            "Content-Type": "application/json",
+        },
+        json={},
+        status_code=204,
     )
