@@ -30,6 +30,8 @@ from bemserver_api_client.enums import (
     Aggregation,
     BucketWidthUnit,
     StructuralElement,
+    DegreeDaysPeriod,
+    DegreeDaysType,
 )
 
 
@@ -1221,6 +1223,9 @@ def mock_download_weather_uris(mock_adapter, base_uri):
 
 
 def mock_site_download_weather_data_uris(mock_adapter, base_uri):
+    endpoint_uri = f"{base_uri}{SiteResources.endpoint_base_uri}1"
+
+    # Download weather data from external weather service.
     q_params = {
         "start_time": "2020-01-01T00:00:00+00:00",
         "end_time": "2020-01-01T00:30:00+00:00",
@@ -1228,7 +1233,7 @@ def mock_site_download_weather_data_uris(mock_adapter, base_uri):
     mock_adapter.register_uri(
         "PUT",
         (
-            f"{base_uri}{SiteResources.endpoint_base_uri}1/download_weather_data"
+            f"{endpoint_uri}/download_weather_data"
             f"?{urllib.parse.urlencode(q_params, True)}"
         ),
         headers={
@@ -1236,4 +1241,43 @@ def mock_site_download_weather_data_uris(mock_adapter, base_uri):
         },
         json={},
         status_code=204,
+    )
+
+    # Get degree days.
+    data_json = {
+        "2020-01-01T00:00:00+00:00": 7.1,
+        "2020-01-02T00:00:00+00:00": 7.2,
+        "2020-01-03T00:00:00+00:00": 7.3,
+        "2020-01-04T00:00:00+00:00": 7.4,
+    }
+    q_params = {
+        "start_time": "2020-01-01T00:00:00+00:00",
+        "end_time": "2020-01-05T00:00:00+00:00",
+    }
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}/degree_days?{urllib.parse.urlencode(q_params, True)}",
+        headers={
+            "Content-Type": "application/json",
+        },
+        json=data_json,
+    )
+
+    data_json = {
+        "2020-07-01T00:00:00+00:00": 297.4,
+    }
+    q_params = {
+        "start_time": "2020-07-01T00:00:00+00:00",
+        "end_time": "2020-08-01T00:00:00+00:00",
+        "period": DegreeDaysPeriod.month.value,
+        "type": DegreeDaysType.cooling.value,
+        "base": 24,
+    }
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}/degree_days?{urllib.parse.urlencode(q_params, True)}",
+        headers={
+            "Content-Type": "application/json",
+        },
+        json=data_json,
     )
