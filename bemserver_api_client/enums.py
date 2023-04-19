@@ -54,3 +54,14 @@ class WeatherParameter(enum.Enum):
     RELATIVE_HUMIDITY = "Relative humidity"
     SURFACE_PRESSURE = "Surface pressure"
     TOTAL_PRECIPITATION = "Total precipitation"
+
+
+class DegreeDaysPeriod(enum.Enum):
+    day = "day"
+    month = "month"
+    year = "year"
+
+
+class DegreeDaysType(enum.Enum):
+    heating = "heating"
+    cooling = "cooling"
