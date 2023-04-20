@@ -140,15 +140,15 @@ class TestAPIClientResourcesStructuralElements:
 
         # Get degree days for a site.
         dd_json = {
-            "2020-01-01T00:00:00+00:00": 7.1,
-            "2020-01-02T00:00:00+00:00": 7.2,
-            "2020-01-03T00:00:00+00:00": 7.3,
-            "2020-01-04T00:00:00+00:00": 7.4,
+            "2020-01-01": 7.1,
+            "2020-01-02": 7.2,
+            "2020-01-03": 7.3,
+            "2020-01-04": 7.4,
         }
         resp = sites_res.get_degree_days(
             1,
-            "2020-01-01T00:00:00+00:00",
-            "2020-01-05T00:00:00+00:00",
+            "2020-01-01",
+            "2020-01-05",
         )
         assert isinstance(resp, BEMServerApiClientResponse)
         assert resp.status_code == 200
@@ -160,12 +160,12 @@ class TestAPIClientResourcesStructuralElements:
             assert v == dd_json[k]
 
         dd_json = {
-            "2020-07-01T00:00:00+00:00": 297.4,
+            "2020-07-01": 297.4,
         }
         resp = sites_res.get_degree_days(
             1,
-            "2020-07-01T00:00:00+00:00",
-            "2020-08-01T00:00:00+00:00",
+            "2020-07-01",
+            "2020-08-01",
             period=DegreeDaysPeriod.month,
             type=DegreeDaysType.cooling,
             base=24,
