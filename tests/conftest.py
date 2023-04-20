@@ -1245,14 +1245,14 @@ def mock_site_download_weather_data_uris(mock_adapter, base_uri):
 
     # Get degree days.
     data_json = {
-        "2020-01-01T00:00:00+00:00": 7.1,
-        "2020-01-02T00:00:00+00:00": 7.2,
-        "2020-01-03T00:00:00+00:00": 7.3,
-        "2020-01-04T00:00:00+00:00": 7.4,
+        "2020-01-01": 7.1,
+        "2020-01-02": 7.2,
+        "2020-01-03": 7.3,
+        "2020-01-04": 7.4,
     }
     q_params = {
-        "start_time": "2020-01-01T00:00:00+00:00",
-        "end_time": "2020-01-05T00:00:00+00:00",
+        "start_date": "2020-01-01",
+        "end_date": "2020-01-05",
     }
     mock_adapter.register_uri(
         "GET",
@@ -1264,11 +1264,11 @@ def mock_site_download_weather_data_uris(mock_adapter, base_uri):
     )
 
     data_json = {
-        "2020-07-01T00:00:00+00:00": 297.4,
+        "2020-07-01": 297.4,
     }
     q_params = {
-        "start_time": "2020-07-01T00:00:00+00:00",
-        "end_time": "2020-08-01T00:00:00+00:00",
+        "start_date": "2020-07-01",
+        "end_date": "2020-08-01",
         "period": DegreeDaysPeriod.month.value,
         "type": DegreeDaysType.cooling.value,
         "base": 24,

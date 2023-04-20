@@ -39,8 +39,8 @@ class SiteResources(BaseResources):
     def get_degree_days(
         self,
         id,
-        start_time,
-        end_time,
+        start_date,
+        end_date,
         *,
         period=DegreeDaysPeriod.day,
         type=DegreeDaysType.heating,
@@ -55,8 +55,8 @@ class SiteResources(BaseResources):
             "GET",
             f"{self.enpoint_uri_by_id(id)}/degree_days",
             params={
-                "start_time": start_time,
-                "end_time": end_time,
+                "start_date": start_date,
+                "end_date": end_date,
                 "period": period.value,
                 "type": type.value,
                 "base": base,
