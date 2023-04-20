@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+0.17.2 (2023-04-20)
++++++++++++++++++++
+
+Fixes:
+
+- Fix SiteResources.get_degree_days endpoint
+
 0.17.1 (2023-04-19)
 +++++++++++++++++++
 
