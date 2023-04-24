@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.18.0 (2023-04-24)
++++++++++++++++++++
+
+Features:
+
+- Add TimeseriesDataResources.get_stats endpoint
+
+Other changes:
+
+- Require bemserver-api >=0.18.0 and <0.19.0
+- Require bemserver-core 0.13.4
+
+Follows `API update 0.18.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0180-2023-04-21>`_
+
 0.17.2 (2023-04-20)
 +++++++++++++++++++
 
