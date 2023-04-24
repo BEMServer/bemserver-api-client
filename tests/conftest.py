@@ -618,6 +618,39 @@ def mock_timeseries_uris(mock_adapter, base_uri):
 def mock_timeseries_data_uris(mock_adapter, base_uri):
     endpoint_uri = f"{base_uri}{TimeseriesDataResources.endpoint_base_uri}"
 
+    # Stats
+    q_params = {
+        "data_state": 1,
+        "timeseries": [1, 2],
+    }
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}stats?{urllib.parse.urlencode(q_params, True)}",
+        headers={
+            "Content-Type": "application/json",
+        },
+        json={
+            "1": {
+                "first_timestamp": "2020-01-01T00:00:00+00:00",
+                "last_timestamp": "2021-01-01T00:00:00+00:00",
+                "count": 42,
+                "min": 0.0,
+                "max": 42.0,
+                "avg": 12.0,
+                "stddev": 4.2,
+            },
+            "2": {
+                "first_timestamp": "2020-01-01T00:00:00+00:00",
+                "last_timestamp": "2021-01-01T00:00:00+00:00",
+                "count": 69,
+                "min": 12.0,
+                "max": 142.0,
+                "avg": 69.0,
+                "stddev": 6.9,
+            },
+        },
+    )
+
     # Upload timeseries data CSV (by ids)
     mock_adapter.register_uri(
         "POST",
