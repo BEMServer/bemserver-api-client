@@ -440,6 +440,32 @@ class TestAPIClientResourcesTimeseries:
     def test_api_client_resources_timeseries_data_endpoints(self, mock_request):
         tsdata_res = TimeseriesDataResources(mock_request)
 
+        resp = tsdata_res.get_stats(1, [1, 2])
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert not resp.is_csv
+        assert resp.data == {
+            "1": {
+                "first_timestamp": "2020-01-01T00:00:00+00:00",
+                "last_timestamp": "2021-01-01T00:00:00+00:00",
+                "count": 42,
+                "min": 0.0,
+                "max": 42.0,
+                "avg": 12.0,
+                "stddev": 4.2,
+            },
+            "2": {
+                "first_timestamp": "2020-01-01T00:00:00+00:00",
+                "last_timestamp": "2021-01-01T00:00:00+00:00",
+                "count": 69,
+                "min": 12.0,
+                "max": 142.0,
+                "avg": 69.0,
+                "stddev": 6.9,
+            },
+        }
+
         resp = tsdata_res.delete(
             "2020-01-01T00:00:00+00:00",
             "2020-01-01T00:30:00+00:00",

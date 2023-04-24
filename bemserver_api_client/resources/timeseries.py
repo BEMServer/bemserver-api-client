@@ -45,6 +45,17 @@ class TimeseriesDataResources(BaseResources):
     def endpoint_uri_by_campaign(self, campaign_id):
         return f"{self.endpoint_base_uri}campaign/{str(campaign_id)}/"
 
+    def get_stats(self, data_state, timeseries_ids, timezone="UTC"):
+        return self._req._execute(
+            "GET",
+            f"{self.endpoint_base_uri}stats",
+            params={
+                "data_state": data_state,
+                "timeseries": timeseries_ids,
+                "timezone": timezone,
+            },
+        )
+
     def upload(self, data_state, data, format=DataFormat.json):
         """
 
