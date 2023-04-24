@@ -140,10 +140,10 @@ class TestAPIClientResourcesStructuralElements:
 
         # Get degree days for a site.
         dd_json = {
-            "2020-01-01": 7.1,
-            "2020-01-02": 7.2,
-            "2020-01-03": 7.3,
-            "2020-01-04": 7.4,
+            "2020-01-01T00:00:00+00:00": 7.1,
+            "2020-01-02T00:00:00+00:00": 7.2,
+            "2020-01-03T00:00:00+00:00": 7.3,
+            "2020-01-04T00:00:00+00:00": 7.4,
         }
         resp = sites_res.get_degree_days(
             1,
@@ -154,13 +154,14 @@ class TestAPIClientResourcesStructuralElements:
         assert resp.status_code == 200
         assert resp.is_json
         assert not resp.is_csv
-        assert len(resp.data.keys()) == len(dd_json.keys())
-        for k, v in resp.data.items():
+        assert "degree_days" in resp.data
+        assert len(resp.data["degree_days"].keys()) == len(dd_json.keys())
+        for k, v in resp.data["degree_days"].items():
             assert k in dd_json
             assert v == dd_json[k]
 
         dd_json = {
-            "2020-07-01": 297.4,
+            "2020-07-01T00:00:00+00:00": 297.4,
         }
         resp = sites_res.get_degree_days(
             1,
@@ -174,8 +175,8 @@ class TestAPIClientResourcesStructuralElements:
         assert resp.status_code == 200
         assert resp.is_json
         assert not resp.is_csv
-        assert len(resp.data.keys()) == len(dd_json.keys())
-        for k, v in resp.data.items():
+        assert len(resp.data["degree_days"].keys()) == len(dd_json.keys())
+        for k, v in resp.data["degree_days"].items():
             assert k in dd_json
             assert v == dd_json[k]
 

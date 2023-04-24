@@ -148,7 +148,7 @@ def mock_session(uri_prefix, base_uri):
     mock_check_missing_uris(adapter, base_uri)
     mock_check_outlier_uris(adapter, base_uri)
     mock_download_weather_uris(adapter, base_uri)
-    mock_site_download_weather_data_uris(adapter, base_uri)
+    mock_site_weather_data_uris(adapter, base_uri)
 
     session = requests.Session()
     session.mount(f"{uri_prefix}://", adapter)
@@ -1222,7 +1222,7 @@ def mock_download_weather_uris(mock_adapter, base_uri):
     )
 
 
-def mock_site_download_weather_data_uris(mock_adapter, base_uri):
+def mock_site_weather_data_uris(mock_adapter, base_uri):
     endpoint_uri = f"{base_uri}{SiteResources.endpoint_base_uri}1"
 
     # Download weather data from external weather service.
@@ -1245,10 +1245,12 @@ def mock_site_download_weather_data_uris(mock_adapter, base_uri):
 
     # Get degree days.
     data_json = {
-        "2020-01-01": 7.1,
-        "2020-01-02": 7.2,
-        "2020-01-03": 7.3,
-        "2020-01-04": 7.4,
+        "degree_days": {
+            "2020-01-01T00:00:00+00:00": 7.1,
+            "2020-01-02T00:00:00+00:00": 7.2,
+            "2020-01-03T00:00:00+00:00": 7.3,
+            "2020-01-04T00:00:00+00:00": 7.4,
+        }
     }
     q_params = {
         "start_date": "2020-01-01",
@@ -1264,7 +1266,9 @@ def mock_site_download_weather_data_uris(mock_adapter, base_uri):
     )
 
     data_json = {
-        "2020-07-01": 297.4,
+        "degree_days": {
+            "2020-07-01T00:00:00+00:00": 297.4,
+        }
     }
     q_params = {
         "start_date": "2020-07-01",
