@@ -10,8 +10,6 @@ charset-normalizer==2.1.1
     # via requests
 coverage[toml]==6.4.4
     # via pytest-cov
-exceptiongroup==1.1.1
-    # via pytest
 idna==3.4
     # via requests
 iniconfig==1.1.1
@@ -28,7 +26,7 @@ pytest==7.3.1
     #   pytest-cov
 pytest-cov==4.0.0
     # via -r requirements/tests.in
-requests==2.29.0
+requests==2.30.0
     # via
     #   -r requirements/tests.in
     #   requests-mock
@@ -36,7 +34,5 @@ requests-mock==1.10.0
     # via -r requirements/tests.in
 six==1.16.0
     # via requests-mock
-tomli==2.0.1
-    # via pytest
 urllib3==1.26.12
     # via requests
