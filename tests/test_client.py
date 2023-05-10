@@ -38,7 +38,7 @@ class TestAPIClient:
         assert isinstance(apicli._request_manager, BEMServerApiClientRequest)
 
     def test_api_client_resources(self):
-        assert len(RESOURCES_MAP) == 59
+        assert len(RESOURCES_MAP) == 60
 
         apicli = BEMServerApiClient("localhost:5050")
 
