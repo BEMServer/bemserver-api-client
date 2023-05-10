@@ -23,6 +23,7 @@ from bemserver_api_client.resources.services import (
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
     ST_DownloadWeatherDataBySiteResources,
+    ST_DownloadWeatherForecastDataBySiteResources,
 )
 from bemserver_api_client.resources.structural_elements import SiteResources
 from bemserver_api_client.enums import (
@@ -1242,6 +1243,39 @@ def mock_download_weather_uris(mock_adapter, base_uri):
             {
                 "id": 2,
                 "is_enabled": False,
+                "site_id": 2,
+                "site_name": "Bordeaux",
+            },
+            {
+                "id": None,
+                "is_enabled": False,
+                "site_id": 3,
+                "site_name": "Talence",
+            },
+        ],
+    )
+
+    # Get download weather forecast data service state for all sites
+    mock_adapter.register_uri(
+        "GET",
+        (
+            f"{base_uri}"
+            f"{ST_DownloadWeatherForecastDataBySiteResources.endpoint_base_uri}full"
+        ),
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "etag_download_weather_forecast_data_sites",
+        },
+        json=[
+            {
+                "id": 1,
+                "is_enabled": False,
+                "site_id": 1,
+                "site_name": "Anglet",
+            },
+            {
+                "id": 2,
+                "is_enabled": True,
                 "site_id": 2,
                 "site_name": "Bordeaux",
             },

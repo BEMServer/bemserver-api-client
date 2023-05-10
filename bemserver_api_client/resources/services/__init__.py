@@ -12,4 +12,5 @@ from .check_outliers import (  # noqa
 )
 from .download_weather import (  # noqa
     ST_DownloadWeatherDataBySiteResources,
+    ST_DownloadWeatherForecastDataBySiteResources,
 )
