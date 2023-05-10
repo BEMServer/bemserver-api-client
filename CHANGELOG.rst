@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.19.0 (2023-05-10)
++++++++++++++++++++
+
+Features:
+
+- Add download weather **forecast** data service resources
+
+Other changes:
+
+- Require bemserver-api >=0.20.0 and <0.21.0
+- Require bemserver-core 0.15.0
+
+Follows `API update 0.19.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0190-2023-05-05>`_ and `update 0.20.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0200-2023-05-05>`_
+
 0.18.0 (2023-04-24)
 +++++++++++++++++++
 
