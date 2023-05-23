@@ -50,6 +50,8 @@ class AnalysisResources(BaseResources):
         bucket_width_value,
         bucket_width_unit,
         timezone="UTC",
+        unit="kWh",
+        ratio_property=None,
         *,
         etag=None,
     ):
@@ -76,5 +78,7 @@ class AnalysisResources(BaseResources):
             "bucket_width_value": bucket_width_value,
             "bucket_width_unit": bucket_width_unit.value,
             "timezone": timezone,
+            "unit": unit,
+            "ratio_property": ratio_property,
         }
         return self._req.getall(endpoint, etag=etag, params=q_params)

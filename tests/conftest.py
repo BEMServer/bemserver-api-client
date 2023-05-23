@@ -986,6 +986,7 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
 
 def mock_analysis_uris(mock_adapter, base_uri):
     # Get completeness
+    endpoint_uri = f"{base_uri}{AnalysisResources.endpoint_base_uri}completeness"
     q_params = {
         "start_time": "2020-01-01T00:00:00+00:00",
         "end_time": "2020-02-01T00:00:00+00:00",
@@ -995,7 +996,6 @@ def mock_analysis_uris(mock_adapter, base_uri):
         "bucket_width_unit": BucketWidthUnit.week.value,
         "timezone": "UTC",
     }
-    endpoint_uri = f"{base_uri}{AnalysisResources.endpoint_base_uri}completeness"
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
@@ -1039,6 +1039,10 @@ def mock_analysis_uris(mock_adapter, base_uri):
     )
 
     # Get energy consumption breakdown for site
+    endpoint_uri = (
+        f"{base_uri}{AnalysisResources.endpoint_base_uri}"
+        f"energy_consumption/{StructuralElement.site.value}/1"
+    )
     q_params = {
         "start_time": "2020-01-01T00:00:00+00:00",
         "end_time": "2020-02-01T00:00:00+00:00",
@@ -1046,10 +1050,38 @@ def mock_analysis_uris(mock_adapter, base_uri):
         "bucket_width_unit": BucketWidthUnit.week.value,
         "timezone": "UTC",
     }
-    endpoint_uri = (
-        f"{base_uri}{AnalysisResources.endpoint_base_uri}"
-        f"energy_consumption/{StructuralElement.site.value}/1"
+    mock_adapter.register_uri(
+        "GET",
+        f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "etag_analysis_energy_cons_site",
+        },
+        json={
+            "energy": {
+                "all": {
+                    "all": [0, 0, 0, 0, 0],
+                    "appliances": [0, 0, 0, 0, 0],
+                    "lighting": [0, 0, 0, 0, 0],
+                    "ventilation": [0, 0, 0, 0, 0],
+                },
+                "electricity": {
+                    "all": [0, 0, 0, 0, 0],
+                    "heating": [0, 0, 0, 0, 0],
+                },
+            },
+            "timestamps": [
+                "2019-12-30T00:00:00+00:00",
+                "2020-01-06T00:00:00+00:00",
+                "2020-01-13T00:00:00+00:00",
+                "2020-01-20T00:00:00+00:00",
+                "2020-01-27T00:00:00+00:00",
+            ],
+        },
     )
+    # Get energy consumption breakdown for site, with kWh unit and Area ratio
+    q_params["unit"] = "kWh"
+    q_params["ratio_property"] = "Area"
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri}?{urllib.parse.urlencode(q_params, True)}",
