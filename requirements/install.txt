@@ -12,7 +12,7 @@ idna==3.4
     # via requests
 packaging==23.1
     # via bemserver-api-client (setup.py)
-requests==2.29.0
+requests==2.31.0
     # via bemserver-api-client (setup.py)
 urllib3==1.26.12
     # via requests
