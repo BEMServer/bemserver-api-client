@@ -110,6 +110,43 @@ class TestAPIClientResourcesAnalysis:
                 "2020-01-27T00:00:00+00:00",
             ],
         }
+        # Get energy consumption breakdown, with kWh unit and Area ratio
+        resp = analysis_res.get_energy_consumption_breakdown(
+            StructuralElement.site,
+            1,
+            start_time="2020-01-01T00:00:00+00:00",
+            end_time="2020-02-01T00:00:00+00:00",
+            bucket_width_value=1,
+            bucket_width_unit=BucketWidthUnit.week,
+            unit="kWh",
+            ratio_property="Area",
+        )
+        assert isinstance(resp, BEMServerApiClientResponse)
+        assert resp.status_code == 200
+        assert resp.is_json
+        assert resp.pagination == {}
+        assert resp.etag == "etag_analysis_energy_cons_site"
+        assert resp.data == {
+            "energy": {
+                "all": {
+                    "all": [0, 0, 0, 0, 0],
+                    "appliances": [0, 0, 0, 0, 0],
+                    "lighting": [0, 0, 0, 0, 0],
+                    "ventilation": [0, 0, 0, 0, 0],
+                },
+                "electricity": {
+                    "all": [0, 0, 0, 0, 0],
+                    "heating": [0, 0, 0, 0, 0],
+                },
+            },
+            "timestamps": [
+                "2019-12-30T00:00:00+00:00",
+                "2020-01-06T00:00:00+00:00",
+                "2020-01-13T00:00:00+00:00",
+                "2020-01-20T00:00:00+00:00",
+                "2020-01-27T00:00:00+00:00",
+            ],
+        }
 
     def test_api_client_resources_analysis_endpoints_errors(self, mock_request):
         analysis_res = AnalysisResources(mock_request)
