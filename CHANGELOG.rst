@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+0.19.1 (2023-05-23)
++++++++++++++++++++
+
+Features:
+
+- Add `unit` and `ratio_property` parameters on `AnalysisResources.get_energy_consumption_breakdown`
+
+Other changes:
+
+- Require bemserver-api >=0.20.1 and <0.21.0
+- Require bemserver-core 0.15.1
+
+Follows `API update 0.20.1 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0201-2023-05-22>`_
+
 0.19.0 (2023-05-10)
 +++++++++++++++++++
 
