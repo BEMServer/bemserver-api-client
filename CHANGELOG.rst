@@ -1,6 +1,18 @@
 Changelog
 ---------
 
+0.20.0 (2023-06-13)
++++++++++++++++++++
+
+API changes in version 0.21.0 do affect client features.
+
+Other changes:
+
+- Require bemserver-api >=0.21.0 and <0.22.0
+- Require bemserver-core 0.16.0
+
+Follows `API update 0.21.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0210-2023-06-09>`_
+
 0.19.1 (2023-05-23)
 +++++++++++++++++++
 
