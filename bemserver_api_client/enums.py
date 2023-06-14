@@ -41,6 +41,13 @@ class StructuralElement(enum.Enum):
     zone = "zone"
 
 
+class StructuralElementPropertyValueType(enum.Enum):
+    integer = "integer"
+    float = "float"
+    boolean = "boolean"
+    string = "string"
+
+
 class WeatherParameter(enum.Enum):
     AIR_TEMPERATURE = "Air temperature"
     DEWPOINT_TEMPERATURE = "Dewpoint temperature"

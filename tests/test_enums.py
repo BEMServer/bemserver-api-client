@@ -5,6 +5,7 @@ from bemserver_api_client.enums import (
     BucketWidthUnit,
     EventLevel,
     StructuralElement,
+    StructuralElementPropertyValueType,
     WeatherParameter,
     DegreeDaysPeriod,
     DegreeDaysType,
@@ -50,6 +51,13 @@ class TestAPIClientEnums:
         assert StructuralElement.storey.value == "storey"
         assert StructuralElement.space.value == "space"
         assert StructuralElement.zone.value == "zone"
+
+    def test_api_client_enums_structural_element_property_type(self):
+        assert len(list(StructuralElementPropertyValueType)) == 4
+        assert StructuralElementPropertyValueType.integer.value == "integer"
+        assert StructuralElementPropertyValueType.float.value == "float"
+        assert StructuralElementPropertyValueType.boolean.value == "boolean"
+        assert StructuralElementPropertyValueType.string.value == "string"
 
     def test_api_client_enums_weather_parameter(self):
         assert len(list(WeatherParameter)) == 12
