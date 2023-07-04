@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+0.20.1 (2023-07-04)
++++++++++++++++++++
+
+Features:
+
+- Add ``StructuralElementPropertyValueType`` enum
+
 0.20.0 (2023-06-13)
 +++++++++++++++++++
 
