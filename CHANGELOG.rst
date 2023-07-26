@@ -11,7 +11,7 @@ Features:
 0.20.0 (2023-06-13)
 +++++++++++++++++++
 
-API changes in version 0.21.0 do affect client features.
+API changes in version 0.21.0 do not affect client features.
 
 Other changes:
 
