@@ -9,7 +9,11 @@ certifi==2022.9.24
 charset-normalizer==2.1.1
     # via requests
 coverage[toml]==6.4.4
-    # via pytest-cov
+    # via
+    #   coverage
+    #   pytest-cov
+exceptiongroup==1.2.0
+    # via pytest
 idna==3.4
     # via requests
 iniconfig==1.1.1
@@ -18,9 +22,9 @@ packaging==23.2
     # via
     #   -r requirements/tests.in
     #   pytest
-pluggy==1.0.0
+pluggy==1.4.0
     # via pytest
-pytest==7.4.3
+pytest==8.0.0
     # via
     #   -r requirements/tests.in
     #   pytest-cov
@@ -34,5 +38,9 @@ requests-mock==1.11.0
     # via -r requirements/tests.in
 six==1.16.0
     # via requests-mock
+tomli==2.0.1
+    # via
+    #   coverage
+    #   pytest
 urllib3==1.26.12
     # via requests
