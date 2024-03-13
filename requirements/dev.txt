@@ -28,7 +28,7 @@ iniconfig==1.1.1
     # via pytest
 nodeenv==1.7.0
     # via pre-commit
-packaging==23.2
+packaging==24.0
     # via
     #   -r requirements/tests.in
     #   pytest
