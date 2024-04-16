@@ -16,7 +16,7 @@ idna==3.4
     # via requests
 iniconfig==1.1.1
     # via pytest
-packaging==23.2
+packaging==24.0
     # via
     #   -r requirements/tests.in
     #   pytest
@@ -29,9 +29,7 @@ pytest==8.1.1
 pytest-cov==5.0.0
     # via -r requirements/tests.in
 requests==2.31.0
-    # via
-    #   -r requirements/tests.in
-    #   requests-mock
+    # via requests-mock
 requests-mock==1.12.1
     # via -r requirements/tests.in
 tomli==2.0.1

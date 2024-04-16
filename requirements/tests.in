@@ -1,5 +1,4 @@
 pytest
 pytest-cov
 requests-mock
-requests>=2.31.0
-packaging>=23.1
+packaging>=24.0
