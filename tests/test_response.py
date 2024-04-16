@@ -1,11 +1,12 @@
 """BEMServer API client response tests"""
+
 import pytest
 
-from bemserver_api_client.response import BEMServerApiClientResponse
 from bemserver_api_client.response import (
+    BEMServerApiClientResponse,
     BEMServerAPIConflictError,
-    BEMServerAPIValidationError,
     BEMServerAPIInternalError,
+    BEMServerAPIValidationError,
 )
 
 

@@ -1,30 +1,31 @@
 """BEMServer API client structural element resources tests"""
+
 import pytest
 
-from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources.structural_elements import (
-    StructuralElementPropertyResources,
-    SiteResources,
-    SitePropertyResources,
-    SitePropertyDataResources,
-    BuildingResources,
-    BuildingPropertyResources,
-    BuildingPropertyDataResources,
-    StoreyResources,
-    StoreyPropertyResources,
-    StoreyPropertyDataResources,
-    SpaceResources,
-    SpacePropertyResources,
-    SpacePropertyDataResources,
-    ZoneResources,
-    ZonePropertyResources,
-    ZonePropertyDataResources,
-)
-from bemserver_api_client.response import BEMServerApiClientResponse
+from tests.conftest import FakeEnum
+
 from bemserver_api_client.enums import DegreeDaysPeriod, DegreeDaysType
 from bemserver_api_client.exceptions import BEMServerAPIClientValueError
-
-from tests.conftest import FakeEnum
+from bemserver_api_client.resources.base import BaseResources
+from bemserver_api_client.resources.structural_elements import (
+    BuildingPropertyDataResources,
+    BuildingPropertyResources,
+    BuildingResources,
+    SitePropertyDataResources,
+    SitePropertyResources,
+    SiteResources,
+    SpacePropertyDataResources,
+    SpacePropertyResources,
+    SpaceResources,
+    StoreyPropertyDataResources,
+    StoreyPropertyResources,
+    StoreyResources,
+    StructuralElementPropertyResources,
+    ZonePropertyDataResources,
+    ZonePropertyResources,
+    ZoneResources,
+)
+from bemserver_api_client.response import BEMServerApiClientResponse
 
 
 class TestAPIClientResourcesStructuralElements:

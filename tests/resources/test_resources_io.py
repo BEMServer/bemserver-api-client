@@ -1,4 +1,5 @@
 """BEMServer API client IO resources tests"""
+
 import io
 
 from bemserver_api_client.resources.base import BaseResources

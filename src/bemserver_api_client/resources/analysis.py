@@ -2,9 +2,10 @@
 
 /analysis/ endpoints
 """
-from .base import BaseResources
+
 from ..enums import BucketWidthUnit, StructuralElement
 from ..exceptions import BEMServerAPIClientValueError
+from .base import BaseResources
 
 
 class AnalysisResources(BaseResources):

@@ -1,17 +1,19 @@
 """BEMServer API client resources tests"""
-import pytest
+
 from contextlib import nullcontext as not_raises
 
-from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.response import BEMServerApiClientResponse
+import pytest
+
 from bemserver_api_client.exceptions import (
     BEMServerAPIAuthenticationError,
-    BEMServerAPINotModified,
-    BEMServerAPIValidationError,
-    BEMServerAPIPreconditionError,
-    BEMServerAPINotFoundError,
     BEMServerAPIInternalError,
+    BEMServerAPINotFoundError,
+    BEMServerAPINotModified,
+    BEMServerAPIPreconditionError,
+    BEMServerAPIValidationError,
 )
+from bemserver_api_client.resources.base import BaseResources
+from bemserver_api_client.response import BEMServerApiClientResponse
 
 
 class TestAPIClientResourcesBase:

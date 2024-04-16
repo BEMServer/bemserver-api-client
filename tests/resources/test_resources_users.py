@@ -1,9 +1,10 @@
 """BEMServer API client users resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.users import (
-    UserResources,
-    UserGroupResources,
     UserByUserGroupResources,
+    UserGroupResources,
+    UserResources,
 )
 from bemserver_api_client.response import BEMServerApiClientResponse
 

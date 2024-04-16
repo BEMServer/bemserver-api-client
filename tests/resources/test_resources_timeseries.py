@@ -1,24 +1,26 @@
 """BEMServer API client timeseries resources tests"""
+
 import pytest
-from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources.timeseries import (
-    TimeseriesResources,
-    TimeseriesDataStateResources,
-    TimeseriesPropertyResources,
-    TimeseriesPropertyDataResources,
-    TimeseriesDataResources,
-    TimeseriesBySiteResources,
-    TimeseriesByBuildingResources,
-    TimeseriesByStoreyResources,
-    TimeseriesBySpaceResources,
-    TimeseriesByZoneResources,
-    TimeseriesByEventResources,
-)
-from bemserver_api_client.response import BEMServerApiClientResponse
-from bemserver_api_client.enums import DataFormat, Aggregation
-from bemserver_api_client.exceptions import BEMServerAPIClientValueError
 
 from tests.conftest import FakeEnum
+
+from bemserver_api_client.enums import Aggregation, DataFormat
+from bemserver_api_client.exceptions import BEMServerAPIClientValueError
+from bemserver_api_client.resources.base import BaseResources
+from bemserver_api_client.resources.timeseries import (
+    TimeseriesByBuildingResources,
+    TimeseriesByEventResources,
+    TimeseriesBySiteResources,
+    TimeseriesBySpaceResources,
+    TimeseriesByStoreyResources,
+    TimeseriesByZoneResources,
+    TimeseriesDataResources,
+    TimeseriesDataStateResources,
+    TimeseriesPropertyDataResources,
+    TimeseriesPropertyResources,
+    TimeseriesResources,
+)
+from bemserver_api_client.response import BEMServerApiClientResponse
 
 
 class TestAPIClientResourcesTimeseries:

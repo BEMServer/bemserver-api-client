@@ -1,12 +1,13 @@
 """BEMServer API client"""
+
 import logging
-from packaging.version import Version, InvalidVersion
+
+from packaging.version import InvalidVersion, Version
 from requests.auth import HTTPBasicAuth
 
 from .exceptions import BEMServerAPIVersionError
 from .request import BEMServerApiClientRequest
 from .resources import RESOURCES_MAP
-
 
 APICLI_LOGGER = logging.getLogger(__name__)
 
@@ -46,8 +47,8 @@ class BEMServerApiClient:
         try:
             # Here name value is expected to be a resource client_entrypoint value.
             return RESOURCES_MAP[name](self._request_manager)
-        except KeyError:
-            raise AttributeError
+        except KeyError as exc:
+            raise AttributeError from exc
 
     @property
     def uri_prefix(self):
@@ -72,7 +73,7 @@ class BEMServerApiClient:
         try:
             version_api = Version(str(api_version))
         except InvalidVersion as exc:
-            raise BEMServerAPIVersionError(f"Invalid API version: {str(exc)}")
+            raise BEMServerAPIVersionError(f"Invalid API version: {str(exc)}") from exc
         version_min = REQUIRED_API_VERSION["min"]
         version_max = REQUIRED_API_VERSION["max"]
         if not (version_min <= version_api < version_max):

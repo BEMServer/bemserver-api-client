@@ -2,6 +2,7 @@
 
 /weather_timeseries_by_sites/ endpoints
 """
+
 from .base import BaseResources
 
 

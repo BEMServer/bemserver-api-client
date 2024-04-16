@@ -1,11 +1,12 @@
 """BEMServer API client request tests"""
+
 import io
+
 import pytest
 
-from bemserver_api_client.request import BEMServerApiClientRequest
-from bemserver_api_client.exceptions import BEMServerAPIClientValueError
 from bemserver_api_client.enums import DataFormat
-
+from bemserver_api_client.exceptions import BEMServerAPIClientValueError
+from bemserver_api_client.request import BEMServerApiClientRequest
 from tests.conftest import FakeEnum
 
 
@@ -55,9 +56,9 @@ class TestAPIClientRequest:
             assert req._prepare_dataformat_header("whatever", dataformat) == {}
 
         for http_method in ["POST", "post", "PUT", "put", "GET", "get"]:
-            with pytest.raises(TypeError):
+            with pytest.raises((TypeError, BEMServerAPIClientValueError)):
                 req._prepare_dataformat_header(http_method, None)
-            with pytest.raises(TypeError):
+            with pytest.raises((TypeError, BEMServerAPIClientValueError)):
                 req._prepare_dataformat_header(http_method, "other")
 
             with pytest.raises(

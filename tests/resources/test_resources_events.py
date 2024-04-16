@@ -1,14 +1,15 @@
 """BEMServer API client events resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.events import (
-    EventResources,
-    EventCategoryResources,
-    EventCategoryByUserResources,
-    EventBySiteResources,
     EventByBuildingResources,
-    EventByStoreyResources,
+    EventBySiteResources,
     EventBySpaceResources,
+    EventByStoreyResources,
     EventByZoneResources,
+    EventCategoryByUserResources,
+    EventCategoryResources,
+    EventResources,
 )
 from bemserver_api_client.response import BEMServerApiClientResponse
 

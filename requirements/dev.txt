@@ -4,8 +4,6 @@
 #
 #    pip-compile requirements/dev.in
 #
-bump2version==1.0.1
-    # via -r requirements/dev.in
 certifi==2022.9.24
     # via requests
 cfgv==3.3.1

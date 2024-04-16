@@ -5,6 +5,7 @@
 /campaign_scopes/ endpoints
 /user_groups_by_campaign_scopes/ endpoints
 """
+
 from .base import BaseResources
 
 

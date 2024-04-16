@@ -2,6 +2,7 @@
 
 /notifications/ endpoints
 """
+
 from .base import BaseResources
 
 

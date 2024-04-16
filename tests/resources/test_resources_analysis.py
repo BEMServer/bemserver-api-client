@@ -1,13 +1,14 @@
 """BEMServer API client analysis resources tests"""
+
 import pytest
 
-from bemserver_api_client.resources.base import BaseResources
-from bemserver_api_client.resources.analysis import AnalysisResources
-from bemserver_api_client.response import BEMServerApiClientResponse
+from tests.conftest import FakeEnum
+
 from bemserver_api_client.enums import BucketWidthUnit, StructuralElement
 from bemserver_api_client.exceptions import BEMServerAPIClientValueError
-
-from tests.conftest import FakeEnum
+from bemserver_api_client.resources.analysis import AnalysisResources
+from bemserver_api_client.resources.base import BaseResources
+from bemserver_api_client.response import BEMServerApiClientResponse
 
 
 class TestAPIClientResourcesAnalysis:

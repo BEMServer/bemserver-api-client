@@ -1,9 +1,10 @@
 """BEMServer API client campaigns resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.campaigns import (
     CampaignResources,
-    UserGroupByCampaignResources,
     CampaignScopeResources,
+    UserGroupByCampaignResources,
     UserGroupByCampaignScopeResources,
 )
 

@@ -2,6 +2,7 @@
 
 /about/ endpoint
 """
+
 from .base import BaseResources
 
 

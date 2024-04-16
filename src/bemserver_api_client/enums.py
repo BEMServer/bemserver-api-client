@@ -1,4 +1,5 @@
 """BEMServer API client enums"""
+
 import enum
 
 

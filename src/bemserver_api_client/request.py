@@ -1,12 +1,14 @@
 """BEMServer API client request"""
+
 import logging
 import os
+
 import requests
 import requests.exceptions as req_exc
 
 from .enums import DataFormat
+from .exceptions import BEMServerAPIClientValueError, BEMServerAPIInternalError
 from .response import BEMServerApiClientResponse
-from .exceptions import BEMServerAPIInternalError, BEMServerAPIClientValueError
 
 
 class BEMServerApiClientRequest:

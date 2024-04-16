@@ -8,6 +8,7 @@
 /energy_production_timeseries_by_sites/ endpoints
 /energy_production_timeseries_by_buildings/ endpoints
 """
+
 from .base import BaseResources
 
 
