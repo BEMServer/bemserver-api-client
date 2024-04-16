@@ -1,8 +1,9 @@
 """BEMServer API client about resources tests"""
+
 import pytest
 
-from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.about import AboutResources
+from bemserver_api_client.resources.base import BaseResources
 
 
 class TestAPIClientResourcesAbout:

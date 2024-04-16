@@ -9,6 +9,7 @@
 /events_by_spaces/ endpoints
 /events_by_zones/ endpoints
 """
+
 from .base import BaseResources
 
 

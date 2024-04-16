@@ -1,14 +1,15 @@
 """BEMServer API client enums tests"""
+
 from bemserver_api_client.enums import (
-    DataFormat,
     Aggregation,
     BucketWidthUnit,
+    DataFormat,
+    DegreeDaysPeriod,
+    DegreeDaysType,
     EventLevel,
     StructuralElement,
     StructuralElementPropertyValueType,
     WeatherParameter,
-    DegreeDaysPeriod,
-    DegreeDaysType,
 )
 
 

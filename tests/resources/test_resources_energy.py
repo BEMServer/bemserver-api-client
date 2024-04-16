@@ -1,13 +1,14 @@
 """BEMServer API client energy resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.energy import (
-    EnergyResources,
-    EnergyEndUseResources,
-    EnergyConsumptionTimseriesBySiteResources,
     EnergyConsumptionTimseriesByBuildingResources,
+    EnergyConsumptionTimseriesBySiteResources,
+    EnergyEndUseResources,
     EnergyProductionTechnologyResources,
-    EnergyProductionTimseriesBySiteResources,
     EnergyProductionTimseriesByBuildingResources,
+    EnergyProductionTimseriesBySiteResources,
+    EnergyResources,
 )
 
 

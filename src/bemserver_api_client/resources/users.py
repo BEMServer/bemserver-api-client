@@ -4,6 +4,7 @@
 /user_groups/ endpoints
 /users_by_user_groups/ endpoints
 """
+
 from .base import BaseResources
 
 

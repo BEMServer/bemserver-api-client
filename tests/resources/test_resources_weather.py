@@ -1,4 +1,5 @@
 """BEMServer API client weather resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.weather import WeatherTimseriesBySiteResources
 

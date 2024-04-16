@@ -1,4 +1,5 @@
 """BEMServer API client services check outliers data resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.services import (
     ST_CheckOutlierByCampaignResources,

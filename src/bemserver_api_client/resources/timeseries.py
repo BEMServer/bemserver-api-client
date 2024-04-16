@@ -12,9 +12,10 @@
 /timeseries_by_zones/ endpoints
 /timeseries_by_events/ endpoints
 """
-from .base import BaseResources
-from ..enums import DataFormat, Aggregation, BucketWidthUnit
+
+from ..enums import Aggregation, BucketWidthUnit, DataFormat
 from ..exceptions import BEMServerAPIClientValueError
+from .base import BaseResources
 
 
 class TimeseriesResources(BaseResources):

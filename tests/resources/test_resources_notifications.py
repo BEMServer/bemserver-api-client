@@ -1,4 +1,5 @@
 """BEMServer API client notifications resources tests"""
+
 from bemserver_api_client.resources.base import BaseResources
 from bemserver_api_client.resources.notifications import NotificationResources
 from bemserver_api_client.response import BEMServerApiClientResponse

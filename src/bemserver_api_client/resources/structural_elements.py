@@ -17,9 +17,10 @@
 /space_property_data/ endpoints
 /zone_property_data/ endpoints
 """
-from .base import BaseResources
+
 from ..enums import DegreeDaysPeriod, DegreeDaysType
 from ..exceptions import BEMServerAPIClientValueError
+from .base import BaseResources
 
 
 class SiteResources(BaseResources):

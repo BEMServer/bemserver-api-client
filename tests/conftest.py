@@ -1,39 +1,41 @@
-import pytest
-import requests
-import requests_mock
-import json
-import urllib
 import copy
 import enum
+import json
+import urllib
+
+import pytest
+
+import requests
+import requests_mock
 
 from bemserver_api_client.client import REQUIRED_API_VERSION
-from bemserver_api_client.request import BEMServerApiClientRequest
-from bemserver_api_client.resources.users import UserResources
-from bemserver_api_client.resources.io import IOResources
-from bemserver_api_client.resources.timeseries import (
-    TimeseriesResources,
-    TimeseriesDataResources,
+from bemserver_api_client.enums import (
+    Aggregation,
+    BucketWidthUnit,
+    DataFormat,
+    DegreeDaysPeriod,
+    DegreeDaysType,
+    StructuralElement,
 )
+from bemserver_api_client.request import BEMServerApiClientRequest
 from bemserver_api_client.resources.analysis import AnalysisResources
 from bemserver_api_client.resources.events import EventResources
+from bemserver_api_client.resources.io import IOResources
 from bemserver_api_client.resources.notifications import NotificationResources
 from bemserver_api_client.resources.services import (
-    ST_CleanupByCampaignResources,
-    ST_CleanupByTimeseriesResources,
     ST_CheckMissingByCampaignResources,
     ST_CheckOutlierByCampaignResources,
+    ST_CleanupByCampaignResources,
+    ST_CleanupByTimeseriesResources,
     ST_DownloadWeatherDataBySiteResources,
     ST_DownloadWeatherForecastDataBySiteResources,
 )
 from bemserver_api_client.resources.structural_elements import SiteResources
-from bemserver_api_client.enums import (
-    DataFormat,
-    Aggregation,
-    BucketWidthUnit,
-    StructuralElement,
-    DegreeDaysPeriod,
-    DegreeDaysType,
+from bemserver_api_client.resources.timeseries import (
+    TimeseriesDataResources,
+    TimeseriesResources,
 )
+from bemserver_api_client.resources.users import UserResources
 
 
 class FakeEnum(enum.Enum):

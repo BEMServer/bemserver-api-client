@@ -10,11 +10,10 @@ from . import (
     notifications,
     services,
     structural_elements,
+    timeseries,
     users,
     weather,
-    timeseries,
 )
-
 
 __all__ = [
     about.AboutResources,

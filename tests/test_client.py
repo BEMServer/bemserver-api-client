@@ -1,10 +1,12 @@
 """BEMServer API client tests"""
+
 import pytest
+
 from requests.auth import HTTPBasicAuth
 
 from bemserver_api_client import BEMServerApiClient
-from bemserver_api_client.exceptions import BEMServerAPIVersionError
 from bemserver_api_client.client import REQUIRED_API_VERSION
+from bemserver_api_client.exceptions import BEMServerAPIVersionError
 from bemserver_api_client.request import BEMServerApiClientRequest
 from bemserver_api_client.resources import RESOURCES_MAP
 
@@ -48,8 +50,6 @@ class TestAPIClient:
             assert isinstance(getattr(apicli, resource_name), resource_cls)
 
         assert not hasattr(apicli, "whatever_resources_that_does_not_exist")
-        with pytest.raises(AttributeError):
-            apicli.whatever_resources_that_does_not_exist
 
     def test_api_client_required_api_version_manual(self):
         req_version_min = REQUIRED_API_VERSION["min"]

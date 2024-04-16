@@ -2,6 +2,7 @@
 
 /st_check_missings_by_campaigns/ endpoints
 """
+
 from ..base import BaseResources
 
 

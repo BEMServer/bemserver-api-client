@@ -3,6 +3,7 @@
 /st_download_weather_data_by_sites/ endpoints
 /st_download_weather_forecast_data_by_sites/ endpoints
 """
+
 from ..base import BaseResources
 
 
