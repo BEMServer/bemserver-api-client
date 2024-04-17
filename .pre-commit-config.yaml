@@ -8,9 +8,10 @@ repos:
     - id: ruff
     - id: ruff-format
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: 0.28.0
+  rev: 0.28.2
   hooks:
     - id: check-github-workflows
+    - id: check-dependabot
 - repo: https://github.com/asottile/blacken-docs
   rev: 1.16.0
   hooks:
