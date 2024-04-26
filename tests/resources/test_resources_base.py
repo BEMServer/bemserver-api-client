@@ -6,6 +6,7 @@ import pytest
 
 from bemserver_api_client.exceptions import (
     BEMServerAPIAuthenticationError,
+    BEMServerAPIAuthorizationError,
     BEMServerAPIInternalError,
     BEMServerAPINotFoundError,
     BEMServerAPINotModified,
@@ -163,7 +164,7 @@ class TestAPIClientResourcesBase:
         with pytest.raises(BEMServerAPINotFoundError):
             res.getone(0)
 
-        with pytest.raises(BEMServerAPIAuthenticationError):
+        with pytest.raises(BEMServerAPIAuthorizationError):
             res.getone(42)
 
         with pytest.raises(BEMServerAPIInternalError) as excinfo:

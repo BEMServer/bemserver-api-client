@@ -8,7 +8,7 @@ import pytest
 import requests
 import requests_mock
 
-from bemserver_api_client.client import REQUIRED_API_VERSION
+from bemserver_api_client.client import REQUIRED_API_VERSION, BEMServerApiClient
 from bemserver_api_client.enums import (
     Aggregation,
     BucketWidthUnit,
@@ -122,7 +122,27 @@ def mock_raw_response_422(request):
     )
 
 
-@pytest.fixture(params=[{"host": "localhost:5050", "use_ssl": False}])
+@pytest.fixture(
+    params=[{"host": "localhost:5050", "use_ssl": False, "auth_method": None}]
+)
+def api_client(request):
+    host = request.param.get("host", "localhost:5050")
+    use_ssl = request.param.get("use_ssl", False)
+    uri_prefix = "https+mock" if use_ssl else "http+mock"
+
+    api_cli = BEMServerApiClient(
+        host, use_ssl, request.param.get("auth_method"), uri_prefix
+    )
+    api_cli._request_manager._session.mount(
+        f"{uri_prefix}://", mock_adapter(api_cli.base_uri)
+    )
+
+    yield api_cli
+
+
+@pytest.fixture(
+    params=[{"host": "localhost:5050", "use_ssl": False, "auth_method": None}]
+)
 def mock_request(request):
     host = request.param.get("host", "localhost:5050")
     use_ssl = request.param.get("use_ssl", False)
@@ -131,15 +151,20 @@ def mock_request(request):
     base_uri = f"{uri_prefix}://{host}"
 
     req = BEMServerApiClientRequest(base_uri, None)
-    req._session = mock_session(uri_prefix, base_uri)
+    req._session.mount(f"{uri_prefix}://", mock_adapter(base_uri))
+
+    auth_method = request.param.get("auth_method")
+    if isinstance(auth_method, requests.auth.AuthBase):
+        req._session.auth = auth_method
 
     yield req
 
 
-def mock_session(uri_prefix, base_uri):
+def mock_adapter(base_uri):
     adapter = requests_mock.Adapter()
     mock_fake_uris(adapter, base_uri)
     mock_about_uris(adapter, base_uri)
+    mock_auth_uris(adapter, base_uri)
     mock_users_uris(adapter, base_uri)
     mock_io_uris(adapter, base_uri)
     mock_events_uris(adapter, base_uri)
@@ -152,10 +177,7 @@ def mock_session(uri_prefix, base_uri):
     mock_check_outlier_uris(adapter, base_uri)
     mock_download_weather_uris(adapter, base_uri)
     mock_site_weather_data_uris(adapter, base_uri)
-
-    session = requests.Session()
-    session.mount(f"{uri_prefix}://", adapter)
-    return session
+    return adapter
 
 
 def mock_about_uris(mock_adapter, base_uri):
@@ -209,6 +231,104 @@ def mock_about_uris(mock_adapter, base_uri):
     )
 
 
+def mock_auth_uris(mock_adapter, base_uri):
+    auth_api_uri = "/auth/"
+
+    def match_request_body_auth_success(request):
+        return request.json() == {
+            "email": "chuck@norris.com",
+            "password": "awesome",
+        }
+
+    def match_request_body_auth_failure(request):
+        return request.json() == {
+            "email": "chuck@norris.com",
+            "password": "useless",
+        }
+
+    def match_request_auth_refresh_success(request):
+        return request.headers["Authorization"] == (
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+            "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_RT1"
+        )
+
+    def match_request_auth_refresh_failure(request):
+        return request.headers["Authorization"] == (
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+            "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_RT1_expired"
+        )
+
+    # Get (POST) token, 200 token granted successfully
+    mock_adapter.register_uri(
+        "POST",
+        f"{base_uri}{auth_api_uri}token",
+        additional_matcher=match_request_body_auth_success,
+        headers={
+            "Content-Type": "application/json",
+        },
+        json={
+            "status": "success",
+            "access_token": (
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+                "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_AT1"
+            ),
+            "refresh_token": (
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+                "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_RT1"
+            ),
+        },
+    )
+
+    # Get (POST) token, 200 token refused (bad login)
+    mock_adapter.register_uri(
+        "POST",
+        f"{base_uri}{auth_api_uri}token",
+        additional_matcher=match_request_body_auth_failure,
+        headers={
+            "Content-Type": "application/json",
+        },
+        json={
+            "status": "failure",
+        },
+    )
+
+    # Refresh (POST) token, 200 token refreshed and granted successfully
+    mock_adapter.register_uri(
+        "POST",
+        f"{base_uri}{auth_api_uri}token/refresh",
+        additional_matcher=match_request_auth_refresh_success,
+        headers={
+            "Content-Type": "application/json",
+        },
+        json={
+            "status": "success",
+            "access_token": (
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+                "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_AT2"
+            ),
+            "refresh_token": (
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+                "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_RT2"
+            ),
+        },
+    )
+
+    # Refresh (POST) token, 401 for bad or expired refresh token
+    mock_adapter.register_uri(
+        "POST",
+        f"{base_uri}{auth_api_uri}token/refresh",
+        additional_matcher=match_request_auth_refresh_failure,
+        headers={
+            "Content-Type": "application/json",
+            "WWW-Authenticate": "Bearer",
+        },
+        status_code=401,
+        json={
+            "authentication": "expired_token",
+        },
+    )
+
+
 def mock_fake_uris(mock_adapter, base_uri):
     fake_api_uri = "/fake/"
 
@@ -225,6 +345,9 @@ def mock_fake_uris(mock_adapter, base_uri):
                     "Content-Type": "application/json",
                 },
                 "status_code": 401,
+                "json": {
+                    "authentication": "missing_authentication",
+                },
             },
             {
                 "headers": {
@@ -433,6 +556,58 @@ def mock_users_uris(mock_adapter, base_uri):
             "ETag": "etag_user_0",
         },
         status_code=204,
+    )
+
+    def match_request_get_user_expired_token(request):
+        return request.headers["Authorization"] == (
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+            "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_AT1_expired"
+        )
+
+    def match_request_get_user_valid_token(request):
+        return request.headers["Authorization"] in [
+            (
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+                "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_AT1"
+            ),
+            (
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+                "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_AT2"
+            ),
+        ]
+
+    # Get user by id: 401 access token expired.
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{UserResources.endpoint_base_uri}1",
+        additional_matcher=match_request_get_user_expired_token,
+        headers={
+            "Content-Type": "application/json",
+        },
+        status_code=401,
+        json={
+            "errors": {
+                "authentication": "expired_token",
+            },
+        },
+    )
+
+    # Get user by id: 200 valid access token.
+    mock_adapter.register_uri(
+        "GET",
+        f"{base_uri}{UserResources.endpoint_base_uri}1",
+        additional_matcher=match_request_get_user_valid_token,
+        headers={
+            "Content-Type": "application/json",
+            "ETag": "0d898370a9ce828b8e570102ad450210c892ae00",
+        },
+        json={
+            "email": "john@doe.com",
+            "id": 1,
+            "is_active": False,
+            "is_admin": False,
+            "name": "John",
+        },
     )
 
 

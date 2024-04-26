@@ -80,6 +80,16 @@ The tables below shows the correspondance between API endpoint uris and API clie
     ``CF`` - ``update`` means that all common functions are implemented less the ``update`` one.
 
 
+Authentication
+~~~~~~~~~~~~~~
+
++---------------+-------------------------+---------------------------------------+
+| API resources | API client entry points |    API client entry point actions     |
++===============+=========================+=======================================+
+| /auth/        | auth                    | ``get_tokens``, ``refresh_tokens``    |
++---------------+-------------------------+---------------------------------------+
+
+
 General
 ~~~~~~~
 
@@ -272,17 +282,39 @@ Usage example
         BEMServerAPIValidationError,
     )
 
-    # Get an instance of API client, setting the API host and the authentication method used for API requests.
-    api_client = BEMServerAPIClient(
-        "localhost:5000",
-        authentication_method=BEMServerAPIClient.make_http_basic(
-            "user@email.com", "password"
-        ),
+    # Get an instance of API client, setting the API host.
+    api_client = BEMServerAPIClient("localhost:5000")
+
+    # Get the authentication bearer access and refresh tokens (JWT).
+    auth_resp = api_client.auth.get_tokens("user@email.com", "password")
+    if auth_resp.data["status"] == "failure":
+        # User could not be authenticated (no access/refresh tokens are returned).
+        # Raise exception, ...
+        pass
+    # At this point (auth_resp.data["status"] == "success"), the user is authenticated.
+    #  auth_resp.data contains access and refresh tokens:
+    #  {
+    #      "status": "success",
+    #      "access_token": "...",
+    #      "refresh_token": "..."
+    #  }
+
+    # Set authentication method (bearer token authentication) in API client instance,
+    #  in order to call private API endpoints.
+    api_client.set_authentication_method(
+        BEMServerAPIClient.make_bearer_token_auth(
+            auth_resp.data["access_token"], auth_resp.data["refresh_token"]
+        )
     )
+
+    # NOTE: When expired access token is automatically refreshed inside API client
+    #  and requests goes on. Else `BEMServerAPIAuthenticationError` is raised and
+    #  a new authentication is needed to continue calling private API endpoints.
 
     # Get a list of all the sites available (for the authenticated user).
     sites_resp = api_client.sites.getall()
-    # sites_resp is an instance of `BEMServerApiClientResponse` class, which has processed yet API response data
+    # sites_resp is an instance of `BEMServerApiClientResponse` class,
+    #  which has processed yet API response data
     # sites_resp.data contains sites list:
     #  [
     #      {

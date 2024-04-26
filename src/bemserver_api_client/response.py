@@ -6,6 +6,7 @@ import logging
 from .enums import DataFormat
 from .exceptions import (
     BEMServerAPIAuthenticationError,
+    BEMServerAPIAuthorizationError,
     BEMServerAPIConflictError,
     BEMServerAPIInternalError,
     BEMServerAPINotFoundError,
@@ -78,8 +79,17 @@ class BEMServerApiClientResponse:
         self._logger.error(f"{self.status_code} {self._raw_response.url}")
 
         # Authentication error
-        if self.status_code in (401, 403):
-            raise BEMServerAPIAuthenticationError(status_code=self.status_code)
+        if self.status_code == 401:
+            # Example of response:
+            #  {"authentication": "expired_token"}
+            code = None
+            if self.is_json and "errors" in self.data:
+                code = self.data["errors"].get("authentication")
+            raise BEMServerAPIAuthenticationError(code=code)
+
+        # Authorization error
+        elif self.status_code == 403:
+            raise BEMServerAPIAuthorizationError
 
         # Precondition error (etag)
         elif self.status_code in (412, 428):
@@ -117,8 +127,9 @@ class BEMServerApiClientResponse:
                     errors = {"_general": [self.data["message"]]}
             raise BEMServerAPIValidationError(errors=errors)
 
-        # Issue in BEMServer
-        raise BEMServerAPIInternalError(status_code=self.status_code)
+        else:
+            # Issue in BEMServer
+            raise BEMServerAPIInternalError(status_code=self.status_code)
 
     def toJSON(self):
         # Allows to set this response instance in a serializable object.
