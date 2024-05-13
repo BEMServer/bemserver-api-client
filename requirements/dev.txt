@@ -32,11 +32,11 @@ packaging==24.0
     #   pytest
 platformdirs==2.5.2
     # via virtualenv
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
 pre-commit==3.7.0
     # via -r requirements/dev.in
-pytest==8.1.1
+pytest==8.2.0
     # via
     #   -r requirements/tests.in
     #   pytest-cov
