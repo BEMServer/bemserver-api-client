@@ -61,7 +61,7 @@ class TimeseriesDataResources(BaseResources):
         """
 
         :param int data_state: timeseries data state id to feed
-        :param str data: data to upload (for example a read content of file stream)
+        :param bytes|dict data: data to upload (bytes for CSV format, dict for JSON)
         :param DataFormat format: (optional, default JSON)
             data format, either CSV or JSON
         """
@@ -76,7 +76,7 @@ class TimeseriesDataResources(BaseResources):
         """
 
         :param int data_state: timeseries data state id to feed
-        :param str data: data to upload (for example a read content of file stream)
+        :param bytes|dict data: data to upload (bytes for CSV format, dict for JSON)
         :param DataFormat format: (optional, default JSON)
             data format, either CSV or JSON
         """
