@@ -681,12 +681,25 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
     )
 
     # Upload timeseries data JSON (by ids)
+    def match_request_upload_json(request):
+        return request.text == json.dumps(
+            {
+                "0": {
+                    "2020-01-01T00:00:00+00:00": 0,
+                    "2020-01-01T01:00:00+00:00": 1,
+                    "2020-01-01T02:00:00+00:00": 2,
+                    "2020-01-01T03:00:00+00:00": 3,
+                },
+            }
+        )
+
     mock_adapter.register_uri(
         "POST",
         f"{endpoint_uri}?data_state=1",
         request_headers={
             "Content-Type": DataFormat.json.value,
         },
+        additional_matcher=match_request_upload_json,
         headers={
             "Content-Type": "application/json",
         },
@@ -694,12 +707,25 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
     )
 
     # Upload timeseries data JSON (by names)
+    def match_request_upload_by_names_json(request):
+        return request.text == json.dumps(
+            {
+                "Timeseries 1": {
+                    "2020-01-01T00:00:00+00:00": 0,
+                    "2020-01-01T01:00:00+00:00": 1,
+                    "2020-01-01T02:00:00+00:00": 2,
+                    "2020-01-01T03:00:00+00:00": 3,
+                },
+            }
+        )
+
     mock_adapter.register_uri(
         "POST",
         f"{endpoint_uri}campaign/0/?data_state=1",
         request_headers={
             "Content-Type": DataFormat.json.value,
         },
+        additional_matcher=match_request_upload_by_names_json,
         headers={
             "Content-Type": "application/json",
         },

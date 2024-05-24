@@ -1,5 +1,6 @@
 """BEMServer API client request"""
 
+import json
 import logging
 import os
 
@@ -117,7 +118,7 @@ class BEMServerApiClientRequest:
     def upload_data(self, endpoint, data, *, format=DataFormat.json, **kwargs):
         """Upload data from specified format.
 
-        :param str data: data to upload (for example a read content of file stream)
+        :param bytes|dict data: data to upload (bytes for CSV format, dict for JSON)
         :param DataFormat format: (optional, default JSON)
             data format, either CSV or JSON
         """
@@ -126,6 +127,8 @@ class BEMServerApiClientRequest:
             **kwargs.pop("headers", {}),
             **self._prepare_dataformat_header(http_method, format),
         }
+        if format == DataFormat.json:
+            data = json.dumps(data)
         return self._execute(http_method, endpoint, data=data, **kwargs)
 
     def download(self, endpoint, *, format=DataFormat.json, **kwargs):
