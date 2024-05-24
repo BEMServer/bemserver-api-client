@@ -1,5 +1,23 @@
-Changelog
----------
+=============
+  Changelog
+=============
+
+0.20.4 (2024-05-24)
++++++++++++++++++++
+
+Features:
+
+- Change licence to MIT
+- Update README with documentation and example on BEMServerAPIClient usage
+
+Fixes:
+
+- JSON data encoding while using ``TimeseriesDataResources.upload`` and ``TimeseriesDataResources.upload_by_names`` endpoints
+
+Other changes:
+
+- Still require bemserver-api >=0.22.0 and <0.24.0
+- Still require bemserver-core 0.17.1
 
 0.20.3 (2024-02-13)
 +++++++++++++++++++
@@ -47,7 +65,7 @@ Follows `API update 0.21.0 <https://github.com/BEMServer/bemserver-api/blob/mast
 
 Features:
 
-- Add `unit` and `ratio_property` parameters on `AnalysisResources.get_energy_consumption_breakdown`
+- Add ``unit`` and ``ratio_property`` parameters on ``AnalysisResources.get_energy_consumption_breakdown`` endpoint
 
 Other changes:
 
@@ -75,7 +93,7 @@ Follows `API update 0.19.0 <https://github.com/BEMServer/bemserver-api/blob/mast
 
 Features:
 
-- Add TimeseriesDataResources.get_stats endpoint
+- Add ``TimeseriesDataResources.get_stats`` endpoint
 
 Other changes:
 
@@ -89,15 +107,15 @@ Follows `API update 0.18.0 <https://github.com/BEMServer/bemserver-api/blob/mast
 
 Fixes:
 
-- Fix SiteResources.get_degree_days endpoint
+- Fix ``SiteResources.get_degree_days`` endpoint
 
 0.17.1 (2023-04-19)
 +++++++++++++++++++
 
 Features:
 
-- Add SiteResources.download_weather_data endpoint
-- Add SiteResources.get_degree_days endpoint
+- Add ``SiteResources.download_weather_data`` endpoint
+- Add ``SiteResources.get_degree_days`` endpoint
 - Add ``DegreeDaysPeriod`` and ``DegreeDaysType`` enums
 
 Other changes:
@@ -112,7 +130,7 @@ Follows `API update 0.17.2 <https://github.com/BEMServer/bemserver-api/blob/mast
 
 Features:
 
-- Update timeseries_data.download* endpoints: add *convert_to* param
+- Update ``timeseries_data.download*`` endpoints: add *convert_to* param
 - Add download weather data service resources
 
 Other changes:
@@ -184,9 +202,9 @@ Follows `API update 0.13.1 <https://github.com/BEMServer/bemserver-api/blob/mast
 Features:
 
 - Rename ``EnergySourceResources`` to ``EnergyResources``
-- Add energy_production_technologies endpoints (``EnergyProductionTechnologyResources``)
-- Add energy_production_timeseries_by_* endpoints (``EnergyProductionTimseriesBySiteResources`` and ``EnergyProductionTimseriesByBuildingResources``)
-- Add weather_timeseries_by_sites endpoints (``WeatherTimseriesBySiteResources``)
+- Add ``energy_production_technologies`` endpoints (``EnergyProductionTechnologyResources``)
+- Add ``energy_production_timeseries_by_*`` endpoints (``EnergyProductionTimseriesBySiteResources`` and ``EnergyProductionTimseriesByBuildingResources``)
+- Add ``weather_timeseries_by_sites`` endpoints (``WeatherTimseriesBySiteResources``)
 
 Fixes:
 
@@ -256,8 +274,8 @@ Features:
 - Update notifications resources:
 
   - add *campaign_id* filter on list endpoint
-  - add *count_by_campaign* endpoint
-  - add *mark_all_as_read* endpoint
+  - add ``count_by_campaign`` endpoint
+  - add ``mark_all_as_read`` endpoint
 
 Other changes:
 
@@ -354,10 +372,10 @@ Features:
 
 - Event API updates on query args:
 
-  - replace ``level_id`` with ``EventLevel`` enum
-  - add ``level_min`` and ``in_source``
+  - replace *level_id* with ``EventLevel`` enum
+  - add *level_min* and *in_source*
 
-- Timeseries API: add ``event_id`` query arg
+- Timeseries API: add *event_id* query arg
 
 Other changes:
 
