@@ -12,7 +12,7 @@ idna==3.7
     # via requests
 packaging==24.0
     # via bemserver-api-client (pyproject.toml)
-requests==2.32.2
+requests==2.32.3
     # via bemserver-api-client (pyproject.toml)
 urllib3==2.2.1
     # via requests
