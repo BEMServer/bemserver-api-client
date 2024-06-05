@@ -332,7 +332,7 @@ Usage example
     # Some kind of errors, like BEMServerAPIValidationError, includes details on what occured.
     try:
         sites_resp = api_client.sites.create({"campaign_id": 1})
-    except BEMServerAPINotFoundError as exc:
+    except BEMServerAPIValidationError as exc:
         # Manage validation error.
         print(exc.errors)
         # exc.errors actually contains a dict of validation messages:
