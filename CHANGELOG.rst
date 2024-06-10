@@ -2,6 +2,19 @@
   Changelog
 =============
 
+0.21.1 (2024-06-10)
+++++++++++++++++++
+
+Fixes:
+
+- Require bemserver-api >=0.24.0 and <0.25.0
+
+Other changes:
+
+- Remove bad 0.21.0 release from PyPI
+- Still require bemserver-api >=0.24.0 and <0.25.0
+- Still require bemserver-core 0.18.0
+
 0.21.0 (2024-06-10)
 +++++++++++++++++++
 
