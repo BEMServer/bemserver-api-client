@@ -2,6 +2,21 @@
   Changelog
 =============
 
+0.21.0 (2024-06-10)
++++++++++++++++++++
+
+Features:
+
+- Add bearer token (JWT) authentication feature: ``auth.get_tokens`` and ``auth.refresh_tokens`` endpoints
+- Dissociate 401 and 403 http status codes management by adding ``BEMServerAPIAuthorizationError`` error (403)
+
+Other changes:
+
+- Require bemserver-api >=0.24.0 and <0.25.0
+- Require bemserver-core 0.18.0
+
+Follows `API update 0.24.0 <https://github.com/BEMServer/bemserver-api/blob/master/CHANGELOG.rst#0240-2024-06-06>`_
+
 0.20.4 (2024-05-24)
 +++++++++++++++++++
 
