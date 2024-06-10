@@ -3,9 +3,9 @@
 import logging
 
 from packaging.version import InvalidVersion, Version
-from requests.auth import HTTPBasicAuth
 
-from .exceptions import BEMServerAPIVersionError
+from .authentication import BearerTokenAuth, HTTPBasicAuth
+from .exceptions import BEMServerAPIAuthenticationError, BEMServerAPIVersionError
 from .request import BEMServerApiClientRequest
 from .resources import RESOURCES_MAP
 
@@ -35,7 +35,7 @@ class BEMServerApiClient:
 
         self._request_manager = request_manager or BEMServerApiClientRequest(
             self.base_uri,
-            authentication_method,
+            self._ensure_bearer_token_auth_callbacks(authentication_method),
             logger=APICLI_LOGGER,
         )
 
@@ -66,6 +66,39 @@ class BEMServerApiClient:
         return HTTPBasicAuth(
             email.encode(encoding="utf-8"),
             password.encode(encoding="utf-8"),
+        )
+
+    @staticmethod
+    def make_bearer_token_auth(
+        access_token, refresh_token=None, after_refresh_tokens_callback=None
+    ):
+        return BearerTokenAuth(
+            access_token,
+            refresh_token=refresh_token,
+            after_refresh_tokens_external_callback=after_refresh_tokens_callback,
+        )
+
+    def _ensure_bearer_token_auth_callbacks(self, authentication_method):
+        # Ensure that bearer token authentication refreshes automatically
+        #  its expired access token.
+        if isinstance(authentication_method, BearerTokenAuth):
+
+            def _refresh_tokens_callback():
+                auth_resp = self.auth.refresh_tokens()
+                if auth_resp.data["status"] == "failure":
+                    raise BEMServerAPIAuthenticationError
+                authentication_method.after_refresh_tokens_callback(
+                    auth_resp.data["access_token"],
+                    auth_resp.data["refresh_token"],
+                )
+
+            authentication_method.refresh_tokens_callback = _refresh_tokens_callback
+
+        return authentication_method
+
+    def set_authentication_method(self, authentication_method):
+        self._request_manager.set_authentication_method(
+            self._ensure_bearer_token_auth_callbacks(authentication_method)
         )
 
     @classmethod

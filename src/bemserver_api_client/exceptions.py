@@ -45,6 +45,17 @@ class BEMServerAPINotModified(BEMServerAPIError):
 class BEMServerAPIAuthenticationError(BEMServerAPIError):
     """BEMServer API authentication error"""
 
+    def __init__(self, code=None):
+        super().__init__(status_code=401)
+        self.code = code
+
+
+class BEMServerAPIAuthorizationError(BEMServerAPIError):
+    """BEMServer API authorization error"""
+
+    def __init__(self):
+        super().__init__(status_code=403)
+
 
 class BEMServerAPIPreconditionError(BEMServerAPIError):
     """BEMServer API precondition error"""

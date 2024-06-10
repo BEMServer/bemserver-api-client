@@ -2,9 +2,8 @@
 
 import pytest
 
-from requests.auth import HTTPBasicAuth
-
 from bemserver_api_client import BEMServerApiClient
+from bemserver_api_client.authentication import BearerTokenAuth, HTTPBasicAuth
 from bemserver_api_client.client import REQUIRED_API_VERSION
 from bemserver_api_client.exceptions import BEMServerAPIVersionError
 from bemserver_api_client.request import BEMServerApiClientRequest
@@ -12,13 +11,32 @@ from bemserver_api_client.resources import RESOURCES_MAP
 
 
 class TestAPIClient:
-    def test_api_client_auth(self):
+    def test_api_client_auth_http_basic(self):
         ret = BEMServerApiClient.make_http_basic_auth("chuck@test.com", "N0rr1s")
         assert isinstance(ret, HTTPBasicAuth)
         assert isinstance(ret.username, bytes)
         assert isinstance(ret.password, bytes)
         assert ret.username.decode(encoding="utf-8") == "chuck@test.com"
         assert ret.password.decode(encoding="utf-8") == "N0rr1s"
+
+    def test_api_client_auth_bearer_token(self):
+        access_token = (
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+            "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_AT"
+        )
+        ret = BEMServerApiClient.make_bearer_token_auth(access_token)
+        assert isinstance(ret, BearerTokenAuth)
+        assert ret.access_token == access_token
+        assert ret.refresh_token is None
+
+        refresh_token = (
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+            "-rpkjK19GUy0Fgrkm_pGHi8XghjWM_RT"
+        )
+        ret = BEMServerApiClient.make_bearer_token_auth(access_token, refresh_token)
+        assert isinstance(ret, BearerTokenAuth)
+        assert ret.access_token == access_token
+        assert ret.refresh_token == refresh_token
 
     def test_api_client_class(self):
         apicli = BEMServerApiClient("localhost:5050")
@@ -39,8 +57,26 @@ class TestAPIClient:
 
         assert isinstance(apicli._request_manager, BEMServerApiClientRequest)
 
+    def test_api_client_set_authentication_method(self):
+        api_cli = BEMServerApiClient("localhost:5050")
+        assert api_cli._request_manager._session.auth is None
+
+        auth_method = BEMServerApiClient.make_http_basic_auth("user@mail.com", "pwd")
+        api_cli.set_authentication_method(auth_method)
+        assert auth_method == api_cli._request_manager._session.auth
+
+        access_token = (
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.uJKHM4XyWv1bC_"
+            "-rpkjK19GUy0Fgrkm_pGHi8XghjWM"
+        )
+        auth_method = BEMServerApiClient.make_bearer_token_auth(access_token)
+        assert auth_method.refresh_tokens_callback is None
+        api_cli.set_authentication_method(auth_method)
+        assert auth_method.refresh_tokens_callback is not None
+        assert auth_method == api_cli._request_manager._session.auth
+
     def test_api_client_resources(self):
-        assert len(RESOURCES_MAP) == 60
+        assert len(RESOURCES_MAP) == 61
 
         apicli = BEMServerApiClient("localhost:5050")
 

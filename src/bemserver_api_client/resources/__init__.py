@@ -3,6 +3,7 @@
 from . import (
     about,
     analysis,
+    auth,
     campaigns,
     energy,
     events,
@@ -18,6 +19,7 @@ from . import (
 __all__ = [
     about.AboutResources,
     analysis.AnalysisResources,
+    auth.AuthenticationResources,
     campaigns.CampaignResources,
     campaigns.UserGroupByCampaignResources,
     campaigns.CampaignScopeResources,

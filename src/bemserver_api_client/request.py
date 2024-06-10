@@ -3,12 +3,18 @@
 import json
 import logging
 import os
+from copy import deepcopy
 
 import requests
 import requests.exceptions as req_exc
 
+from .authentication import BearerTokenAuth
 from .enums import DataFormat
-from .exceptions import BEMServerAPIClientValueError, BEMServerAPIInternalError
+from .exceptions import (
+    BEMServerAPIAuthenticationError,
+    BEMServerAPIClientValueError,
+    BEMServerAPIInternalError,
+)
 from .response import BEMServerApiClientResponse
 
 
@@ -26,7 +32,22 @@ class BEMServerApiClientRequest:
 
         self._logger = logger or logging.getLogger(__name__)
         self._session = requests.Session()
-        self._session.auth = authentication_method
+        self.set_authentication_method(authentication_method)
+
+    @property
+    def _is_bearer_token_auth(self):
+        return isinstance(self._session.auth, BearerTokenAuth)
+
+    @property
+    def is_authentication_refreshing(self):
+        return self._is_bearer_token_auth and self._session.auth.do_refresh
+
+    @is_authentication_refreshing.setter
+    def is_authentication_refreshing(self, value):
+        # In token based authentication mode...
+        if self._is_bearer_token_auth:
+            # ...ensure that the refresh token will be used for this request.
+            self._session.auth.do_refresh = value
 
     def _build_uri(self, endpoint_uri):
         return f"{self.base_uri}{endpoint_uri}"
@@ -58,6 +79,9 @@ class BEMServerApiClientRequest:
         return etag_header
 
     def _execute(self, http_method, endpoint, *, etag=None, **kwargs):
+        try_refresh = kwargs.pop("try_refresh", True)
+        _orig_kwargs = deepcopy(kwargs)
+
         full_endpoint_uri = self._build_uri(endpoint)
         headers = {
             **kwargs.pop("headers", {}),
@@ -73,7 +97,27 @@ class BEMServerApiClientRequest:
                 f"Unexpected error while requesting {full_endpoint_uri}: {exc}"
             )
             raise BEMServerAPIInternalError from exc
-        return BEMServerApiClientResponse(raw_resp)
+
+        try:
+            return BEMServerApiClientResponse(raw_resp)
+        except BEMServerAPIAuthenticationError as exc:
+            # Catch 401 response to check if authentication mode is token based,
+            #  current access token has expired and access token refresh is wanted.
+            if (
+                self._is_bearer_token_auth
+                and exc.code == "expired_token"
+                and try_refresh
+            ):
+                # Call the refresh tokens process (an error will be raised if it fails).
+                self._session.auth.refresh_tokens_callback()
+                # At this point refresh is ok, so just replay the request.
+                return self._execute(
+                    http_method, endpoint, etag=etag, try_refresh=False, **_orig_kwargs
+                )
+            else:
+                # Authentication mode not token based or refresh not wanted/needed,
+                #  raise initial authentication error.
+                raise exc
 
     @staticmethod
     def _exclude_empty_files(files):
@@ -89,6 +133,9 @@ class BEMServerApiClientRequest:
                 v.seek(0, os.SEEK_SET)
                 not_empty_files[k] = v
         return not_empty_files
+
+    def set_authentication_method(self, authentication_method):
+        self._session.auth = authentication_method
 
     def getall(self, endpoint, *, etag=None, **kwargs):
         return self._execute("GET", endpoint, etag=etag, **kwargs)
