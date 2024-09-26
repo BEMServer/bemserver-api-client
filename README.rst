@@ -38,12 +38,12 @@ API client usage
 
 .. code:: python3
 
-    from bemserver_api_client import BEMServerAPIClient
+    from bemserver_api_client import BEMServerApiClient
 
     # Get an instance of API client, setting the API host and the authentication method used for API requests.
-    api_client = BEMServerAPIClient(
+    api_client = BEMServerApiClient(
         "localhost:5000",
-        authentication_method=BEMServerAPIClient.make_http_basic(
+        authentication_method=BEMServerApiClient.make_http_basic(
             "user@email.com", "password"
         ),
     )
@@ -275,7 +275,7 @@ Usage example
 
     import datetime as dt
 
-    from bemserver_api_client import BEMServerAPIClient
+    from bemserver_api_client import BEMServerApiClient
     from bemserver_api_client.enums import DegreeDaysPeriod
     from bemserver_api_client.exceptions import (
         BEMServerAPINotFoundError,
@@ -283,7 +283,7 @@ Usage example
     )
 
     # Get an instance of API client, setting the API host.
-    api_client = BEMServerAPIClient("localhost:5000")
+    api_client = BEMServerApiClient("localhost:5000")
 
     # Get the authentication bearer access and refresh tokens (JWT).
     auth_resp = api_client.auth.get_tokens("user@email.com", "password")
@@ -302,7 +302,7 @@ Usage example
     # Set authentication method (bearer token authentication) in API client instance,
     #  in order to call private API endpoints.
     api_client.set_authentication_method(
-        BEMServerAPIClient.make_bearer_token_auth(
+        BEMServerApiClient.make_bearer_token_auth(
             auth_resp.data["access_token"], auth_resp.data["refresh_token"]
         )
     )
