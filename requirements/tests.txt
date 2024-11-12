@@ -16,7 +16,7 @@ idna==3.4
     # via requests
 iniconfig==1.1.1
     # via pytest
-packaging==24.1
+packaging==24.2
     # via
     #   -r requirements/tests.in
     #   pytest
