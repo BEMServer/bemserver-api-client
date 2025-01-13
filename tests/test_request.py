@@ -67,7 +67,7 @@ class TestAPIClientRequest:
                 req._prepare_dataformat_header(http_method, FakeEnum.a)
 
     def test_api_client_request_exclude_empty_files(self):
-        sites_csv_data = "Name,Description,IFC_ID,Area\n" "Site 1,Great site,,2000\n"
+        sites_csv_data = "Name,Description,IFC_ID,Area\nSite 1,Great site,,2000\n"
         sites_csv = io.BytesIO(sites_csv_data.encode())
         assert BEMServerApiClientRequest._exclude_empty_files(
             {

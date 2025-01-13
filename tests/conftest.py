@@ -1021,9 +1021,9 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
     data_json_names = copy.deepcopy(data_json)
     q_params["timeseries"] = []
     for i in range(len(data_json_names.keys())):
-        data_json_names[f"Timeseries {i+1}"] = data_json_names[str(i)]
+        data_json_names[f"Timeseries {i + 1}"] = data_json_names[str(i)]
         del data_json_names[str(i)]
-        q_params["timeseries"].append(f"Timeseries {i+1}")
+        q_params["timeseries"].append(f"Timeseries {i + 1}")
     endpoint_uri_camp = f"{endpoint_uri}campaign/0/"
     mock_adapter.register_uri(
         "GET",
@@ -1137,9 +1137,9 @@ def mock_timeseries_data_uris(mock_adapter, base_uri):
     data_json_agg_names = copy.deepcopy(data_json_agg)
     q_params["timeseries"] = []
     for i in range(len(data_json_agg_names.keys())):
-        data_json_agg_names[f"Timeseries {i+1}"] = data_json_agg_names[str(i)]
+        data_json_agg_names[f"Timeseries {i + 1}"] = data_json_agg_names[str(i)]
         del data_json_agg_names[str(i)]
-        q_params["timeseries"].append(f"Timeseries {i+1}")
+        q_params["timeseries"].append(f"Timeseries {i + 1}")
     mock_adapter.register_uri(
         "GET",
         f"{endpoint_uri_camp}aggregate?{urllib.parse.urlencode(q_params, True)}",
