@@ -374,7 +374,7 @@ class TestAPIClientResourcesTimeseries:
             assert v == tsdata_json[k]
 
         for i in range(len(tsdata_json.keys())):
-            tsdata_json[f"Timeseries {i+1}"] = tsdata_json[str(i)]
+            tsdata_json[f"Timeseries {i + 1}"] = tsdata_json[str(i)]
             del tsdata_json[str(i)]
         resp = tsdata_res.download_by_names(
             0,
@@ -420,7 +420,7 @@ class TestAPIClientResourcesTimeseries:
             assert v == tsdata_json_agg[k]
 
         for i in range(len(tsdata_json_agg.keys())):
-            tsdata_json_agg[f"Timeseries {i+1}"] = tsdata_json_agg[str(i)]
+            tsdata_json_agg[f"Timeseries {i + 1}"] = tsdata_json_agg[str(i)]
             del tsdata_json_agg[str(i)]
         resp = tsdata_res.download_aggregate_by_names(
             0,
