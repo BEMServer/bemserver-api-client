@@ -10,8 +10,6 @@ charset-normalizer==2.1.1
     # via requests
 idna==3.4
     # via requests
-packaging==24.2
-    # via bemserver-api-client (pyproject.toml)
 requests==2.32.3
     # via bemserver-api-client (pyproject.toml)
 urllib3==1.26.12
