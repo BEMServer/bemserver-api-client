@@ -38,7 +38,7 @@ pytest==8.3.5
     # via
     #   -r requirements/tests.in
     #   pytest-cov
-pytest-cov==6.0.0
+pytest-cov==6.1.1
     # via -r requirements/tests.in
 pyyaml==6.0
     # via pre-commit
