@@ -86,6 +86,8 @@ class TestAPIClient:
             assert isinstance(getattr(apicli, resource_name), resource_cls)
 
         assert not hasattr(apicli, "whatever_resources_that_does_not_exist")
+        with pytest.raises(AttributeError):
+            apicli.whatever_resources_that_does_not_exist.get()
 
     def test_api_client_required_api_version_manual(self):
         req_version_min = REQUIRED_API_VERSION["min"]
