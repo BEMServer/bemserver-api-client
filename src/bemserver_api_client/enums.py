@@ -73,3 +73,13 @@ class DegreeDaysPeriod(enum.Enum):
 class DegreeDaysType(enum.Enum):
     heating = "heating"
     cooling = "cooling"
+
+
+class TaskOffsetUnit(enum.Enum):
+    second = "second"
+    minute = "minute"
+    hour = "hour"
+    day = "day"
+    week = "week"
+    month = "month"
+    year = "year"

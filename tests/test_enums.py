@@ -9,6 +9,7 @@ from bemserver_api_client.enums import (
     EventLevel,
     StructuralElement,
     StructuralElementPropertyValueType,
+    TaskOffsetUnit,
     WeatherParameter,
 )
 
@@ -93,3 +94,13 @@ class TestAPIClientEnums:
         assert len(list(DegreeDaysType)) == 2
         assert DegreeDaysType.heating.value == "heating"
         assert DegreeDaysType.cooling.value == "cooling"
+
+    def test_api_client_enums_task_offset_unit(self):
+        assert len(list(TaskOffsetUnit)) == 7
+        assert TaskOffsetUnit.second.value == "second"
+        assert TaskOffsetUnit.minute.value == "minute"
+        assert TaskOffsetUnit.hour.value == "hour"
+        assert TaskOffsetUnit.day.value == "day"
+        assert TaskOffsetUnit.week.value == "week"
+        assert TaskOffsetUnit.month.value == "month"
+        assert TaskOffsetUnit.year.value == "year"

@@ -76,7 +76,7 @@ class TestAPIClient:
         assert auth_method == api_cli._request_manager._session.auth
 
     def test_api_client_resources(self):
-        assert len(RESOURCES_MAP) == 61
+        assert len(RESOURCES_MAP) == 57
 
         apicli = BEMServerApiClient("localhost:5050")
 

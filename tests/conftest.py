@@ -22,15 +22,8 @@ from bemserver_api_client.resources.analysis import AnalysisResources
 from bemserver_api_client.resources.events import EventResources
 from bemserver_api_client.resources.io import IOResources
 from bemserver_api_client.resources.notifications import NotificationResources
-from bemserver_api_client.resources.services import (
-    ST_CheckMissingByCampaignResources,
-    ST_CheckOutlierByCampaignResources,
-    ST_CleanupByCampaignResources,
-    ST_CleanupByTimeseriesResources,
-    ST_DownloadWeatherDataBySiteResources,
-    ST_DownloadWeatherForecastDataBySiteResources,
-)
 from bemserver_api_client.resources.structural_elements import SiteResources
+from bemserver_api_client.resources.tasks import TasksResources
 from bemserver_api_client.resources.timeseries import (
     TimeseriesDataResources,
     TimeseriesResources,
@@ -172,11 +165,8 @@ def mock_adapter(base_uri):
     mock_timeseries_uris(adapter, base_uri)
     mock_timeseries_data_uris(adapter, base_uri)
     mock_analysis_uris(adapter, base_uri)
-    mock_cleanup_uris(adapter, base_uri)
-    mock_check_missing_uris(adapter, base_uri)
-    mock_check_outlier_uris(adapter, base_uri)
-    mock_download_weather_uris(adapter, base_uri)
     mock_site_weather_data_uris(adapter, base_uri)
+    mock_tasks_uris(adapter, base_uri)
     return adapter
 
 
@@ -1316,214 +1306,6 @@ def mock_analysis_uris(mock_adapter, base_uri):
     )
 
 
-def mock_cleanup_uris(mock_adapter, base_uri):
-    # Get cleanup state for all campaigns
-    mock_adapter.register_uri(
-        "GET",
-        f"{base_uri}{ST_CleanupByCampaignResources.endpoint_base_uri}full",
-        headers={
-            "Content-Type": "application/json",
-            "ETag": "etag_cleanup_campaigns",
-        },
-        json=[
-            {
-                "campaign_id": 3,
-                "campaign_name": "Nobatek offices EPC",
-                "id": 1,
-                "is_enabled": True,
-            },
-            {
-                "campaign_id": 4,
-                "campaign_name": "BET windows tests",
-                "id": 2,
-                "is_enabled": False,
-            },
-            {
-                "campaign_id": 5,
-                "campaign_name": "test",
-                "id": 3,
-                "is_enabled": False,
-            },
-        ],
-    )
-
-    # Get cleanup state for all timeseries
-    mock_adapter.register_uri(
-        "GET",
-        f"{base_uri}{ST_CleanupByTimeseriesResources.endpoint_base_uri}full",
-        headers={
-            "Content-Type": "application/json",
-            "ETag": "etag_cleanup_timeseries",
-        },
-        json=[
-            {
-                "id": 3,
-                "last_timestamp": None,
-                "timeseries_id": 1,
-                "timeseries_name": "AirTempAngF1Off",
-                "timeseries_unit_symbol": "°C",
-            },
-            {
-                "id": 1,
-                "last_timestamp": "2021-05-31T22:00:00+00:00",
-                "timeseries_id": 2,
-                "timeseries_name": "AirTempAngF2Off",
-                "timeseries_unit_symbol": "°C",
-            },
-            {
-                "id": None,
-                "last_timestamp": None,
-                "timeseries_id": 3,
-                "timeseries_name": "AirTempBdxF1Off",
-                "timeseries_unit_symbol": "°C",
-            },
-            {
-                "id": 2,
-                "last_timestamp": "2021-09-27T09:54:07+00:00",
-                "timeseries_id": 4,
-                "timeseries_name": "ElecPowerAng",
-                "timeseries_unit_symbol": "W",
-            },
-            {
-                "id": None,
-                "last_timestamp": None,
-                "timeseries_id": 5,
-                "timeseries_name": "ElecPowerBdx",
-                "timeseries_unit_symbol": "W",
-            },
-        ],
-    )
-
-
-def mock_check_missing_uris(mock_adapter, base_uri):
-    # Get check missing state for all campaigns
-    mock_adapter.register_uri(
-        "GET",
-        f"{base_uri}{ST_CheckMissingByCampaignResources.endpoint_base_uri}full",
-        headers={
-            "Content-Type": "application/json",
-            "ETag": "etag_check_missing_campaigns",
-        },
-        json=[
-            {
-                "campaign_id": 3,
-                "campaign_name": "Nobatek offices EPC",
-                "id": 1,
-                "is_enabled": True,
-            },
-            {
-                "campaign_id": 4,
-                "campaign_name": "BET windows tests",
-                "id": 2,
-                "is_enabled": False,
-            },
-            {
-                "campaign_id": 5,
-                "campaign_name": "test",
-                "id": 3,
-                "is_enabled": False,
-            },
-        ],
-    )
-
-
-def mock_check_outlier_uris(mock_adapter, base_uri):
-    # Get check outlier service state for all campaigns
-    mock_adapter.register_uri(
-        "GET",
-        f"{base_uri}{ST_CheckOutlierByCampaignResources.endpoint_base_uri}full",
-        headers={
-            "Content-Type": "application/json",
-            "ETag": "etag_check_outlier_campaigns",
-        },
-        json=[
-            {
-                "campaign_id": 3,
-                "campaign_name": "Nobatek offices EPC",
-                "id": 1,
-                "is_enabled": True,
-            },
-            {
-                "campaign_id": 4,
-                "campaign_name": "BET windows tests",
-                "id": 2,
-                "is_enabled": False,
-            },
-            {
-                "campaign_id": 5,
-                "campaign_name": "test",
-                "id": 3,
-                "is_enabled": False,
-            },
-        ],
-    )
-
-
-def mock_download_weather_uris(mock_adapter, base_uri):
-    # Get download weather data service state for all sites
-    mock_adapter.register_uri(
-        "GET",
-        f"{base_uri}{ST_DownloadWeatherDataBySiteResources.endpoint_base_uri}full",
-        headers={
-            "Content-Type": "application/json",
-            "ETag": "etag_download_weather_data_sites",
-        },
-        json=[
-            {
-                "id": 1,
-                "is_enabled": True,
-                "site_id": 1,
-                "site_name": "Anglet",
-            },
-            {
-                "id": 2,
-                "is_enabled": False,
-                "site_id": 2,
-                "site_name": "Bordeaux",
-            },
-            {
-                "id": None,
-                "is_enabled": False,
-                "site_id": 3,
-                "site_name": "Talence",
-            },
-        ],
-    )
-
-    # Get download weather forecast data service state for all sites
-    mock_adapter.register_uri(
-        "GET",
-        (
-            f"{base_uri}"
-            f"{ST_DownloadWeatherForecastDataBySiteResources.endpoint_base_uri}full"
-        ),
-        headers={
-            "Content-Type": "application/json",
-            "ETag": "etag_download_weather_forecast_data_sites",
-        },
-        json=[
-            {
-                "id": 1,
-                "is_enabled": False,
-                "site_id": 1,
-                "site_name": "Anglet",
-            },
-            {
-                "id": 2,
-                "is_enabled": True,
-                "site_id": 2,
-                "site_name": "Bordeaux",
-            },
-            {
-                "id": None,
-                "is_enabled": False,
-                "site_id": 3,
-                "site_name": "Talence",
-            },
-        ],
-    )
-
-
 def mock_site_weather_data_uris(mock_adapter, base_uri):
     endpoint_uri = f"{base_uri}{SiteResources.endpoint_base_uri}1"
 
@@ -1586,4 +1368,35 @@ def mock_site_weather_data_uris(mock_adapter, base_uri):
             "Content-Type": "application/json",
         },
         json=data_json,
+    )
+
+
+def mock_tasks_uris(mock_adapter, base_uri):
+    endpoint_uri = f"{base_uri}{TasksResources.endpoint_base_uri}"
+
+    def match_request_body_run(request):
+        return request.json() == {
+            "task_name": "Another task",
+            "campaign_id": 666,
+            "start_time": "2020-01-01T00:00:00.000Z",
+            "end_time": "2020-02-01T00:00:00.000Z",
+            "parameters": {
+                "property1": None,
+                "property2": None,
+            },
+        }
+
+    # Run once a registered async task.
+    mock_adapter.register_uri(
+        "POST",
+        f"{endpoint_uri}run",
+        request_headers={
+            "Content-Type": "application/json",
+        },
+        additional_matcher=match_request_body_run,
+        headers={
+            "Content-Type": "application/json",
+        },
+        json={},
+        status_code=204,
     )
