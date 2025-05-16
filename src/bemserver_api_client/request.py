@@ -58,7 +58,7 @@ class BEMServerApiClientRequest:
         :raises TypeError: when format is None or not an enum type
         :raises BEMServerAPIClientValueError: when format is not in DataFormat enum
         """
-        if format not in DataFormat:
+        if format not in DataFormat._value2member_map_.values():
             raise BEMServerAPIClientValueError(f"Invalid data format: {format}")
         dataformat_header = {}
         if http_method.upper() == "GET":
