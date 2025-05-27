@@ -2,6 +2,18 @@
   Changelog
 =============
 
+0.22.0 (2025-05-27)
+++++++++++++++++++
+
+Features:
+
+- Remove ``services`` endpoints
+- Remove ``tasks`` and ``tasks_by_campaigns`` endpoints
+
+Other changes:
+
+- Require bemserver-api >=0.26.0 and <0.27.0
+
 0.21.2 (2025-01-03)
 ++++++++++++++++++
 
