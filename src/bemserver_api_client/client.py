@@ -12,8 +12,8 @@ from .resources import RESOURCES_MAP
 APICLI_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_API_VERSION = {
-    "min": Version("0.24.0"),
-    "max": Version("0.26.0"),
+    "min": Version("0.26.0"),
+    "max": Version("0.27.0"),
 }
 
 
