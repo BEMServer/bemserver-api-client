@@ -26,11 +26,11 @@ repos:
       files: ^(pyproject\.toml|requirements\/install\.txt)$
     - id: pip-compile
       name: pip-compile requirements/dev.in
-      args: [requirements/dev.in]
+      args: [requirements/dev.in, --unsafe-package, requests]
       files: ^requirements\/(tests|dev)\.(in|txt)$
     - id: pip-compile
       name: pip-compile requirements/tests.in
-      args: [requirements/tests.in]
+      args: [requirements/tests.in, --unsafe-package, requests]
       files: ^requirements\/tests\.(in|txt)$
     - id: pip-compile
       name: pip-compile requirements/install-min.in
