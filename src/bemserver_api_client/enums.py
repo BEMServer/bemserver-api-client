@@ -83,3 +83,14 @@ class TaskOffsetUnit(enum.Enum):
     week = "week"
     month = "month"
     year = "year"
+
+
+class TaskStatus(enum.Enum):
+    PENDING = "pending"
+    SENT = "sent"
+    STARTED = "started"
+    PROGRESS = "progress"
+    SUCCESS = "success"
+    FAILURE = "failure"
+    RETRY = "retry"
+    REVOKED = "revoked"

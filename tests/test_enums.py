@@ -10,6 +10,7 @@ from bemserver_api_client.enums import (
     StructuralElement,
     StructuralElementPropertyValueType,
     TaskOffsetUnit,
+    TaskStatus,
     WeatherParameter,
 )
 
@@ -104,3 +105,14 @@ class TestAPIClientEnums:
         assert TaskOffsetUnit.week.value == "week"
         assert TaskOffsetUnit.month.value == "month"
         assert TaskOffsetUnit.year.value == "year"
+
+    def test_api_client_enums_task_status(self):
+        assert len(list(TaskStatus)) == 8
+        assert TaskStatus.PENDING.value == "pending"
+        assert TaskStatus.SENT.value == "sent"
+        assert TaskStatus.STARTED.value == "started"
+        assert TaskStatus.PROGRESS.value == "progress"
+        assert TaskStatus.SUCCESS.value == "success"
+        assert TaskStatus.FAILURE.value == "failure"
+        assert TaskStatus.RETRY.value == "retry"
+        assert TaskStatus.REVOKED.value == "revoked"
