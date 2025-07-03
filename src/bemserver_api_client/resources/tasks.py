@@ -9,7 +9,7 @@ from .base import BaseResources
 
 class TasksResources(BaseResources):
     endpoint_base_uri = "/tasks/"
-    disabled_endpoints = ["getone", "create", "update", "delete"]
+    disabled_endpoints = ["create", "update", "delete"]
     client_entrypoint = "tasks"
 
     def run_async(self, payload):
