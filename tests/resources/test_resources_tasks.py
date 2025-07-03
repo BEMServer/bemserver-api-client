@@ -13,7 +13,6 @@ class TestAPIClientResourcesTasks:
         assert issubclass(TasksResources, BaseResources)
         assert TasksResources.endpoint_base_uri == "/tasks/"
         assert TasksResources.disabled_endpoints == [
-            "getone",
             "create",
             "update",
             "delete",
