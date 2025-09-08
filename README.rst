@@ -16,7 +16,7 @@
     :target: https://github.com/bemserver/bemserver-api-client/actions?query=workflow%3Abuild
     :alt: Build status
 
-.. |img_precommit| image:: https://results.pre-commit.ci/badge/github/bemserver/bemserver-api-client/main.svg
+.. |img_precommit| image:: https://results.pre-commit.ci/badge/github/BEMServer/bemserver-api-client/main.svg
    :target: https://results.pre-commit.ci/latest/github/bemserver/bemserver-api-client/main
    :alt: pre-commit.ci status
 
