@@ -30,7 +30,7 @@ pytest-cov==7.0.0
     # via -r requirements/tests.in
 requests-mock==1.12.1
     # via -r requirements/tests.in
-urllib3==2.6.0
+urllib3==2.6.1
     # via requests
 
 # The following packages are considered to be unsafe in a requirements file:

@@ -46,7 +46,7 @@ pyyaml==6.0.3
     # via pre-commit
 requests-mock==1.12.1
     # via -r requirements/tests.in
-urllib3==2.6.0
+urllib3==2.6.1
     # via requests
 virtualenv==20.35.4
     # via pre-commit
