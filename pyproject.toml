@@ -25,6 +25,7 @@ classifiers = [
 ]
 requires-python = ">=3.9"
 dependencies = [
+  "packaging>=25.0",
   "requests>=2.32.5,<3.0.0",
 ]
 
