@@ -30,7 +30,7 @@ repos:
       files: ^requirements\/(tests|dev)\.(in|txt)$
     - id: pip-compile
       name: pip-compile requirements/tests.in
-      args: [requirements/tests.in, --unsafe-package, requests]
+      args: [requirements/tests.in, --unsafe-package, requests, --unsafe-package, packaging]
       files: ^requirements\/tests\.(in|txt)$
     - id: pip-compile
       name: pip-compile requirements/install-min.in
