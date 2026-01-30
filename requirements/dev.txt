@@ -44,11 +44,12 @@ pytest-cov==7.0.0
     # via -r requirements/tests.in
 pyyaml==6.0.3
     # via pre-commit
-requests==2.32.5
-    # via requests-mock
 requests-mock==1.12.1
     # via -r requirements/tests.in
 urllib3==2.6.1
     # via requests
 virtualenv==20.35.4
     # via pre-commit
+
+# The following packages are considered to be unsafe in a requirements file:
+# requests
