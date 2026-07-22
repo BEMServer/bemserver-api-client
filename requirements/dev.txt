@@ -32,7 +32,7 @@ pluggy==1.6.0
     # via
     #   pytest
     #   pytest-cov
-pre-commit==4.6.0
+pre-commit==4.6.1
     # via -r requirements/dev.in
 pygments==2.19.2
     # via pytest
@@ -44,8 +44,6 @@ pytest-cov==7.1.0
     # via -r requirements/tests.in
 pyyaml==6.0.3
     # via pre-commit
-requests==2.32.5
-    # via requests-mock
 requests-mock==1.12.1
     # via -r requirements/tests.in
 urllib3==2.6.1
